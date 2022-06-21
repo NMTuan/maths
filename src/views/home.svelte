@@ -1,0 +1,3 @@
+<main>
+    home
+</main>
