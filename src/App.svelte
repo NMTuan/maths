@@ -4,11 +4,26 @@
 </script>
 
 <main>
-    <ul>
-        <li><a href="#/">首页</a></li>
-        <li><a href="#/addSub/">加减法</a></li>
-        <li>分成图</li>
-        <li>比大小</li>
-    </ul>
+    <div class="py-4 print:hidden">
+        <ul class="flex list-none justify-center">
+            <li class="mx-4"><a href="#/">首页</a></li>
+            <li class="mx-4"><a href="#/addSub/">加减法</a></li>
+            <li class="mx-4">分成图</li>
+            <li class="mx-4">比大小</li>
+        </ul>
+    </div>
+
     <Router {routes} />
 </main>
+
+<style>
+    :root {
+        margin: 0;
+        padding: 0;
+        background-color: #e2e2e2;
+    }
+    :global(body) {
+        margin: 0;
+        padding: 0;
+    }
+</style>
