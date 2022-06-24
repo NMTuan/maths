@@ -1,5 +1,4 @@
 <script lang="ts">
-    export const title = '加减法'
     // 运算方式
     const methods = {
         add: '加法',
@@ -17,6 +16,11 @@
 
     let resLen: number = 60 // 生成数量 60正好一页a4纸
     let res = [] // 结果
+
+    // 标题
+    $: {
+        document.title = `${currentRange}以内${methods[currentMethod]}`
+    }
 
     // 生成随机数
     const random = (min: number = 0, max: number = currentRange): number => {
@@ -64,24 +68,26 @@
     }
 </script>
 
-<div class="flex items-center  justify-center print:hidden">
-    <div>
+<div class="flex justify-center my-10 print:hidden">
+    <div class="mr-12">
+        <strong>范围：</strong>
         {#each ranges as range}
-            <label class="block">
+            <label>
                 <input type="radio" bind:group={currentRange} value={range} />
                 {range} 以内
             </label>
         {/each}
     </div>
-    <div>
+    <div class="mr-12">
+        <strong>运算：</strong>
         {#each Object.keys(methods) as key}
-            <label class="block">
+            <label>
                 <input type="radio" bind:group={currentMethod} value={key} />
                 {methods[key]}
             </label>
         {/each}
     </div>
-    <div>
+    <div class="mr-12">
         <button on:click={submit}>生成</button>
     </div>
 </div>

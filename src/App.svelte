@@ -4,14 +4,25 @@
 </script>
 
 <main>
-    <div class="py-4 print:hidden">
+    <!-- <div class="py-4 print:hidden">
         <ul class="flex list-none justify-center">
-            <li class="mx-4"><a href="#/">首页</a></li>
-            <li class="mx-4"><a href="#/addSub/">加减法</a></li>
+            <li class="mx-4">
+                <a class="text-blue-500 no-underline hover:underline" href="#/">
+                    首页
+                </a>
+            </li>
+            <li class="mx-4">
+                <a
+                    class="text-blue-500 no-underline hover:underline"
+                    href="#/addSub/"
+                >
+                    加减法
+                </a>
+            </li>
             <li class="mx-4">分成图</li>
             <li class="mx-4">比大小</li>
         </ul>
-    </div>
+    </div> -->
 
     <Router {routes} />
 </main>
