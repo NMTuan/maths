@@ -66,6 +66,10 @@
         }
         res = total
     }
+
+    const print = () => {
+        window.print()
+    }
 </script>
 
 <div class="flex items-center justify-center my-10 print:hidden">
@@ -111,10 +115,19 @@
     </div>
     <div class="mr-12">
         <button
-            class="bg-sky-500 border-none text-white px-4 py-2 cursor-pointer
+            class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
             hover:bg-sky-400
             "
             on:click={submit}>生成</button
+        >
+        <button
+            class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
+            hover:bg-sky-400
+            disabled:bg-neutral-400 disabled:text-neutral-200 disabled:cursor-not-allowed
+            disabled:hover:bg-neutral-400
+            "
+            disabled={res.length === 0}
+            on:click={print}>打印</button
         >
     </div>
 </div>
