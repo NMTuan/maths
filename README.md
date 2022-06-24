@@ -2,16 +2,18 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-06-24 10:54:00
- * @LastEditTime: 2022-06-24 16:12:52
+ * @LastEditTime: 2022-06-24 16:16:28
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \math_test_questions_generator\README.md
 -->
 # 数学题生成器
 
-简单的一个加减法生成器.
+一个简单的加减法题目生成器. 供打印使用(或口算).
 
 一次生成60题, 正好一张A4纸.
+
+![](./public/thumb.png)
 
 
 ## 功能
