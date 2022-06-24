@@ -1,119 +1,99 @@
 <script lang="ts">
-    let addMethod: boolean = true // 加法
-    let addCarry: string = '0' // 进位：0不 1进 2不限
+    export const title = '加减法'
+    // 运算方式
+    const methods = {
+        add: '加法',
+        sub: '减法',
+        add_sub: '加减法'
+    }
+    let currentMethod = 'add'
 
-    let subMethod: boolean = false //减法
-    let subCarry: string = '0' // 退位：0不 1退 2不限
+    // 运算范围
+    const ranges = [10, 20, 100]
+    let currentRange = 10
 
-    let range: number[] = [0, 10] // 范围
-    let rangeSelected: string = '10' // 范围选定值
-    let resLen: number = 60 // 生成数量
+    // 为了美观对齐, 补空数量
+    $: padStartLen = (currentRange - 1).toString().length
+
+    let resLen: number = 60 // 生成数量 60正好一页a4纸
     let res = [] // 结果
 
-    $: addMethod === false && (addCarry = '0')
-    $: subMethod === false && (subCarry = '0')
-    $: range[1] = parseInt(rangeSelected)
-
-    const submit = () => {
-        if (!addMethod && !subMethod) {
-            alert('请选择算法！')
-            return
-        }
-        let total = []
-        for (let i = 0; i < resLen; i++) {
-            const item = handleAdd()
-            console.log('item', item)
-            total.push(item)
-        }
-        console.log(total)
-        res = total
-    }
-
     // 生成随机数
-    const random = (min: number = range[0], max: number = range[1]): number => {
+    const random = (min: number = 0, max: number = currentRange): number => {
         return Math.floor(Math.random() * (max - min)) + min
     }
 
     // 加法
     const handleAdd = () => {
         let a = random()
-        let b = 0
-        // if (addCarry === '2') {
-        b = random()
-        // } else {
-        //     const max = range[1] - 1
-        //     const maxStr = max.toString().split('')
-        //     console.log(max, maxStr)
-        //     b = random(range[0], range[1] - a)
-        // }
-
+        let b = random()
         return [a, '+', b]
+    }
+    // 减法
+    const handleSub = () => {
+        let a = random()
+        let b = random(0, a)
+        return [a, '-', b]
+    }
+
+    const submit = () => {
+        let total = []
+        switch (currentMethod) {
+            case 'add': // 加法
+                for (let i = 0; i < resLen; i++) {
+                    const item = handleAdd()
+                    total.push(item)
+                }
+                break
+
+            case 'sub': // 减法
+                for (let i = 0; i < resLen; i++) {
+                    const item = handleSub()
+                    total.push(item)
+                }
+                break
+
+            case 'add_sub': // 加减法
+                for (let i = 0; i < resLen; i++) {
+                    const dice = random(0, 2)
+                    const item = dice ? handleAdd() : handleSub()
+                    total.push(item)
+                }
+        }
+        res = total
     }
 </script>
 
-<main class="flex container">
-    <div class="print:hidden">
-        <p>加减法</p>
-        <p>加法，范围，进位</p>
-        <p>减法，范围，退位</p>
-        <h2>配置规则</h2>
-        <div>
-            addMethod：{addMethod}
-        </div>
-        <div>
-            subMethod：{subMethod}
-        </div>
-        <div>{range}</div>
-        <div>
-            <select name="" bind:value={rangeSelected}>
-                <option value="10">10以内</option>
-                <option value="20">20以内</option>
-                <option value="100">100以内</option>
-            </select>
-        </div>
-        <div>
-            <label>
-                <input bind:checked={addMethod} type="checkbox" /> 加法
+<div class="flex items-center  justify-center print:hidden">
+    <div>
+        {#each ranges as range}
+            <label class="block">
+                <input type="radio" bind:group={currentRange} value={range} />
+                {range} 以内
             </label>
-            <select bind:value={addCarry} disabled={!addMethod}>
-                <option value="0">不进位</option>
-                <option value="1">进位</option>
-                <option value="2">不限</option>
-            </select>
-        </div>
-        <div>
-            <label>
-                <input bind:checked={subMethod} type="checkbox" /> 减法
-            </label>
-            <select bind:value={subCarry} disabled={!subMethod}>
-                <option value="0">不退位</option>
-                <option value="1">退位</option>
-                <option value="2">不限</option>
-            </select>
-        </div>
-        <div>
-            <button on:click={submit}>生成</button>
-        </div>
-    </div>
-    <div
-        class="flex-grow flex-shrink-0 max-w-[800px] mx-auto p-12 shadow bg-white text-xl  grid grid-cols-4
-        print:p-0 print:shadow-none"
-        style="font-family: consolas;"
-    >
-        {#each res as item, index}
-            <pre class="whitespace-pre-wrap flex items-center justify-center	">
-{item[0]
-                    .toString()
-                    .padStart(
-                        (range[1] - 1).toString().length,
-                        ' '
-                    )} {item[1]} {item[2]
-                    .toString()
-                    .padStart(
-                        (range[1] - 1).toString().length,
-                        ' '
-                    )} = ___</pre>
         {/each}
     </div>
-    <div class="print:hidden">2</div>
-</main>
+    <div>
+        {#each Object.keys(methods) as key}
+            <label class="block">
+                <input type="radio" bind:group={currentMethod} value={key} />
+                {methods[key]}
+            </label>
+        {/each}
+    </div>
+    <div>
+        <button on:click={submit}>生成</button>
+    </div>
+</div>
+<div
+    class="flex-grow flex-shrink-0 max-w-[800px] mx-auto p-12 shadow bg-white text-xl  grid grid-cols-4
+        print:p-0 print:shadow-none"
+    style="font-family: consolas;"
+>
+    {#each res as item, index}
+        <pre class="flex items-center justify-center">
+{item[0].toString().padStart(padStartLen)} {item[1]} {item[2]
+                .toString()
+                .padStart(padStartLen)} = ___</pre>
+    {/each}
+</div>
