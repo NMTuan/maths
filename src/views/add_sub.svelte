@@ -5,11 +5,15 @@
         sub: '减法',
         add_sub: '加减法'
     }
-    let currentMethod = 'add'
+    let currentMethod = localStorage.getItem('currentMethod') || 'add'
+    $: localStorage.setItem('currentMethod', currentMethod)
 
     // 运算范围
-    const ranges = [10, 20, 100]
-    let currentRange = 10
+    const ranges = [10, 20, 50, 100]
+    let currentRange = localStorage.getItem('currentRange')
+        ? parseInt(localStorage.getItem('currentRange'))
+        : 10
+    $: localStorage.setItem('currentRange', currentRange.toString())
 
     // 为了美观对齐, 补空数量
     $: padStartLen = (currentRange - 1).toString().length
@@ -88,7 +92,7 @@
                     for={`range${index}`}
                     class="peer-checked:text-sky-500 peer-checked:font-bold"
                 >
-                    {range} 以内
+                    {range}
                 </label>
             </span>
         {/each}
