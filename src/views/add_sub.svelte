@@ -68,27 +68,54 @@
     }
 </script>
 
-<div class="flex justify-center my-10 print:hidden">
+<div class="flex items-center justify-center my-10 print:hidden">
     <div class="mr-12">
         <strong>范围：</strong>
-        {#each ranges as range}
-            <label>
-                <input type="radio" bind:group={currentRange} value={range} />
-                {range} 以内
-            </label>
+        {#each ranges as range, index}
+            <span>
+                <input
+                    id={`range${index}`}
+                    class="peer"
+                    type="radio"
+                    bind:group={currentRange}
+                    value={range}
+                />
+                <label
+                    for={`range${index}`}
+                    class="peer-checked:text-sky-500 peer-checked:font-bold"
+                >
+                    {range} 以内
+                </label>
+            </span>
         {/each}
     </div>
     <div class="mr-12">
         <strong>运算：</strong>
-        {#each Object.keys(methods) as key}
-            <label>
-                <input type="radio" bind:group={currentMethod} value={key} />
-                {methods[key]}
-            </label>
+        {#each Object.keys(methods) as key, index}
+            <span>
+                <input
+                    id={`method${index}`}
+                    class="peer"
+                    type="radio"
+                    bind:group={currentMethod}
+                    value={key}
+                />
+                <label
+                    for={`method${index}`}
+                    class="peer-checked:text-sky-500 peer-checked:font-bold"
+                >
+                    {methods[key]}
+                </label>
+            </span>
         {/each}
     </div>
     <div class="mr-12">
-        <button on:click={submit}>生成</button>
+        <button
+            class="bg-sky-500 border-none text-white px-4 py-2 cursor-pointer
+            hover:bg-sky-400
+            "
+            on:click={submit}>生成</button
+        >
     </div>
 </div>
 <div
