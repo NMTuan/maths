@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Qrcode from '../components/Qrcode.svelte'
+    let qrcodeStr = ''
     // 运算方式
     const methods = {
         add: '加法',
@@ -39,7 +41,7 @@
     // 为了美观对齐, 补空数量
     $: padStartLen = (currentRange - 1).toString().length
 
-    let resLen: number = 60 // 生成数量 60正好一页a4纸
+    let resLen: number = 50 // 生成数量 60正好一页a4纸
     let res = [] // 结果
 
     // 标题
@@ -139,6 +141,13 @@
                 }
         }
         res = total
+
+        // 结果集
+        const qrcodeRes = []
+        total.forEach((item) => {
+            qrcodeRes.push(item[3].toString(36).padStart(2, '_'))
+        })
+        qrcodeStr = location.href + qrcodeRes.join('')
     }
 
     const print = () => {
@@ -264,7 +273,7 @@
     </div>
 </div>
 <div
-    class="container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-4
+    class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-4
         print:p-0 print:shadow-none print:grid-cols-4"
     style="font-family: consolas;"
 >
@@ -278,4 +287,16 @@
                 ? item?.[3].toString().padStart(padStartLen)
                 : '__'}</pre>
     {/each}
+    {#if qrcodeStr}
+        <div />
+        <div class=" justify-self-center self-center text-base">
+            扫一扫 查答案
+        </div>
+        <div />
+        <div />
+        <div />
+        <div class="justify-self-center">
+            <Qrcode value={qrcodeStr} size="150" />
+        </div>
+    {/if}
 </div>
