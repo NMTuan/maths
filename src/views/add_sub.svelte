@@ -148,8 +148,8 @@
             qrcodeRes.push(item[3].toString(36).padStart(2, '_'))
         })
         qrcodeStr =
-            (location.hash === '' ? '#/' : '') +
             location.href +
+            (location.hash === '' ? '#/' : '') +
             qrcodeRes.join('')
     }
 
