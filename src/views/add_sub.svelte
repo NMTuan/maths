@@ -17,12 +17,14 @@
 
     let rules: string[] = [] // 规则
     $: {
-        if (currentMethod === 'sub') {
+        // 减法或10以内时，不涉及进位
+        if (currentMethod === 'sub' || currentRange === 10) {
             rules = rules.filter((role) => role !== 'addCarry')
         }
     }
     $: {
-        if (currentMethod === 'add') {
+        // 加法或10以内时，不涉及退位
+        if (currentMethod === 'add' || currentRange === 10) {
             rules = rules.filter((role) => role !== 'subBack')
         }
     }
@@ -66,9 +68,38 @@
     }
     // 减法
     const handleSub = () => {
-        let a = random()
-        let b = random(0, a)
-        return [a, '-', b]
+        const a = random()
+
+        // 如果a小于10， 不会有退位的问题
+        // 直接生成一个比a小的即可。
+        if (a < 10) {
+            let b = random(0, a)
+            return [a, '-', b]
+        }
+
+        const bArr = []
+        const rangeStr = a.toString().split('') // 一共几位
+
+        if (rules.includes('subBack')) {
+            // 可退位， 循环每一位，保证除了个位外，不大于a-1
+            rangeStr.forEach((item, index) => {
+                let b = 0
+                if (index === rangeStr.length - 1) {
+                    b = random(0, 9)
+                } else {
+                    b = random(0, parseInt(item) - 1)
+                }
+                bArr.push(b)
+            })
+            return [a, '-', parseInt(bArr.join(''))]
+        }
+
+        // 不退位， 循环每一位，保证不大于a
+        rangeStr.forEach((item, index) => {
+            const b = random(0, parseInt(item))
+            bArr.push(b)
+        })
+        return [a, '-', parseInt(bArr.join(''))]
     }
 
     const submit = () => {
@@ -151,7 +182,8 @@
                 id="addCarry"
                 class="peer"
                 type="checkbox"
-                disabled={['sub'].includes(currentMethod)}
+                disabled={['sub'].includes(currentMethod) ||
+                    currentRange === 10}
                 value="addCarry"
                 bind:group={rules}
             />
@@ -169,7 +201,8 @@
                 id="subBack"
                 class="peer"
                 type="checkbox"
-                disabled={['add'].includes(currentMethod)}
+                disabled={['add'].includes(currentMethod) ||
+                    currentRange === 10}
                 value="subBack"
                 bind:group={rules}
             />
@@ -208,8 +241,8 @@
 >
     {#each res as item, index}
         <pre class="flex items-center justify-center">
-{item?.[0].toString().padStart(padStartLen)} {item[1]} {item[2]
-                .toString()
-                .padStart(padStartLen)} = ___</pre>
+{item?.[0].toString().padStart(padStartLen) || 'a'} {item?.[1] ||
+                'x'} {item?.[2].toString().padStart(padStartLen) ||
+                'b'} = ___</pre>
     {/each}
 </div>
