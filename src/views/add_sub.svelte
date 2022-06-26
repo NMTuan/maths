@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Qrcode from '../components/Qrcode.svelte'
+    let qrcodeStr = ''
     // 运算方式
     const methods = {
         add: '加法',
@@ -8,6 +10,8 @@
     let currentMethod = localStorage.getItem('currentMethod') || 'add'
     $: localStorage.setItem('currentMethod', currentMethod)
 
+    // 运算符
+    const operator = ['+', '-']
     // 运算范围
     const ranges = [10, 20, 50, 100]
     let currentRange = localStorage.getItem('currentRange')
@@ -15,10 +19,29 @@
         : 10
     $: localStorage.setItem('currentRange', currentRange.toString())
 
+    let rules: string[] = localStorage.getItem('rules')
+        ? JSON.parse(localStorage.getItem('rules'))
+        : [] // 规则
+    $: {
+        // 减法或10以内时，不涉及进位
+        if (currentMethod === 'sub' || currentRange === 10) {
+            rules = rules.filter((role) => role !== 'addCarry')
+        }
+    }
+    $: {
+        // 加法或10以内时，不涉及退位
+        if (currentMethod === 'add' || currentRange === 10) {
+            rules = rules.filter((role) => role !== 'subBack')
+        }
+    }
+    $: {
+        localStorage.setItem('rules', JSON.stringify(rules))
+    }
+
     // 为了美观对齐, 补空数量
     $: padStartLen = (currentRange - 1).toString().length
 
-    let resLen: number = 60 // 生成数量 60正好一页a4纸
+    let resLen: number = 50 // 生成数量 60正好一页a4纸
     let res = [] // 结果
 
     // 标题
@@ -28,20 +51,69 @@
 
     // 生成随机数
     const random = (min: number = 0, max: number = currentRange): number => {
-        return Math.floor(Math.random() * (max - min)) + min
+        return Math.round(Math.random() * (max - min)) + min
     }
 
     // 加法
     const handleAdd = () => {
-        let a = random()
-        let b = random()
-        return [a, '+', b]
+        if (rules.includes('addCarry')) {
+            // 可进位
+            let a = random()
+            let b = random(0, currentRange - a)
+            return [0, a, b, a + b]
+        }
+        // 不进位
+        const rangeStr = (currentRange - 1).toString().split('') // 一共几位
+        const aArr = []
+        const bArr = []
+        rangeStr.forEach((item, index) => {
+            // 循环每一位，保证不进位
+            const a = random(0, parseInt(item))
+            const b = random(0, parseInt(item) - a)
+            aArr.push(a)
+            bArr.push(b)
+        })
+        return [
+            0,
+            parseInt(aArr.join('')),
+            parseInt(bArr.join('')),
+            parseInt(aArr.join('')) + parseInt(bArr.join(''))
+        ]
     }
     // 减法
     const handleSub = () => {
-        let a = random()
-        let b = random(0, a)
-        return [a, '-', b]
+        const a = random()
+
+        // 如果a小于10， 不会有退位的问题
+        // 直接生成一个比a小的即可。
+        if (a < 10) {
+            let b = random(0, a)
+            return [1, a, b, a - b]
+        }
+
+        const bArr = []
+        const rangeStr = a.toString().split('') // 一共几位
+
+        if (rules.includes('subBack')) {
+            // 可退位， 循环每一位，保证除了个位外，不大于a-1
+            rangeStr.forEach((item, index) => {
+                let b = 0
+                if (index === rangeStr.length - 1) {
+                    b = random(0, 9)
+                } else {
+                    b = random(0, parseInt(item) - 1)
+                }
+                bArr.push(b)
+            })
+        } else {
+            // 不退位， 循环每一位，保证不大于a
+            rangeStr.forEach((item, index) => {
+                const b = random(0, parseInt(item))
+                bArr.push(b)
+            })
+        }
+
+        return [1, a, parseInt(bArr.join('')), a - parseInt(bArr.join(''))]
     }
 
     const submit = () => {
@@ -69,6 +141,13 @@
                 }
         }
         res = total
+
+        // 结果集
+        const qrcodeRes = []
+        total.forEach((item) => {
+            qrcodeRes.push(item[3].toString(36).padStart(2, '_'))
+        })
+        qrcodeStr = location.href + qrcodeRes.join('')
     }
 
     const print = () => {
@@ -76,8 +155,8 @@
     }
 </script>
 
-<div class="flex items-center justify-center my-10 print:hidden">
-    <div class="mr-12">
+<div class="flex flex-wrap items-center justify-center my-10 print:hidden">
+    <div class="m-4 whitespace-nowrap">
         <strong>范围：</strong>
         {#each ranges as range, index}
             <span>
@@ -97,7 +176,7 @@
             </span>
         {/each}
     </div>
-    <div class="mr-12">
+    <div class="m-4 whitespace-nowrap">
         <strong>运算：</strong>
         {#each Object.keys(methods) as key, index}
             <span>
@@ -117,7 +196,65 @@
             </span>
         {/each}
     </div>
-    <div class="mr-12">
+    <div class="m-4 whitespace-nowrap">
+        <strong>规则：</strong>
+        <span>
+            <input
+                id="addCarry"
+                class="peer"
+                type="checkbox"
+                disabled={['sub'].includes(currentMethod) ||
+                    currentRange === 10}
+                value="addCarry"
+                bind:group={rules}
+            />
+            <label
+                for="addCarry"
+                class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
+            >
+                可进位
+            </label>
+        </span>
+        <span>
+            <input
+                id="subBack"
+                class="peer"
+                type="checkbox"
+                disabled={['add'].includes(currentMethod) ||
+                    currentRange === 10}
+                value="subBack"
+                bind:group={rules}
+            />
+            <label
+                for="subBack"
+                class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
+            >
+                可退位
+            </label>
+        </span>
+        <span>
+            <input
+                id="showRes"
+                class="peer"
+                type="checkbox"
+                value="showRes"
+                bind:group={rules}
+            />
+            <label
+                for="showRes"
+                class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
+            >
+                显示结果
+            </label>
+        </span>
+    </div>
+    <div class="m-4 whitespace-nowrap">
         <button
             class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
             hover:bg-sky-400
@@ -136,14 +273,30 @@
     </div>
 </div>
 <div
-    class="flex-grow flex-shrink-0 max-w-[800px] mx-auto p-12 shadow bg-white text-xl  grid grid-cols-4
-        print:p-0 print:shadow-none"
+    class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-4
+        print:p-0 print:shadow-none print:grid-cols-4"
     style="font-family: consolas;"
 >
     {#each res as item, index}
-        <pre class="flex items-center justify-center">
-{item[0].toString().padStart(padStartLen)} {item[1]} {item[2]
+        <pre class="flex items-center justify-center ">
+<span class="text-xs text-gray-400 mr-2">{index + 1}.</span>{item?.[1]
                 .toString()
-                .padStart(padStartLen)} = ___</pre>
+                .padStart(padStartLen) || 'a'} {operator[item?.[0]] ||
+                'x'} {item?.[2].toString().padStart(padStartLen) ||
+                'b'} = {rules.includes('showRes')
+                ? item?.[3].toString().padStart(padStartLen)
+                : '__'}</pre>
     {/each}
+    {#if qrcodeStr}
+        <div />
+        <div class=" justify-self-center self-center text-base">
+            扫一扫 查答案
+        </div>
+        <div />
+        <div />
+        <div />
+        <div class="justify-self-center">
+            <Qrcode value={qrcodeStr} size="150" />
+        </div>
+    {/if}
 </div>

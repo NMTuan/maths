@@ -21,6 +21,7 @@
     "vite": "^2.9.9"
   },
   "dependencies": {
+    "qrious": "^4.0.2",
     "svelte-spa-router": "^3.2.0"
   }
 }

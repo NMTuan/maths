@@ -3,7 +3,7 @@
     import routes from './routes'
 </script>
 
-<main>
+<main class=" relative">
     <!-- <div class="py-4 print:hidden">
         <ul class="flex list-none justify-center">
             <li class="mx-4">
