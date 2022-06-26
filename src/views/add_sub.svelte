@@ -139,8 +139,8 @@
     }
 </script>
 
-<div class="flex items-center justify-center my-10 print:hidden">
-    <div class="mr-12">
+<div class="flex flex-wrap items-center justify-center my-10 print:hidden">
+    <div class="m-4 whitespace-nowrap">
         <strong>范围：</strong>
         {#each ranges as range, index}
             <span>
@@ -160,7 +160,7 @@
             </span>
         {/each}
     </div>
-    <div class="mr-12">
+    <div class="m-4 whitespace-nowrap">
         <strong>运算：</strong>
         {#each Object.keys(methods) as key, index}
             <span>
@@ -180,7 +180,7 @@
             </span>
         {/each}
     </div>
-    <div class="mr-12">
+    <div class="m-4 whitespace-nowrap">
         <strong>规则：</strong>
         <span>
             <input
@@ -221,7 +221,7 @@
             </label>
         </span>
     </div>
-    <div class="mr-12">
+    <div class="m-4 whitespace-nowrap">
         <button
             class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
             hover:bg-sky-400
@@ -240,14 +240,16 @@
     </div>
 </div>
 <div
-    class="flex-grow flex-shrink-0 max-w-[800px] mx-auto p-12 shadow bg-white text-xl  grid grid-cols-4
-        print:p-0 print:shadow-none"
+    class="container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-4
+        print:p-0 print:shadow-none print:grid-cols-4"
     style="font-family: consolas;"
 >
     {#each res as item, index}
-        <pre class="flex items-center justify-center">
-{item?.[0].toString().padStart(padStartLen) || 'a'} {item?.[1] ||
-                'x'} {item?.[2].toString().padStart(padStartLen) ||
-                'b'} = ___</pre>
+        <pre class="flex items-center justify-center ">
+<span class="text-xs text-gray-400 mr-2">{index + 1}.</span>{item?.[0]
+                .toString()
+                .padStart(padStartLen) || 'a'} {item?.[1] || 'x'} {item?.[2]
+                .toString()
+                .padStart(padStartLen) || 'b'} = __</pre>
     {/each}
 </div>
