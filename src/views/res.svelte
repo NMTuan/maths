@@ -22,7 +22,7 @@
 </script>
 
 <div
-    class="mt-6 container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-3xl grid sm:grid-cols-2 md:grid-cols-4
+    class=" container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-3xl grid sm:grid-cols-2 md:grid-cols-4
         print:p-0 print:shadow-none print:grid-cols-4"
     style="font-family: consolas;"
 >
