@@ -15,6 +15,18 @@
         : 10
     $: localStorage.setItem('currentRange', currentRange.toString())
 
+    let rules: string[] = [] // 规则
+    $: {
+        if (currentMethod === 'sub') {
+            rules = rules.filter((role) => role !== 'addCarry')
+        }
+    }
+    $: {
+        if (currentMethod === 'add') {
+            rules = rules.filter((role) => role !== 'subBack')
+        }
+    }
+
     // 为了美观对齐, 补空数量
     $: padStartLen = (currentRange - 1).toString().length
 
@@ -28,14 +40,29 @@
 
     // 生成随机数
     const random = (min: number = 0, max: number = currentRange): number => {
-        return Math.floor(Math.random() * (max - min)) + min
+        return Math.round(Math.random() * (max - min)) + min
     }
 
     // 加法
     const handleAdd = () => {
-        let a = random()
-        let b = random()
-        return [a, '+', b]
+        if (rules.includes('addCarry')) {
+            // 可进位
+            let a = random()
+            let b = random(0, currentRange - a)
+            return [a, '+', b]
+        }
+        // 不进位
+        const rangeStr = (currentRange - 1).toString().split('') // 一共几位
+        const aArr = []
+        const bArr = []
+        rangeStr.forEach((item, index) => {
+            // 循环每一位，保证不进位
+            const a = random(0, parseInt(item))
+            const b = random(0, parseInt(item) - a)
+            aArr.push(a)
+            bArr.push(b)
+        })
+        return [parseInt(aArr.join('')), '+', parseInt(bArr.join(''))]
     }
     // 减法
     const handleSub = () => {
@@ -118,6 +145,45 @@
         {/each}
     </div>
     <div class="mr-12">
+        <strong>规则：</strong>
+        <span>
+            <input
+                id="addCarry"
+                class="peer"
+                type="checkbox"
+                disabled={['sub'].includes(currentMethod)}
+                value="addCarry"
+                bind:group={rules}
+            />
+            <label
+                for="addCarry"
+                class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
+            >
+                可进位
+            </label>
+        </span>
+        <span>
+            <input
+                id="subBack"
+                class="peer"
+                type="checkbox"
+                disabled={['add'].includes(currentMethod)}
+                value="subBack"
+                bind:group={rules}
+            />
+            <label
+                for="subBack"
+                class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
+            >
+                可退位
+            </label>
+        </span>
+    </div>
+    <div class="mr-12">
         <button
             class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
             hover:bg-sky-400
@@ -142,7 +208,7 @@
 >
     {#each res as item, index}
         <pre class="flex items-center justify-center">
-{item[0].toString().padStart(padStartLen)} {item[1]} {item[2]
+{item?.[0].toString().padStart(padStartLen)} {item[1]} {item[2]
                 .toString()
                 .padStart(padStartLen)} = ___</pre>
     {/each}
