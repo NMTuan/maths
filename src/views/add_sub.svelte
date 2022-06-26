@@ -8,6 +8,8 @@
     let currentMethod = localStorage.getItem('currentMethod') || 'add'
     $: localStorage.setItem('currentMethod', currentMethod)
 
+    // 运算符
+    const operator = ['+', '-']
     // 运算范围
     const ranges = [10, 20, 50, 100]
     let currentRange = localStorage.getItem('currentRange')
@@ -56,7 +58,7 @@
             // 可进位
             let a = random()
             let b = random(0, currentRange - a)
-            return [a, '+', b]
+            return [0, a, b, a + b]
         }
         // 不进位
         const rangeStr = (currentRange - 1).toString().split('') // 一共几位
@@ -69,7 +71,12 @@
             aArr.push(a)
             bArr.push(b)
         })
-        return [parseInt(aArr.join('')), '+', parseInt(bArr.join(''))]
+        return [
+            0,
+            parseInt(aArr.join('')),
+            parseInt(bArr.join('')),
+            parseInt(aArr.join('')) + parseInt(bArr.join(''))
+        ]
     }
     // 减法
     const handleSub = () => {
@@ -79,7 +86,7 @@
         // 直接生成一个比a小的即可。
         if (a < 10) {
             let b = random(0, a)
-            return [a, '-', b]
+            return [1, a, b, a - b]
         }
 
         const bArr = []
@@ -96,15 +103,15 @@
                 }
                 bArr.push(b)
             })
-            return [a, '-', parseInt(bArr.join(''))]
+        } else {
+            // 不退位， 循环每一位，保证不大于a
+            rangeStr.forEach((item, index) => {
+                const b = random(0, parseInt(item))
+                bArr.push(b)
+            })
         }
 
-        // 不退位， 循环每一位，保证不大于a
-        rangeStr.forEach((item, index) => {
-            const b = random(0, parseInt(item))
-            bArr.push(b)
-        })
-        return [a, '-', parseInt(bArr.join(''))]
+        return [1, a, parseInt(bArr.join('')), a - parseInt(bArr.join(''))]
     }
 
     const submit = () => {
@@ -220,6 +227,23 @@
                 可退位
             </label>
         </span>
+        <span>
+            <input
+                id="showRes"
+                class="peer"
+                type="checkbox"
+                value="showRes"
+                bind:group={rules}
+            />
+            <label
+                for="showRes"
+                class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
+            >
+                显示结果
+            </label>
+        </span>
     </div>
     <div class="m-4 whitespace-nowrap">
         <button
@@ -246,10 +270,12 @@
 >
     {#each res as item, index}
         <pre class="flex items-center justify-center ">
-<span class="text-xs text-gray-400 mr-2">{index + 1}.</span>{item?.[0]
+<span class="text-xs text-gray-400 mr-2">{index + 1}.</span>{item?.[1]
                 .toString()
-                .padStart(padStartLen) || 'a'} {item?.[1] || 'x'} {item?.[2]
-                .toString()
-                .padStart(padStartLen) || 'b'} = __</pre>
+                .padStart(padStartLen) || 'a'} {operator[item?.[0]] ||
+                'x'} {item?.[2].toString().padStart(padStartLen) ||
+                'b'} = {rules.includes('showRes')
+                ? item?.[3].toString().padStart(padStartLen)
+                : '__'}</pre>
     {/each}
 </div>
