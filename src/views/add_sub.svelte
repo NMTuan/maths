@@ -147,7 +147,10 @@
         total.forEach((item) => {
             qrcodeRes.push(item[3].toString(36).padStart(2, '_'))
         })
-        qrcodeStr = location.href + qrcodeRes.join('')
+        qrcodeStr =
+            (location.hash === '' ? '#/' : '') +
+            location.href +
+            qrcodeRes.join('')
     }
 
     const print = () => {
