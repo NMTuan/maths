@@ -21,9 +21,7 @@
     "vite": "^2.9.9"
   },
   "dependencies": {
-    "qrcode": "^1.5.0",
     "qrious": "^4.0.2",
-    "svelte-qrcode": "^1.0.0",
     "svelte-spa-router": "^3.2.0"
   }
 }
