@@ -22,13 +22,13 @@
 </script>
 
 <div
-    class="mt-6 container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-4
+    class="mt-6 container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-3xl grid sm:grid-cols-2 md:grid-cols-4
         print:p-0 print:shadow-none print:grid-cols-4"
     style="font-family: consolas;"
 >
     {#each resultArr as item, index}
         <pre class="flex items-center justify-center"><span
-                class="text-xs text-gray-400 mr-2">{index + 1}.</span
+                class="text-base text-gray-400 mr-2">{index + 1}.</span
             >{item.toString().padStart(2)}</pre>
     {/each}
 </div>
