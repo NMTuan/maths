@@ -15,7 +15,9 @@
         : 10
     $: localStorage.setItem('currentRange', currentRange.toString())
 
-    let rules: string[] = [] // 规则
+    let rules: string[] = localStorage.getItem('rules')
+        ? JSON.parse(localStorage.getItem('rules'))
+        : [] // 规则
     $: {
         // 减法或10以内时，不涉及进位
         if (currentMethod === 'sub' || currentRange === 10) {
@@ -27,6 +29,9 @@
         if (currentMethod === 'add' || currentRange === 10) {
             rules = rules.filter((role) => role !== 'subBack')
         }
+    }
+    $: {
+        localStorage.setItem('rules', JSON.stringify(rules))
     }
 
     // 为了美观对齐, 补空数量
