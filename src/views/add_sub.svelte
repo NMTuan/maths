@@ -1,7 +1,8 @@
 <script lang="ts">
     import Qrcode from '../components/Qrcode.svelte'
     import IconRefresh from '../components/icon/Refresh.svelte'
-    let qrcodeStr = ''
+    let qrcodeStr = '' // 二维码内容
+    let qrcodeDivLen = 4 // 补齐div数量， 保证二维码在最右侧
     // 运算方式
     const methods = {
         add: '加法',
@@ -9,7 +10,10 @@
         add_sub: '加减法'
     }
     let currentMethod = localStorage.getItem('currentMethod') || 'add'
-    $: localStorage.setItem('currentMethod', currentMethod)
+    $: {
+        localStorage.setItem('currentMethod', currentMethod)
+        clearRes()
+    }
 
     // 运算符
     const operator = ['+', '-']
@@ -18,7 +22,10 @@
     let currentRange = localStorage.getItem('currentRange')
         ? parseInt(localStorage.getItem('currentRange'))
         : 10
-    $: localStorage.setItem('currentRange', currentRange.toString())
+    $: {
+        localStorage.setItem('currentRange', currentRange.toString())
+        clearRes()
+    }
 
     let rules: string[] = localStorage.getItem('rules')
         ? JSON.parse(localStorage.getItem('rules'))
@@ -37,13 +44,22 @@
     }
     $: {
         localStorage.setItem('rules', JSON.stringify(rules))
+        clearRes()
     }
 
     // 为了美观对齐, 补空数量
     $: padStartLen = (currentRange - 1).toString().length
 
-    let resLen: number = 50 // 生成数量 60正好一页a4纸
+    let resLen: number = localStorage.getItem('resLen')
+        ? parseInt(localStorage.getItem('resLen'))
+        : 50 // 生成数量 60正好一页a4纸
+    $: {
+        clearRes()
+        localStorage.setItem('resLen', resLen.toString())
+        qrcodeDivLen = 4 - (resLen % 4) + 2
+    }
     let res = [] // 结果
+    let showRes = false // 是否显示结果
 
     // 标题
     $: {
@@ -53,6 +69,12 @@
     // 生成随机数
     const random = (min: number = 0, max: number = currentRange): number => {
         return Math.round(Math.random() * (max - min)) + min
+    }
+
+    // 清除结果
+    const clearRes = () => {
+        res = []
+        qrcodeStr = ''
     }
 
     // 加法
@@ -181,8 +203,8 @@
     }
 </script>
 
-<div class="flex flex-wrap items-center justify-center my-10 print:hidden">
-    <div class="m-4 whitespace-nowrap">
+<div class="flex flex-wrap items-center justify-center my-6 print:hidden">
+    <div class="mx-4 my-2 whitespace-nowrap flex items-center">
         <strong>范围：</strong>
         {#each ranges as range, index}
             <span>
@@ -202,7 +224,7 @@
             </span>
         {/each}
     </div>
-    <div class="m-4 whitespace-nowrap">
+    <div class="mx-4 my-2 whitespace-nowrap flex items-center">
         <strong>运算：</strong>
         {#each Object.keys(methods) as key, index}
             <span>
@@ -222,7 +244,7 @@
             </span>
         {/each}
     </div>
-    <div class="m-4 whitespace-nowrap">
+    <div class="mx-4 my-2 whitespace-nowrap flex items-center">
         <strong>规则：</strong>
         <span>
             <input
@@ -262,41 +284,54 @@
                 可退位
             </label>
         </span>
-        <span>
-            <input
-                id="showRes"
-                class="peer"
-                type="checkbox"
-                value="showRes"
-                bind:group={rules}
-            />
-            <label
-                for="showRes"
-                class="peer-checked:text-sky-500 peer-checked:font-bold
-                peer-disabled:text-gray-400
-                "
-            >
-                显示结果
-            </label>
-        </span>
     </div>
-    <div class="m-4 whitespace-nowrap">
-        <button
-            class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
+    <div class="mx-4 my-2 whitespace-nowrap flex items-center">
+        <strong>题数：</strong>
+        <input
+            type="range"
+            name="points"
+            min="1"
+            max="50"
+            bind:value={resLen}
+        />
+        {resLen}
+    </div>
+</div>
+<div
+    class="text-center mb-6
+print:hidden"
+>
+    <button
+        class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
             hover:bg-sky-400
             "
-            on:click={submit}>生成</button
-        >
-        <button
-            class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
+        on:click={submit}>生成</button
+    >
+    <button
+        class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
             hover:bg-sky-400
             disabled:bg-neutral-400 disabled:text-neutral-200 disabled:cursor-not-allowed
             disabled:hover:bg-neutral-400
             "
-            disabled={res.length === 0}
-            on:click={print}>打印</button
+        disabled={res.length === 0}
+        on:click={print}>打印</button
+    >
+    <span>
+        <input
+            id="showRes"
+            class="peer"
+            type="checkbox"
+            on:change={(e) => (showRes = e.currentTarget.checked)}
+        />
+        <label
+            for="showRes"
+            class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
         >
-    </div>
+            显示结果
+        </label>
+    </span>
 </div>
 <div
     class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-4
@@ -309,7 +344,7 @@
                 .toString()
                 .padStart(padStartLen) || 'a'} {operator[item?.[0]] ||
                 'x'} {item?.[2].toString().padStart(padStartLen) ||
-                'b'} = {rules.includes('showRes')
+                'b'} = {showRes
                 ? item?.[3].toString().padStart(padStartLen)
                 : '__'} <span
                 class="invisible cursor-pointer text-xs
@@ -319,13 +354,12 @@
             ></pre>
     {/each}
     {#if qrcodeStr}
-        <div />
+        {#each Array(qrcodeDivLen) as item, index}
+            <div />
+        {/each}
         <div class=" justify-self-center self-center text-base">
             扫一扫 查答案
         </div>
-        <div />
-        <div />
-        <div />
         <div class="justify-self-center">
             <Qrcode value={qrcodeStr} size="150" />
         </div>
