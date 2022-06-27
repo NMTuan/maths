@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-06-24 10:54:00
- * @LastEditTime: 2022-06-26 22:08:22
+ * @LastEditTime: 2022-06-27 12:17:40
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \math_test_questions_generator\README.md
@@ -24,12 +24,10 @@
 - [ ] 除法
 - [x] 加法进位
 - [x] 减法退位
-- [ ] 两位与一位运算
-- [ ] 两位与两位运算
 - [x] 直接显示答案
 - [x] 扫码显示答案
-- [ ] 打赏
-- [ ] 单题刷新
+- [x] 打赏
+- [x] 单题刷新
 
 
 ## 技术栈

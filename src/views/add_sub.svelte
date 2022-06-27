@@ -1,5 +1,6 @@
 <script lang="ts">
     import Qrcode from '../components/Qrcode.svelte'
+    import IconRefresh from '../components/icon/Refresh.svelte'
     let qrcodeStr = ''
     // 运算方式
     const methods = {
@@ -141,10 +142,12 @@
                 }
         }
         res = total
+        handleQrode()
+    }
 
-        // 结果集
+    const handleQrode = () => {
         const qrcodeRes = []
-        total.forEach((item) => {
+        res.forEach((item) => {
             qrcodeRes.push(item[3].toString(36).padStart(2, '_'))
         })
         qrcodeStr =
@@ -155,6 +158,26 @@
 
     const print = () => {
         window.print()
+    }
+
+    // 单题刷新
+    const refresh = (index) => {
+        let newItem
+        switch (currentMethod) {
+            case 'add': // 加法
+                newItem = handleAdd()
+                break
+
+            case 'sub': // 减法
+                newItem = handleSub()
+                break
+
+            case 'add_sub': // 加减法
+                const dice = random(0, 2)
+                newItem = dice ? handleAdd() : handleSub()
+        }
+        res[index] = newItem
+        handleQrode()
     }
 </script>
 
@@ -281,14 +304,19 @@
     style="font-family: consolas;"
 >
     {#each res as item, index}
-        <pre class="flex items-center justify-center ">
+        <pre class="flex items-center justify-center group">
 <span class="text-xs text-gray-400 mr-2">{index + 1}.</span>{item?.[1]
                 .toString()
                 .padStart(padStartLen) || 'a'} {operator[item?.[0]] ||
                 'x'} {item?.[2].toString().padStart(padStartLen) ||
                 'b'} = {rules.includes('showRes')
                 ? item?.[3].toString().padStart(padStartLen)
-                : '__'}</pre>
+                : '__'} <span
+                class="invisible cursor-pointer text-xs
+                group-hover:visible print:hidden"
+                on:click={() => refresh(index)}
+                title="重新生成本题"><IconRefresh /></span
+            ></pre>
     {/each}
     {#if qrcodeStr}
         <div />
