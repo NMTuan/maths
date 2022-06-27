@@ -32,10 +32,16 @@
             >{item.toString().padStart(2)}</pre>
     {/each}
 </div>
+<div>
+    <img
+        class="w-full block"
+        src="https://s2.loli.net/2022/06/27/mxuA4jgQ72rzVkF.jpg"
+    />
+</div>
 <div class="text-center">
     <a
         href="###"
-        class="inline-block text-sky-500 p-4 no-underline"
+        class="inline-block text-sky-500 p-8 no-underline"
         use:link={{ href: '/' }}
     >
         继续生成数学题
