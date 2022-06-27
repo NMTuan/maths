@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-06-24 10:54:00
- * @LastEditTime: 2022-06-27 12:57:14
+ * @LastEditTime: 2022-06-27 20:01:30
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \math_test_questions_generator\README.md
@@ -37,3 +37,9 @@
 - 伪ts
 - svelte
 - unocss
+
+## 支持
+
+如果您喜欢此项目， 欢迎赞赏。 您的支持是我开发的动力！
+
+<img src="https://s2.loli.net/2022/06/27/mxuA4jgQ72rzVkF.jpg" title="" alt="" height="480"></img>
