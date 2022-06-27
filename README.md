@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-06-24 10:54:00
- * @LastEditTime: 2022-06-27 20:01:30
+ * @LastEditTime: 2022-06-27 20:26:56
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \math_test_questions_generator\README.md
@@ -18,6 +18,7 @@
 
 ## 功能
 
+- [x] 10/20/50/100以内的计算
 - [x] 加法
 - [x] 减法
 - [ ] 乘法
@@ -29,6 +30,7 @@
 - [x] 打赏
 - [x] 单题刷新
 - [x] 题数控制
+- [x] 题目是否可重复
 
 
 ## 技术栈
