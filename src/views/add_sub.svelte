@@ -139,29 +139,42 @@
         return [1, a, parseInt(bArr.join('')), a - parseInt(bArr.join(''))]
     }
 
-    const submit = () => {
-        let total = []
+    // 生成一道题
+    const generator = () => {
+        let item
         switch (currentMethod) {
             case 'add': // 加法
-                for (let i = 0; i < resLen; i++) {
-                    const item = handleAdd()
-                    total.push(item)
-                }
+                item = handleAdd()
                 break
 
             case 'sub': // 减法
-                for (let i = 0; i < resLen; i++) {
-                    const item = handleSub()
-                    total.push(item)
-                }
+                item = handleSub()
                 break
 
             case 'add_sub': // 加减法
-                for (let i = 0; i < resLen; i++) {
-                    const dice = random(0, 2)
-                    const item = dice ? handleAdd() : handleSub()
-                    total.push(item)
-                }
+                const dice = random(0, 2)
+                item = dice ? handleAdd() : handleSub()
+        }
+        return item
+    }
+
+    const submit = () => {
+        let total = []
+        if (rules.includes('repeat')) {
+            // 可重复
+            for (let i = 0; i < resLen; i++) {
+                const item = generator()
+                total.push(item)
+            }
+        } else {
+            // 不重复：每次生成后， 先吧自己过滤出去，再把自己加进去。
+            while (total.length < resLen) {
+                const newItem = generator()
+                total = total.filter((item) => {
+                    return JSON.stringify(item) !== JSON.stringify(newItem)
+                })
+                total.push(newItem)
+            }
         }
         res = total
         handleQrode()
@@ -184,21 +197,7 @@
 
     // 单题刷新
     const refresh = (index) => {
-        let newItem
-        switch (currentMethod) {
-            case 'add': // 加法
-                newItem = handleAdd()
-                break
-
-            case 'sub': // 减法
-                newItem = handleSub()
-                break
-
-            case 'add_sub': // 加减法
-                const dice = random(0, 2)
-                newItem = dice ? handleAdd() : handleSub()
-        }
-        res[index] = newItem
+        res[index] = generator()
         handleQrode()
     }
 </script>
@@ -282,6 +281,23 @@
                 "
             >
                 可退位
+            </label>
+        </span>
+        <span>
+            <input
+                id="repeat"
+                class="peer"
+                type="checkbox"
+                value="repeat"
+                bind:group={rules}
+            />
+            <label
+                for="repeat"
+                class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
+            >
+                可重复
             </label>
         </span>
     </div>
