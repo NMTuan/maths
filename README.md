@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-06-24 10:54:00
- * @LastEditTime: 2022-06-27 12:17:40
+ * @LastEditTime: 2022-06-27 12:57:14
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \math_test_questions_generator\README.md
@@ -28,6 +28,7 @@
 - [x] 扫码显示答案
 - [x] 打赏
 - [x] 单题刷新
+- [x] 题数控制
 
 
 ## 技术栈
