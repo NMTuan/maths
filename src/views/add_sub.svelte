@@ -197,7 +197,21 @@
 
     // 单题刷新
     const refresh = (index) => {
-        res[index] = generator()
+        if (rules.includes('repeat')) {
+            res[index] = generator()
+        } else {
+            let newItem
+            while (newItem === undefined) {
+                const _item = generator()
+                const exist = res.some((item) => {
+                    return JSON.stringify(item) === JSON.stringify(_item)
+                })
+                if (!exist) {
+                    newItem = _item
+                }
+            }
+            res[index] = newItem
+        }
         handleQrode()
     }
 </script>

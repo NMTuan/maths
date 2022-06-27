@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-06-24 10:54:00
- * @LastEditTime: 2022-06-27 20:26:56
+ * @LastEditTime: 2022-06-27 20:27:59
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \math_test_questions_generator\README.md
@@ -11,7 +11,7 @@
 
 一个简单的加减法题目生成器. 供打印使用(或口算).
 
-一次生成60题, 正好一张A4纸.
+一次最多生成50题, 正好一张A4纸.
 
 ![](./public/thumb.png)
 
