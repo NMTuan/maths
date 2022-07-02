@@ -25,6 +25,8 @@
         localStorage.setItem('currentRange', currentRange.toString())
         clearRes()
     }
+    // 参与运算的个数
+    let num = 2
 
     // 规则
     let rules: string[] = localStorage.getItem('rules')
@@ -84,12 +86,11 @@
             // 可进位
             let a = random(1)
             let b = random(1)
-            return [0, a, b, a + b]
-            // return {
-            //     numbers: [a, b],
-            //     methods: [0],
-            //     res: a+b
-            // }
+            return {
+                numbers: [a, b],
+                methods: [0],
+                result: a + b
+            }
         }
         // 不进位
         const rangeStr = (currentRange - 1).toString().split('') // 一共几位
@@ -102,12 +103,11 @@
             aArr.push(a)
             bArr.push(b)
         })
-        return [
-            0,
-            parseInt(aArr.join('')),
-            parseInt(bArr.join('')),
-            parseInt(aArr.join('')) + parseInt(bArr.join(''))
-        ]
+        return {
+            numbers: [parseInt(aArr.join('')), parseInt(bArr.join(''))],
+            methods: [0],
+            result: parseInt(aArr.join('')) + parseInt(bArr.join(''))
+        }
     }
     // 减法
     const handleSub = () => {
@@ -117,7 +117,11 @@
         // 直接生成一个比a小的即可。
         if (a <= 10) {
             let b = random(0, a)
-            return [1, a, b, a - b]
+            return {
+                numbers: [a, b],
+                methods: [1],
+                result: a - b
+            }
         }
 
         const bArr = []
@@ -142,7 +146,11 @@
             })
         }
 
-        return [1, a, parseInt(bArr.join('')), a - parseInt(bArr.join(''))]
+        return {
+            numbers: [a, parseInt(bArr.join(''))],
+            methods: [1],
+            result: a - parseInt(bArr.join(''))
+        }
     }
 
     // 生成一道题
@@ -172,7 +180,7 @@
             const newItem = generator()
 
             // 过滤0
-            if (newItem[1] === 0 || newItem[2] === 0) {
+            if (newItem.numbers.includes(0)) {
                 continue
             }
 
@@ -193,7 +201,8 @@
     const handleQrode = () => {
         const qrcodeRes = []
         res.forEach((item) => {
-            qrcodeRes.push(item[3].toString(36).padStart(2, '_'))
+            console.log('x', item)
+            qrcodeRes.push(item.result.toString(36).padStart(2, '_'))
         })
         qrcodeStr =
             location.href +
@@ -211,12 +220,14 @@
             res[index] = generator()
         } else {
             let newItem
-            while (newItem === undefined) {
+            let time = 0
+            while (newItem === undefined && time < 100) {
+                time++
                 const _item = generator()
                 const exist = res.some((item) => {
                     return JSON.stringify(item) === JSON.stringify(_item)
                 })
-                if (!exist) {
+                if (!exist && !_item.numbers.includes(0)) {
                     newItem = _item
                 }
             }
@@ -375,21 +386,29 @@ print:hidden"
 <div
     class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-3
         print:p-0 print:shadow-none print:grid-cols-3"
-    style="font-family:  consolas;"
+    style="font-family: consolas;"
 >
     {#each res as item, index}
         <div class="flex items-center my-3.5 group">
             <span class="text-xs text-gray-400 mr-2">{index + 1}.</span>
-            {item?.[1] || 'a'}
-            {operator[item?.[0]] || 'x'}
-            {item?.[2] || 'b'}
-            = {showRes ? item?.[3] : ''}
-            <span
-                class="invisible cursor-pointer text-xs
+            {#each item.numbers as number, i}
+                {number}
+                {item.methods[i] !== undefined
+                    ? operator[item.methods[i]] + ' '
+                    : ' '}
+            {/each}
+            = {showRes ? item.result : ''}
+            <!-- 10以内加法就36个，没法刷 -->
+            {#if !(currentRange === 10 && currentMethod === 'add')}
+                <span
+                    class="invisible cursor-pointer text-xs
                 group-hover:visible print:hidden ml-2"
-                on:click={() => refresh(index)}
-                title="重新生成本题"><IconRefresh /></span
-            >
+                    on:click={() => refresh(index)}
+                    title="重新生成本题"
+                >
+                    <IconRefresh />
+                </span>
+            {/if}
         </div>
     {/each}
     {#if qrcodeStr}
