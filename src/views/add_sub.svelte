@@ -2,7 +2,6 @@
     import Qrcode from '../components/Qrcode.svelte'
     import IconRefresh from '../components/icon/Refresh.svelte'
     let qrcodeStr = '' // 二维码内容
-    let qrcodeDivLen = 4 // 补齐div数量， 保证二维码在最右侧
     // 运算方式
     const methods = {
         add: '加法',
@@ -32,7 +31,7 @@
         : [] // 规则
     $: {
         // 减法或10以内时，不涉及进位
-        if (currentMethod === 'sub' || currentRange === 10) {
+        if (currentMethod === 'sub') {
             rules = rules.filter((role) => role !== 'addCarry')
         }
     }
@@ -56,10 +55,14 @@
     $: {
         clearRes()
         localStorage.setItem('resLen', resLen.toString())
-        qrcodeDivLen = 4 - (resLen % 4) + 2
     }
     let res = [] // 结果
     let showRes = false // 是否显示结果
+
+    let qrcodeDivLen = 4 // 补齐div数量， 保证二维码在最右侧
+    $: {
+        qrcodeDivLen = 4 - (res.length % 4) + 2
+    }
 
     // 标题
     $: {
@@ -81,8 +84,8 @@
     const handleAdd = () => {
         if (rules.includes('addCarry')) {
             // 可进位
-            let a = random()
-            let b = random(0, currentRange - a)
+            let a = random(1)
+            let b = random(1)
             return [0, a, b, a + b]
         }
         // 不进位
@@ -160,22 +163,26 @@
 
     const submit = () => {
         let total = []
-        if (rules.includes('repeat')) {
-            // 可重复
-            for (let i = 0; i < resLen; i++) {
-                const item = generator()
-                total.push(item)
+        let time = 0 // 约定最大循环次数，防止页面无响应。
+        while (total.length < resLen && time < 999) {
+            time++
+            const newItem = generator()
+
+            // 过滤0
+            if (newItem[1] === 0 || newItem[2] === 0) {
+                continue
             }
-        } else {
-            // 不重复：每次生成后， 先吧自己过滤出去，再把自己加进去。
-            while (total.length < resLen) {
-                const newItem = generator()
+
+            // 不重复
+            if (!rules.includes('repeat')) {
                 total = total.filter((item) => {
                     return JSON.stringify(item) !== JSON.stringify(newItem)
                 })
-                total.push(newItem)
             }
+
+            total.push(newItem)
         }
+
         res = total
         handleQrode()
     }
@@ -264,8 +271,7 @@
                 id="addCarry"
                 class="peer"
                 type="checkbox"
-                disabled={['sub'].includes(currentMethod) ||
-                    currentRange === 10}
+                disabled={['sub'].includes(currentMethod)}
                 value="addCarry"
                 bind:group={rules}
             />
