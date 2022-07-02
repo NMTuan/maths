@@ -2,7 +2,6 @@
     import Qrcode from '../components/Qrcode.svelte'
     import IconRefresh from '../components/icon/Refresh.svelte'
     let qrcodeStr = '' // 二维码内容
-    let qrcodeDivLen = 4 // 补齐div数量， 保证二维码在最右侧
     // 运算方式
     const methods = {
         add: '加法',
@@ -26,13 +25,22 @@
         localStorage.setItem('currentRange', currentRange.toString())
         clearRes()
     }
+    // 参与运算的个数
+    let num = localStorage.getItem('num')
+        ? JSON.parse(localStorage.getItem('num'))
+        : 2
+    $: {
+        localStorage.setItem('num', num.toString())
+        clearRes()
+    }
 
+    // 规则
     let rules: string[] = localStorage.getItem('rules')
         ? JSON.parse(localStorage.getItem('rules'))
-        : [] // 规则
+        : []
     $: {
         // 减法或10以内时，不涉及进位
-        if (currentMethod === 'sub' || currentRange === 10) {
+        if (currentMethod === 'sub') {
             rules = rules.filter((role) => role !== 'addCarry')
         }
     }
@@ -47,19 +55,20 @@
         clearRes()
     }
 
-    // 为了美观对齐, 补空数量
-    $: padStartLen = (currentRange - 1).toString().length
-
     let resLen: number = localStorage.getItem('resLen')
         ? parseInt(localStorage.getItem('resLen'))
-        : 50 // 生成数量 60正好一页a4纸
+        : 48 // 生成数量
     $: {
         clearRes()
         localStorage.setItem('resLen', resLen.toString())
-        qrcodeDivLen = 4 - (resLen % 4) + 2
     }
     let res = [] // 结果
     let showRes = false // 是否显示结果
+
+    let qrcodeDivLen = 3 // 补齐div数量， 保证二维码在最右侧
+    $: {
+        qrcodeDivLen = 3 - (res.length % 3) + 1
+    }
 
     // 标题
     $: {
@@ -79,64 +88,103 @@
 
     // 加法
     const handleAdd = () => {
+        let numbers = []
         if (rules.includes('addCarry')) {
             // 可进位
-            let a = random()
-            let b = random(0, currentRange - a)
-            return [0, a, b, a + b]
+            while (numbers.length < num) {
+                numbers.push(random(1))
+            }
+        } else {
+            // 不进位
+            const rangeStr = (currentRange - 1).toString().split('') // 一共几位
+            const results = [] // 临时结果 [[1,2], [3,4]] 第一个数的十位/个位; 第二个数的十位/个位;
+            while (results.length < num) {
+                results.push([])
+            }
+            rangeStr.forEach((item, index) => {
+                let total = 0 // 记录一下前面生成的和, 保证下一个数不大于(最大值-和)
+                // 循环每一位，保证不进位
+                for (let i = 0; i < num; i++) {
+                    const a = random(0, parseInt(item) - total)
+                    total += a
+                    results[i].push(a)
+                }
+            })
+            // 把临时结果内每一个数的每一位拼接起来.
+            numbers = results.reduce((total, item) => {
+                total.push(parseInt(item.join('')))
+                return total
+            }, [])
         }
-        // 不进位
-        const rangeStr = (currentRange - 1).toString().split('') // 一共几位
-        const aArr = []
-        const bArr = []
-        rangeStr.forEach((item, index) => {
-            // 循环每一位，保证不进位
-            const a = random(0, parseInt(item))
-            const b = random(0, parseInt(item) - a)
-            aArr.push(a)
-            bArr.push(b)
-        })
-        return [
-            0,
-            parseInt(aArr.join('')),
-            parseInt(bArr.join('')),
-            parseInt(aArr.join('')) + parseInt(bArr.join(''))
-        ]
+        const methods = [] // 运算符, 保证比numbers小1即可. 没有写死是为了后续的混合运算.
+        while (methods.length < numbers.length - 1) {
+            methods.push(0)
+        }
+        return {
+            numbers, // 参与计算的数
+            methods, // 各个数字之间的运算符
+            result: numbers.reduce((total, number) => total + number, 0) // 计算结果
+        }
     }
     // 减法
     const handleSub = () => {
         const a = random()
+        let numbers = []
 
-        // 如果a小于10， 不会有退位的问题
-        // 直接生成一个比a小的即可。
-        if (a < 10) {
-            let b = random(0, a)
-            return [1, a, b, a - b]
-        }
-
-        const bArr = []
         const rangeStr = a.toString().split('') // 一共几位
-
         if (rules.includes('subBack')) {
-            // 可退位， 循环每一位，保证除了个位外，不大于a-1
-            rangeStr.forEach((item, index) => {
-                let b = 0
-                if (index === rangeStr.length - 1) {
-                    b = random(0, 9)
-                } else {
-                    b = random(0, parseInt(item) - 1)
-                }
-                bArr.push(b)
-            })
+            // 可退位, 保证b比a小即可
+            let total = a
+            numbers.push(a)
+            for (var i = 0; i < num - 1; i++) {
+                const b = random(0, total - 1)
+                total = total - b
+                numbers.push(b)
+            }
         } else {
             // 不退位， 循环每一位，保证不大于a
+            const results = [] // 临时结果 [[1,2], [3,4]] 第一个数的十位/个位; 第二个数的十位/个位;
+            // 这里-1是因为a已经生成了.
+            while (results.length < num - 1) {
+                results.push([])
+            }
             rangeStr.forEach((item, index) => {
-                const b = random(0, parseInt(item))
-                bArr.push(b)
+                let total = parseInt(item)
+                // 这里-1是因为a已经生成了.
+                for (let i = 0; i < num - 1; i++) {
+                    const b = random(0, total)
+                    // 不退位
+                    total -= b
+                    results[i].push(b)
+                }
             })
+            // 把临时结果内每一个数的每一位拼接起来.
+            numbers = results.reduce(
+                (total, item) => {
+                    total.push(parseInt(item.join('')))
+                    return total
+                },
+                [a]
+            )
         }
 
-        return [1, a, parseInt(bArr.join('')), a - parseInt(bArr.join(''))]
+        const methods = [] // 运算符, 保证比numbers小1即可. 没有写死是为了后续的混合运算.
+        while (methods.length < numbers.length - 1) {
+            methods.push(1)
+        }
+
+        return {
+            numbers,
+            methods,
+            result: numbers.reduce((total, number) => {
+                if (total === 0) {
+                    total = number
+                } else {
+                    total = total - number
+                }
+                return total
+            }, 0) // 计算结果
+        }
     }
 
     // 生成一道题
@@ -160,22 +208,26 @@
 
     const submit = () => {
         let total = []
-        if (rules.includes('repeat')) {
-            // 可重复
-            for (let i = 0; i < resLen; i++) {
-                const item = generator()
-                total.push(item)
+        let time = 0 // 约定最大循环次数，防止页面无响应。
+        while (total.length < resLen && time < 999) {
+            time++
+            const newItem = generator()
+
+            // 过滤0
+            if (newItem.numbers.includes(0)) {
+                continue
             }
-        } else {
-            // 不重复：每次生成后， 先吧自己过滤出去，再把自己加进去。
-            while (total.length < resLen) {
-                const newItem = generator()
+
+            // 不重复
+            if (!rules.includes('repeat')) {
                 total = total.filter((item) => {
                     return JSON.stringify(item) !== JSON.stringify(newItem)
                 })
-                total.push(newItem)
             }
+
+            total.push(newItem)
         }
+
         res = total
         handleQrode()
     }
@@ -183,7 +235,7 @@
     const handleQrode = () => {
         const qrcodeRes = []
         res.forEach((item) => {
-            qrcodeRes.push(item[3].toString(36).padStart(2, '_'))
+            qrcodeRes.push(item.result.toString(36).padStart(2, '_'))
         })
         qrcodeStr =
             location.href +
@@ -201,12 +253,14 @@
             res[index] = generator()
         } else {
             let newItem
-            while (newItem === undefined) {
+            let time = 0
+            while (newItem === undefined && time < 100) {
+                time++
                 const _item = generator()
                 const exist = res.some((item) => {
                     return JSON.stringify(item) === JSON.stringify(_item)
                 })
-                if (!exist) {
+                if (!exist && !_item.numbers.includes(0)) {
                     newItem = _item
                 }
             }
@@ -258,14 +312,18 @@
         {/each}
     </div>
     <div class="mx-4 my-2 whitespace-nowrap flex items-center">
+        <strong>运算数：</strong>
+        {num}
+        <input type="range" min="2" max="4" bind:value={num} />
+    </div>
+    <div class="mx-4 my-2 whitespace-nowrap flex items-center">
         <strong>规则：</strong>
         <span>
             <input
                 id="addCarry"
                 class="peer"
                 type="checkbox"
-                disabled={['sub'].includes(currentMethod) ||
-                    currentRange === 10}
+                disabled={['sub'].includes(currentMethod)}
                 value="addCarry"
                 bind:group={rules}
             />
@@ -315,22 +373,23 @@
             </label>
         </span>
     </div>
-    <div class="mx-4 my-2 whitespace-nowrap flex items-center">
-        <strong>题数：</strong>
-        <input
-            type="range"
-            name="points"
-            min="1"
-            max="50"
-            bind:value={resLen}
-        />
-        {resLen}
-    </div>
+    <div class="mx-4 my-2 whitespace-nowrap flex items-center" />
 </div>
 <div
     class="text-center mb-6
 print:hidden"
 >
+    <span>
+        <strong>题数：</strong>
+        {resLen}
+        <input
+            type="range"
+            name="points"
+            min="1"
+            max="48"
+            bind:value={resLen}
+        />
+    </span>
     <button
         class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
             hover:bg-sky-400
@@ -364,33 +423,38 @@ print:hidden"
     </span>
 </div>
 <div
-    class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-4
-        print:p-0 print:shadow-none print:grid-cols-4"
+    class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-3
+        print:p-0 print:shadow-none print:grid-cols-3"
     style="font-family: consolas;"
 >
     {#each res as item, index}
-        <pre class="flex items-center justify-center group">
-<span class="text-xs text-gray-400 mr-2">{index + 1}.</span>{item?.[1]
-                .toString()
-                .padStart(padStartLen) || 'a'} {operator[item?.[0]] ||
-                'x'} {item?.[2].toString().padStart(padStartLen) ||
-                'b'} = {showRes
-                ? item?.[3].toString().padStart(padStartLen)
-                : '__'} <span
-                class="invisible cursor-pointer text-xs
-                group-hover:visible print:hidden"
-                on:click={() => refresh(index)}
-                title="重新生成本题"><IconRefresh /></span
-            ></pre>
+        <div class="flex items-center my-3.5 group">
+            <span class="text-xs text-gray-400 mr-2"
+                >{(index + 1).toString().padStart(2, '0')}.</span
+            >
+            {#each item.numbers as number, i}
+                {number}{item.methods[i] !== undefined
+                    ? operator[item.methods[i]] + ''
+                    : ''}{/each} = {showRes ? item.result : ''}
+            <!-- 10以内加法就36个，没法刷 -->
+            {#if !(currentRange === 10 && currentMethod === 'add')}
+                <span
+                    class="invisible cursor-pointer text-xs
+                group-hover:visible print:hidden ml-2"
+                    on:click={() => refresh(index)}
+                    title="重新生成本题"
+                >
+                    <IconRefresh />
+                </span>
+            {/if}
+        </div>
     {/each}
     {#if qrcodeStr}
         {#each Array(qrcodeDivLen) as item, index}
             <div />
         {/each}
-        <div class=" justify-self-center self-center text-base">
-            扫一扫 查答案
-        </div>
-        <div class="justify-self-center">
+        <div class=" text-right self-center text-base pr-8">扫一扫 查答案</div>
+        <div class="">
             <Qrcode value={qrcodeStr} size="150" />
         </div>
     {/if}
