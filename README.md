@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-06-24 10:54:00
- * @LastEditTime: 2022-06-27 20:27:59
+ * @LastEditTime: 2022-07-02 19:39:01
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \math_test_questions_generator\README.md
@@ -31,6 +31,9 @@
 - [x] 单题刷新
 - [x] 题数控制
 - [x] 题目是否可重复
+- [x] 连加
+- [x] 连减
+- [ ] 混合运算
 
 
 ## 技术栈
