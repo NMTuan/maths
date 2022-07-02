@@ -29,6 +29,10 @@
     let num = localStorage.getItem('num')
         ? JSON.parse(localStorage.getItem('num'))
         : 2
+    $: {
+        localStorage.setItem('num', num.toString())
+        clearRes()
+    }
 
     // 规则
     let rules: string[] = localStorage.getItem('rules')
