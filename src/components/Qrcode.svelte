@@ -8,7 +8,7 @@
     export let size = '200'
     export let value = ''
     export let padding = 0
-    export let className = 'qrcode'
+    export let className = 'qrcode block'
     let image = ''
     function generateQrCode() {
         QRcode.set({

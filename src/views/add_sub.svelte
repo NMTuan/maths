@@ -26,9 +26,10 @@
         clearRes()
     }
 
+    // 规则
     let rules: string[] = localStorage.getItem('rules')
         ? JSON.parse(localStorage.getItem('rules'))
-        : [] // 规则
+        : []
     $: {
         // 减法或10以内时，不涉及进位
         if (currentMethod === 'sub') {
@@ -46,12 +47,9 @@
         clearRes()
     }
 
-    // 为了美观对齐, 补空数量
-    $: padStartLen = (currentRange - 1).toString().length
-
     let resLen: number = localStorage.getItem('resLen')
         ? parseInt(localStorage.getItem('resLen'))
-        : 50 // 生成数量 60正好一页a4纸
+        : 48 // 生成数量
     $: {
         clearRes()
         localStorage.setItem('resLen', resLen.toString())
@@ -59,9 +57,9 @@
     let res = [] // 结果
     let showRes = false // 是否显示结果
 
-    let qrcodeDivLen = 4 // 补齐div数量， 保证二维码在最右侧
+    let qrcodeDivLen = 3 // 补齐div数量， 保证二维码在最右侧
     $: {
-        qrcodeDivLen = 4 - (res.length % 4) + 2
+        qrcodeDivLen = 3 - (res.length % 3) + 1
     }
 
     // 标题
@@ -87,6 +85,11 @@
             let a = random(1)
             let b = random(1)
             return [0, a, b, a + b]
+            // return {
+            //     numbers: [a, b],
+            //     methods: [0],
+            //     res: a+b
+            // }
         }
         // 不进位
         const rangeStr = (currentRange - 1).toString().split('') // 一共几位
@@ -327,7 +330,7 @@
             type="range"
             name="points"
             min="1"
-            max="50"
+            max="48"
             bind:value={resLen}
         />
         {resLen}
@@ -370,33 +373,31 @@ print:hidden"
     </span>
 </div>
 <div
-    class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-4
-        print:p-0 print:shadow-none print:grid-cols-4"
-    style="font-family: consolas;"
+    class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-3
+        print:p-0 print:shadow-none print:grid-cols-3"
+    style="font-family:  consolas;"
 >
     {#each res as item, index}
-        <pre class="flex items-center justify-center group">
-<span class="text-xs text-gray-400 mr-2">{index + 1}.</span>{item?.[1]
-                .toString()
-                .padStart(padStartLen) || 'a'} {operator[item?.[0]] ||
-                'x'} {item?.[2].toString().padStart(padStartLen) ||
-                'b'} = {showRes
-                ? item?.[3].toString().padStart(padStartLen)
-                : '__'} <span
+        <div class="flex items-center my-3.5 group">
+            <span class="text-xs text-gray-400 mr-2">{index + 1}.</span>
+            {item?.[1] || 'a'}
+            {operator[item?.[0]] || 'x'}
+            {item?.[2] || 'b'}
+            = {showRes ? item?.[3] : ''}
+            <span
                 class="invisible cursor-pointer text-xs
-                group-hover:visible print:hidden"
+                group-hover:visible print:hidden ml-2"
                 on:click={() => refresh(index)}
                 title="重新生成本题"><IconRefresh /></span
-            ></pre>
+            >
+        </div>
     {/each}
     {#if qrcodeStr}
         {#each Array(qrcodeDivLen) as item, index}
             <div />
         {/each}
-        <div class=" justify-self-center self-center text-base">
-            扫一扫 查答案
-        </div>
-        <div class="justify-self-center">
+        <div class=" text-right self-center text-base pr-8">扫一扫 查答案</div>
+        <div class="">
             <Qrcode value={qrcodeStr} size="150" />
         </div>
     {/if}
