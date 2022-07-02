@@ -129,44 +129,61 @@
     // 减法
     const handleSub = () => {
         const a = random()
+        let numbers = []
 
-        // 如果a小于10， 不会有退位的问题
-        // 直接生成一个比a小的即可。
-        if (a <= 10) {
-            let b = random(0, a)
-            return {
-                numbers: [a, b],
-                methods: [1],
-                result: a - b
-            }
-        }
-
-        const bArr = []
         const rangeStr = a.toString().split('') // 一共几位
-
         if (rules.includes('subBack')) {
-            // 可退位， 循环每一位，保证除了个位外，不大于a-1
-            rangeStr.forEach((item, index) => {
-                let b = 0
-                if (index === rangeStr.length - 1) {
-                    b = random(0, 9)
-                } else {
-                    b = random(0, parseInt(item) - 1)
-                }
-                bArr.push(b)
-            })
+            // 可退位, 保证b比a小即可
+            let total = a
+            numbers.push(a)
+            for (var i = 0; i < num - 1; i++) {
+                const b = random(0, total - 1)
+                total = total - b
+                numbers.push(b)
+            }
         } else {
             // 不退位， 循环每一位，保证不大于a
+            const results = [] // 临时结果 [[1,2], [3,4]] 第一个数的十位/个位; 第二个数的十位/个位;
+            // 这里-1是因为a已经生成了.
+            while (results.length < num - 1) {
+                results.push([])
+            }
             rangeStr.forEach((item, index) => {
-                const b = random(0, parseInt(item))
-                bArr.push(b)
+                let total = parseInt(item)
+                // 这里-1是因为a已经生成了.
+                for (let i = 0; i < num - 1; i++) {
+                    const b = random(0, total)
+                    // 不退位
+                    total -= b
+                    results[i].push(b)
+                }
             })
+            // 把临时结果内每一个数的每一位拼接起来.
+            numbers = results.reduce(
+                (total, item) => {
+                    total.push(parseInt(item.join('')))
+                    return total
+                },
+                [a]
+            )
+        }
+
+        const methods = [] // 运算符, 保证比numbers小1即可. 没有写死是为了后续的混合运算.
+        while (methods.length < numbers.length - 1) {
+            methods.push(1)
         }
 
         return {
-            numbers: [a, parseInt(bArr.join(''))],
-            methods: [1],
-            result: a - parseInt(bArr.join(''))
+            numbers,
+            methods,
+            result: numbers.reduce((total, number) => {
+                if (total === 0) {
+                    total = number
+                } else {
+                    total = total - number
+                }
+                return total
+            }, 0) // 计算结果
         }
     }
 
@@ -296,8 +313,8 @@
     </div>
     <div class="mx-4 my-2 whitespace-nowrap flex items-center">
         <strong>运算数：</strong>
-        <input type="range" min="2" max="4" bind:value={num} />
         {num}
+        <input type="range" min="2" max="4" bind:value={num} />
     </div>
     <div class="mx-4 my-2 whitespace-nowrap flex items-center">
         <strong>规则：</strong>
@@ -356,8 +373,15 @@
             </label>
         </span>
     </div>
-    <div class="mx-4 my-2 whitespace-nowrap flex items-center">
+    <div class="mx-4 my-2 whitespace-nowrap flex items-center" />
+</div>
+<div
+    class="text-center mb-6
+print:hidden"
+>
+    <span>
         <strong>题数：</strong>
+        {resLen}
         <input
             type="range"
             name="points"
@@ -365,13 +389,7 @@
             max="48"
             bind:value={resLen}
         />
-        {resLen}
-    </div>
-</div>
-<div
-    class="text-center mb-6
-print:hidden"
->
+    </span>
     <button
         class="bg-sky-500 border-none text-white px-4 py-1 cursor-pointer
             hover:bg-sky-400
@@ -411,7 +429,9 @@ print:hidden"
 >
     {#each res as item, index}
         <div class="flex items-center my-3.5 group">
-            <span class="text-xs text-gray-400 mr-2">{index + 1}.</span>
+            <span class="text-xs text-gray-400 mr-2"
+                >{(index + 1).toString().padStart(2, '0')}.</span
+            >
             {#each item.numbers as number, i}
                 {number}{item.methods[i] !== undefined
                     ? operator[item.methods[i]] + ''
