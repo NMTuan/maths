@@ -26,7 +26,9 @@
         clearRes()
     }
     // 参与运算的个数
-    let num = 2
+    let num = localStorage.getItem('num')
+        ? JSON.parse(localStorage.getItem('num'))
+        : 2
 
     // 规则
     let rules: string[] = localStorage.getItem('rules')
@@ -82,31 +84,42 @@
 
     // 加法
     const handleAdd = () => {
+        let numbers = []
         if (rules.includes('addCarry')) {
             // 可进位
-            let a = random(1)
-            let b = random(1)
-            return {
-                numbers: [a, b],
-                methods: [0],
-                result: a + b
+            while (numbers.length < num) {
+                numbers.push(random(1))
             }
+        } else {
+            // 不进位
+            const rangeStr = (currentRange - 1).toString().split('') // 一共几位
+            const results = [] // 临时结果 [[1,2], [3,4]] 第一个数的十位/个位; 第二个数的十位/个位;
+            while (results.length < num) {
+                results.push([])
+            }
+            rangeStr.forEach((item, index) => {
+                let total = 0 // 记录一下前面生成的和, 保证下一个数不大于(最大值-和)
+                // 循环每一位，保证不进位
+                for (let i = 0; i < num; i++) {
+                    const a = random(0, parseInt(item) - total)
+                    total += a
+                    results[i].push(a)
+                }
+            })
+            // 把临时结果内每一个数的每一位拼接起来.
+            numbers = results.reduce((total, item) => {
+                total.push(parseInt(item.join('')))
+                return total
+            }, [])
         }
-        // 不进位
-        const rangeStr = (currentRange - 1).toString().split('') // 一共几位
-        const aArr = []
-        const bArr = []
-        rangeStr.forEach((item, index) => {
-            // 循环每一位，保证不进位
-            const a = random(0, parseInt(item))
-            const b = random(0, parseInt(item) - a)
-            aArr.push(a)
-            bArr.push(b)
-        })
+        const methods = [] // 运算符, 保证比numbers小1即可. 没有写死是为了后续的混合运算.
+        while (methods.length < numbers.length - 1) {
+            methods.push(0)
+        }
         return {
-            numbers: [parseInt(aArr.join('')), parseInt(bArr.join(''))],
-            methods: [0],
-            result: parseInt(aArr.join('')) + parseInt(bArr.join(''))
+            numbers, // 参与计算的数
+            methods, // 各个数字之间的运算符
+            result: numbers.reduce((total, number) => total + number, 0) // 计算结果
         }
     }
     // 减法
@@ -201,7 +214,6 @@
     const handleQrode = () => {
         const qrcodeRes = []
         res.forEach((item) => {
-            console.log('x', item)
             qrcodeRes.push(item.result.toString(36).padStart(2, '_'))
         })
         qrcodeStr =
@@ -277,6 +289,11 @@
                 </label>
             </span>
         {/each}
+    </div>
+    <div class="mx-4 my-2 whitespace-nowrap flex items-center">
+        <strong>运算数：</strong>
+        <input type="range" min="2" max="4" bind:value={num} />
+        {num}
     </div>
     <div class="mx-4 my-2 whitespace-nowrap flex items-center">
         <strong>规则：</strong>
@@ -392,12 +409,9 @@ print:hidden"
         <div class="flex items-center my-3.5 group">
             <span class="text-xs text-gray-400 mr-2">{index + 1}.</span>
             {#each item.numbers as number, i}
-                {number}
-                {item.methods[i] !== undefined
-                    ? operator[item.methods[i]] + ' '
-                    : ' '}
-            {/each}
-            = {showRes ? item.result : ''}
+                {number}{item.methods[i] !== undefined
+                    ? operator[item.methods[i]] + ''
+                    : ''}{/each} = {showRes ? item.result : ''}
             <!-- 10以内加法就36个，没法刷 -->
             {#if !(currentRange === 10 && currentMethod === 'add')}
                 <span
