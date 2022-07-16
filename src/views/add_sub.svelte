@@ -435,7 +435,7 @@ print:hidden"
             {#each item.numbers as number, i}
                 {number}{item.methods[i] !== undefined
                     ? operator[item.methods[i]] + ''
-                    : ''}{/each} = {showRes ? item.result : ''}
+                    : ''}{/each} = {showRes ? item.result : '____'}
             <!-- 10以内加法就36个，没法刷 -->
             {#if !(currentRange === 10 && currentMethod === 'add')}
                 <span
