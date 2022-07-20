@@ -57,18 +57,13 @@
 
     let resLen: number = localStorage.getItem('resLen')
         ? parseInt(localStorage.getItem('resLen'))
-        : 48 // 生成数量
+        : 50 // 生成数量
     $: {
         clearRes()
         localStorage.setItem('resLen', resLen.toString())
     }
     let res = [] // 结果
     let showRes = false // 是否显示结果
-
-    let qrcodeDivLen = 3 // 补齐div数量， 保证二维码在最右侧
-    $: {
-        qrcodeDivLen = 3 - (res.length % 3) + 1
-    }
 
     // 标题
     $: {
@@ -386,7 +381,7 @@ print:hidden"
             type="range"
             name="points"
             min="1"
-            max="48"
+            max="50"
             bind:value={resLen}
         />
     </span>
@@ -423,39 +418,42 @@ print:hidden"
     </span>
 </div>
 <div
-    class="relative container max-w-[800px] flex-grow flex-shrink-0 mx-auto p-12 shadow bg-white text-xl grid sm:grid-cols-2 md:grid-cols-3
-        print:p-0 print:shadow-none print:grid-cols-3"
-    style="font-family: consolas;"
+    class="relative container max-w-[800px] overflow-hidden mx-auto p-12 pb-20 bg-white"
 >
-    {#each res as item, index}
-        <div class="flex items-center my-3.5 group">
-            <span class="text-xs text-gray-400 mr-2"
-                >{(index + 1).toString().padStart(2, '0')}.</span
-            >
-            {#each item.numbers as number, i}
-                {number}{item.methods[i] !== undefined
-                    ? operator[item.methods[i]] + ''
-                    : ''}{/each} = {showRes ? item.result : '____'}
-            <!-- 10以内加法就36个，没法刷 -->
-            {#if !(currentRange === 10 && currentMethod === 'add')}
-                <span
-                    class="invisible cursor-pointer text-xs
-                group-hover:visible print:hidden ml-2"
-                    on:click={() => refresh(index)}
-                    title="重新生成本题"
+    <div
+        class="flex-grow flex-shrink-0 text-xl grid sm:grid-cols-2 md:grid-cols-3
+        print:p-0 print:shadow-none print:grid-cols-3"
+        style="font-family: consolas;"
+    >
+        {#each res as item, index}
+            <div class="flex items-center mb-6.5 group">
+                <span class="text-xs text-gray-400 mr-2"
+                    >{(index + 1).toString().padStart(2, '0')}.</span
                 >
-                    <IconRefresh />
-                </span>
-            {/if}
-        </div>
-    {/each}
-    {#if qrcodeStr}
-        {#each Array(qrcodeDivLen) as item, index}
-            <div />
+                {#each item.numbers as number, i}
+                    {number}{item.methods[i] !== undefined
+                        ? operator[item.methods[i]] + ''
+                        : ''}{/each} = {showRes ? item.result : '____'}
+                <!-- 10以内加法就36个，没法刷 -->
+                {#if !(currentRange === 10 && currentMethod === 'add')}
+                    <span
+                        class="invisible cursor-pointer text-xs
+                group-hover:visible print:hidden ml-2"
+                        on:click={() => refresh(index)}
+                        title="重新生成本题"
+                    >
+                        <IconRefresh />
+                    </span>
+                {/if}
+            </div>
         {/each}
-        <div class=" text-right self-center text-base pr-8">扫一扫 查答案</div>
-        <div class="">
-            <Qrcode value={qrcodeStr} size="150" />
+    </div>
+    {#if qrcodeStr}
+        <div>
+            <div class="flex items-center absolute right-0 bottom-0">
+                <div>扫一扫 查答案 &nbsp;</div>
+                <Qrcode value={qrcodeStr} size="100" />
+            </div>
         </div>
     {/if}
 </div>
