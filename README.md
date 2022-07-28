@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-06-24 10:54:00
- * @LastEditTime: 2022-07-20 20:30:13
+ * @LastEditTime: 2022-07-28 17:13:12
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \math_test_questions_generator\README.md
@@ -33,6 +33,7 @@
 - [x] 题目是否可重复
 - [x] 连加
 - [x] 连减
+- [x] 填空
 - [ ] 混合运算
 
 
