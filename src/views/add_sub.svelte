@@ -15,7 +15,7 @@
     }
 
     // 运算符
-    const operator = ['+', '-']
+    const operator = ['+', '-', '×', '÷', '=']
     // 运算范围
     const ranges = [10, 20, 50, 100]
     let currentRange = localStorage.getItem('currentRange')
@@ -198,6 +198,26 @@
                 const dice = random(0, 2)
                 item = dice ? handleAdd() : handleSub()
         }
+        // 调整数据格式
+        // {numbers, methods, result}
+        // 原来 numbers methods 组合成算式等号左边, result是算式后边. 同时result还是二维码中的结果.
+        // 改为 numbers methods 组合成整个算式, result只给二维码用.
+        // cloze 为填空关键字.
+
+        console.log(JSON.stringify(item, null, 2))
+        if (rules.includes('cloze')) {
+            // 处理填空.
+            const clozeIndex = random(0, item.numbers.length - 1) // 空位索引
+            item.numbers.push(item.result) // 插入值
+            item.methods.push(4) // 插入等号
+            item.result = item.numbers[clozeIndex] // 修改result为空位的值
+            item.numbers[clozeIndex] = 'cloze' // 空位替换为关键字
+        } else {
+            // 非填空
+            item.numbers.push('cloze')
+            item.methods.push(4)
+        }
+        console.log(JSON.stringify(item, null, 2))
         return item
     }
 
@@ -367,6 +387,23 @@
                 可重复
             </label>
         </span>
+        <span>
+            <input
+                id="cloze"
+                class="peer"
+                type="checkbox"
+                value="cloze"
+                bind:group={rules}
+            />
+            <label
+                for="cloze"
+                class="peer-checked:text-sky-500 peer-checked:font-bold
+                peer-disabled:text-gray-400
+                "
+            >
+                填空题
+            </label>
+        </span>
     </div>
     <div class="mx-4 my-2 whitespace-nowrap flex items-center" />
 </div>
@@ -430,10 +467,17 @@ print:hidden"
                 <span class="text-xs text-gray-400 mr-2"
                     >{(index + 1).toString().padStart(2, '0')}.</span
                 >
+
                 {#each item.numbers as number, i}
-                    {number}{item.methods[i] !== undefined
+                    {number !== 'cloze'
+                        ? number
+                        : showRes
+                        ? `(${item.result})`
+                        : '(___)'}{item.methods[i] !== undefined
                         ? operator[item.methods[i]] + ''
-                        : ''}{/each} = {showRes ? item.result : '____'}
+                        : ''}
+                {/each}
+
                 <!-- 10以内加法就36个，没法刷 -->
                 {#if !(currentRange === 10 && currentMethod === 'add')}
                     <span

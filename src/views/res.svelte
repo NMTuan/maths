@@ -34,6 +34,7 @@
 </div>
 <div>
     <img
+        alt=""
         class="w-full block"
         src="https://s2.loli.net/2022/06/27/mxuA4jgQ72rzVkF.jpg"
     />
