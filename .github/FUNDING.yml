@@ -10,4 +10,4 @@ liberapay: # Replace with a single Liberapay username
 issuehunt: # Replace with a single IssueHunt username
 otechie: # Replace with a single Otechie username
 lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name e.g., cloud-foundry
-custom: ['https://s2.loli.net/2022/06/27/mxuA4jgQ72rzVkF.jpg'] # Replace with up to 4 custom sponsorship URLs e.g., ['link1', 'link2']
+custom: ['https://afdian.net/@nmtuan', 'https://s2.loli.net/2022/06/27/mxuA4jgQ72rzVkF.jpg'] # Replace with up to 4 custom sponsorship URLs e.g., ['link1', 'link2']
