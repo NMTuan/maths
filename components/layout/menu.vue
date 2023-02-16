@@ -2,10 +2,10 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:01:18
- * @LastEditTime: 2023-02-15 15:50:50
+ * @LastEditTime: 2023-02-16 16:44:13
  * @LastEditors: NMTuan
  * @Description: 
- * @FilePath: \ezMaths\components\layout\menu\Index.vue
+ * @FilePath: \ezMaths\components\layout\menu.vue
 -->
 <template>
     <div class="menu">
@@ -37,7 +37,7 @@ const firstLevelPages = computed(() => {
 </script>
 <style scoped lang="scss">
 .menu {
-    @apply leading-none mt-2;
+    @apply leading-none;
 }
 
 .title {

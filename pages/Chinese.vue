@@ -2,13 +2,15 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:20:42
- * @LastEditTime: 2023-02-14 11:21:02
+ * @LastEditTime: 2023-02-16 16:51:05
  * @LastEditors: NMTuan
  * @Description: 
- * @FilePath: \ezMaths\pages\Chinese.vue
+ * @FilePath: \ezMaths\pages\chinese.vue
 -->
 <template>
-    <div>chinese</div>
+    <div>
+        <NuxtPage />
+    </div>
 </template>
 <script>
 export default {

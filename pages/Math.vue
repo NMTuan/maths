@@ -2,13 +2,15 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:18:12
- * @LastEditTime: 2023-02-15 16:23:42
+ * @LastEditTime: 2023-02-16 16:46:53
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\Math.vue
 -->
 <template>
-    <NuxtPage />
+    <div>
+        <NuxtPage />
+    </div>
 </template>
 <script>
 export default {

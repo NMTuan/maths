@@ -8,5 +8,7 @@
  * @FilePath: \ezMaths\layouts\default.vue
 -->
 <template>
-    <slot />
+    <div>
+        <slot />
+    </div>
 </template>
