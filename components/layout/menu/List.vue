@@ -1,13 +1,20 @@
+<!--
+ * @Author: NMTuan
+ * @Email: NMTuan@qq.com
+ * @Date: 2023-02-14 11:25:11
+ * @LastEditTime: 2023-02-15 15:51:39
+ * @LastEditors: NMTuan
+ * @Description: 
+ * @FilePath: \ezMaths\components\layout\menu\List.vue
+-->
 <template>
     <LayoutMenuItem v-for="page in children" :page="page">
     </LayoutMenuItem>
 </template>
 <script setup>
+const { $pages } = useNuxtApp()
+
 const props = defineProps({
-    pages: {
-        type: Array,
-        default: () => []
-    },
     current: {
         type: Object,
         default: () => { }
@@ -18,7 +25,7 @@ const props = defineProps({
 const reg = new RegExp(`^${props.current.fileName}/`, 'ig')
 // 找 所有子页面
 const children = computed(() => {
-    const res = props.pages.filter((page) => {
+    const res = $pages.filter((page) => {
         return (page.level === props.current.level + 1) && page.dynamicRoute === false && page.fileName.match(reg)
     })
 

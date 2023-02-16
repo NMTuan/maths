@@ -1,35 +1,27 @@
+<!--
+ * @Author: NMTuan
+ * @Email: NMTuan@qq.com
+ * @Date: 2023-02-14 11:01:18
+ * @LastEditTime: 2023-02-15 15:50:50
+ * @LastEditors: NMTuan
+ * @Description: 
+ * @FilePath: \ezMaths\components\layout\menu\Index.vue
+-->
 <template>
     <div class="menu">
         <template v-for="page in firstLevelPages">
             <div class="title">{{ page.name }}</div>
-            <LayoutMenuList :pages="pages" :current="page">
+            <LayoutMenuList :current="page">
             </LayoutMenuList>
         </template>
     </div>
 </template>
 <script setup>
-const files = import.meta.globEager('@/pages/**/*.vue')
-const pages = Object.keys(files).reduce((total, key) => {
-    const fileName = key.replace(/^\/pages\/(.*)\.\w+$/, '$1')
-    if (files[key].default.page) {
-        total.push({
-            ...files[key].default.page,
-            fileName, // 文件名称, 没有.vue
-            dynamicRoute: fileName.includes('['), //是否动态路由, 动态路由不在菜单张显示.
-            routeName: fileName // 路由名称
-                .replace(/\//gi, '-')
-                .replace(/\[/gi, '')
-                .replace(/\]/gi, '')
-                .replace('-index', ''),
-            level: fileName.split('/').length // 层级
-        })
-    }
-    return total
-}, [])
+const { $pages } = useNuxtApp()
 
 // 找到顶级的菜单
 const firstLevelPages = computed(() => {
-    const res = pages.filter((page) => {
+    const res = $pages.filter((page) => {
         return page.level === 1 && page.dynamicRoute === false
     })
     // 排序，sort值越小排名越靠前，未设定的统统往后排

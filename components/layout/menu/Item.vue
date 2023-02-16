@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:29:07
- * @LastEditTime: 2023-02-14 15:17:42
+ * @LastEditTime: 2023-02-15 10:56:36
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\layout\menu\Item.vue
@@ -16,8 +16,8 @@
 <script setup>
 const props = defineProps({
     page: {
-        type: Array,
-        default: () => []
+        type: Object,
+        default: () => { }
     }
 })
 </script>
