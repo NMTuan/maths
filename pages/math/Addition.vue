@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 10:59:27
- * @LastEditTime: 2023-02-20 13:50:02
+ * @LastEditTime: 2023-02-20 15:21:28
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\addition.vue
@@ -12,55 +12,42 @@
         <Title>{{ title }}</Title>
         <LayoutPaper>
             <template #config>
-                <div>
-                    范围：{{ currentRange }}
-                    <div>
-                        <label v-for="range in ranges">
-                            <input type="radio" v-model="currentRange" :value="range"> {{ range }}
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    运算数：{{ currentNumber }}
-                    <div>
-                        <label v-for="number in numberRange[1] - numberRange[0] + 1">
-                            <input type="radio" v-model="currentNumber" :value="number + numberRange[0] - 1">
-                            {{ number + numberRange[0] - 1 }}
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    模式：{{ type.label }}
-                    <div>
-                        <label v-for="(type, index) in types">
-                            <input type="radio" v-model="currentTypeIndex" :value="index">
-                            {{ type.label }}
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    其它：
-                    <div>
-                        <label>
-                            <input type="checkbox" v-model="overflow">
-                            可超出最大值 {{ overflow }}
-                        </label>
-                        <label>
-                            <input type="checkbox" v-model="showRes">
-                            显示结果 {{ showRes }}
-                        </label>
-                    </div>
+                <div class="sm:flex items-center justify-between">
+                    <el-form class="flex items-center flex-wrap">
+                        <el-form-item label="运算范围" class="w-40 mr-4">
+                            <el-select v-model="currentRange" placeholder="请选择范围" @change="submit">
+                                <el-option v-for="range in ranges" :key="range" :label="range" :value="range" />
+                            </el-select>
+                        </el-form-item>
 
-                    可重复
-                </div>
-                <div>
-                    题数：{{ resLength }}
-                    <div>
-                        <input type="range" v-model="resLength" min="1" max="50">
-                    </div>
-                </div>
-                <div>
-                    <button class="border p-4 bg-red-400" @click="submit">生成</button>
+                        <el-form-item label="运算数" class="w-32 mr-4">
+                            <el-select v-model="currentNumber" placeholder="请选择范围" @change="submit">
+                                <el-option v-for="number in numberRange[1] - numberRange[0] + 1"
+                                    :label="number + numberRange[0] - 1" :value="number + numberRange[0] - 1" />
+                            </el-select>
+                        </el-form-item>
+
+                        <el-form-item label="模式" class="w-32 mr-4">
+                            <el-select v-model="currentTypeIndex" placeholder="请选择范围">
+                                <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="" class="mr-4">
+                            <el-checkbox v-model="overflow" label="结果可超出运算范围" @change="submit" />
+                        </el-form-item>
+                        <el-form-item label="" class="">
+                            <el-checkbox v-model="showRes" label="显示答案" />
+                        </el-form-item>
+                    </el-form>
+
+                    <el-form class="flex-shrink-0 flex items-center flex-wrap">
+                        <el-form-item label="" class="">
+                            <el-button-group>
+                                <el-button type="primary" plain @click="submit">重新生成</el-button>
+                                <el-button type="primary" @click="print">打印</el-button>
+                            </el-button-group>
+                        </el-form-item>
+                    </el-form>
                 </div>
             </template>
             <div class="flex flex-wrap">
@@ -72,16 +59,16 @@
     </div>
 </template>
 <script setup>
-const ranges = [10, 20, 50, 100]    // 运算范围
-const currentRange = ref(10)    // 当前运算范围
+const ranges = [10, 20, 50, 100] // 运算范围
+const currentRange = ref(10) // 当前运算范围
 
-const numberRange = [2, 4]  // 参与运算数的范围
-const currentNumber = ref(2)  // 当前运算数
+const numberRange = [2, 4] // 参与运算数的范围
+const currentNumber = ref(2) // 当前运算数
 
 // 类型
 const types = [
     { key: 'cal', label: '运算' },
-    { key: 'fill', label: '填空' },
+    { key: 'fill', label: '填空' }
 ]
 const currentTypeIndex = ref(0) // 当前类型索引
 const type = computed(() => {
@@ -89,14 +76,15 @@ const type = computed(() => {
 })
 
 const overflow = ref(false) // 可超出最大值
-const showRes = ref(false)   // 显示结果
+const showRes = ref(false) // 显示结果
 
-const resLength = ref(50)   // 生成数量
-const items = ref([])   // 结果集
+const resLength = ref(50) // 生成数量
+const items = ref([]) // 结果集
 
 // 页面标题
 const title = computed(() => {
-    return `${currentRange.value} 以内${currentNumber.value === 2 ? '加法' : '连加'}（${types[currentTypeIndex.value].label}）`
+    return `${currentRange.value} 以内${currentNumber.value === 2 ? '加法' : '连加'
+        }（${types[currentTypeIndex.value].label}）`
 })
 
 // 生成随机数
@@ -114,10 +102,10 @@ const random = (min = 0, max = currentRange.value) => {
 // 2. 重新计算一下结果是否正确。
 const generator = () => {
     const res = {
-        numbers: [],    // 运算数
-        dig: -1,    // 填空：挖掉的索引
-        result: 0,  // 结果
-        check: false    // 验证结果
+        numbers: [], // 运算数
+        dig: -1, // 填空：挖掉的索引
+        result: 0, // 结果
+        check: false // 验证结果
     }
     if (overflow.value) {
         // 可超出范围
@@ -128,7 +116,10 @@ const generator = () => {
     }
     // 循环生成运算数（除最后一位）
     while (res.numbers.length < currentNumber.value - 1) {
-        const max = res.numbers.reduce((total, item) => total -= item, res.result)
+        const max = res.numbers.reduce(
+            (total, item) => (total -= item),
+            res.result
+        )
         res.numbers.push(random(0, max))
     }
     // 排序
@@ -139,9 +130,12 @@ const generator = () => {
     res.dig = random(0, res.numbers.length)
 
     // 最后一位运算数用结果减出
-    res.numbers.push(res.numbers.reduce((total, item) => total -= item, res.result))
+    res.numbers.push(
+        res.numbers.reduce((total, item) => (total -= item), res.result)
+    )
     // 检查一下结果
-    res.check = res.numbers.reduce((total, item) => total += item, 0) === res.result
+    res.check =
+        res.numbers.reduce((total, item) => (total += item), 0) === res.result
 
     return res
 }
@@ -153,9 +147,11 @@ const submit = () => {
     }
 }
 
-onMounted(() => {
-    // submit()
-})
+const print = () => {
+    window.print()
+}
+
+submit()
 </script>
 <script>
 export default {

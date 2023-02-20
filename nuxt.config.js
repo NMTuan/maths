@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 10:07:12
- * @LastEditTime: 2023-02-15 13:07:25
+ * @LastEditTime: 2023-02-20 14:17:04
  * @LastEditors: NMTuan
  * @Description:
  * @FilePath: \ezMaths\nuxt.config.js
@@ -18,7 +18,12 @@ export default defineNuxtConfig({
         '@unocss/reset/tailwind.css',
         'simplebar-vue/dist/simplebar.min.css'
     ],
-    modules: ['@unocss/nuxt', '@intlify/nuxt3', '@nuxtjs/color-mode'],
+    modules: [
+        '@unocss/nuxt',
+        '@intlify/nuxt3',
+        '@nuxtjs/color-mode',
+        '@element-plus/nuxt'
+    ],
     unocss: {
         // presets
         uno: true, // enabled `@unocss/preset-uno`
@@ -38,5 +43,8 @@ export default defineNuxtConfig({
     },
     colorMode: {
         classSuffix: ''
+    },
+    elementPlus: {
+        /** Options */
     }
 })

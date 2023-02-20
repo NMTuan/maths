@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center flex-shrink-0 w-1/2 mb-3 text-lg">
+    <div class="flex items-center flex-shrink-0 w-full sm:w-1/2 print:w-1/2 mb-3 text-lg">
         <div class="text-sm text-gray-200 mr-4">
             {{ (index + 1).toString().padStart(2, '0') }}.
         </div>
