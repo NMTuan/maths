@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:01:18
- * @LastEditTime: 2023-02-16 16:44:13
+ * @LastEditTime: 2023-02-20 16:50:28
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\layout\menu.vue
@@ -22,7 +22,7 @@ const { $pages } = useNuxtApp()
 // 找到顶级的菜单
 const firstLevelPages = computed(() => {
     const res = $pages.filter((page) => {
-        return page.level === 1 && page.dynamicRoute === false
+        return page.level === 1 && page.dynamicRoute === false && page.fileName !== 'index'
     })
     // 排序，sort值越小排名越靠前，未设定的统统往后排
     return res.sort((a, b) => {
