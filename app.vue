@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 10:07:12
- * @LastEditTime: 2023-02-15 16:27:28
+ * @LastEditTime: 2023-02-20 10:03:38
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\app.vue
@@ -35,7 +35,7 @@
                         <div class="i-ri-github-fill text-2xl cursor-pointer"></div>
                     </div>
                 </div>
-                <div class="main w-85% max-w-6xl mx-auto mt-6 mb-32" print="w-auto max-w-auto m-0">
+                <div class="main w-85% max-w-6xl mx-auto mt-6" print="w-auto max-w-auto m-0">
                             <NuxtLayout>
                                 <NuxtPage />
                             </NuxtLayout>

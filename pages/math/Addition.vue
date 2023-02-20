@@ -2,63 +2,74 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 10:59:27
- * @LastEditTime: 2023-02-17 16:29:40
+ * @LastEditTime: 2023-02-20 11:22:50
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\addition.vue
 -->
 <template>
-    <LayoutPaper>
-        <template #config>
-            <div>
-                范围：{{ currentRange }}
+    <div>
+        <Title>{{ title }}</Title>
+        <LayoutPaper>
+            <template #config>
                 <div>
-                    <label v-for="range in ranges">
-                        <input type="radio" v-model="currentRange" :value="range"> {{ range }}
-                    </label>
+                    范围：{{ currentRange }}
+                    <div>
+                        <label v-for="range in ranges">
+                            <input type="radio" v-model="currentRange" :value="range"> {{ range }}
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div>
-                运算数：{{ num }}
                 <div>
-                    <label v-for="number in numberRange[1] - numberRange[0] + 1">
-                        <input type="radio" v-model="currentNumber" :value="number + numberRange[0] - 1">
-                        {{ number + numberRange[0] - 1 }}
-                    </label>
+                    运算数：{{ currentNumber }}
+                    <div>
+                        <label v-for="number in numberRange[1] - numberRange[0] + 1">
+                            <input type="radio" v-model="currentNumber" :value="number + numberRange[0] - 1">
+                            {{ number + numberRange[0] - 1 }}
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div>
-                模式：{{ type.label }}
                 <div>
-                    <label v-for="(type, index) in types">
-                        <input type="radio" v-model="currentTypeIndex" :value="index">
-                        {{ type.label }}
-                    </label>
+                    模式：{{ type.label }}
+                    <div>
+                        <label v-for="(type, index) in types">
+                            <input type="radio" v-model="currentTypeIndex" :value="index">
+                            {{ type.label }}
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div>
-                其它：
                 <div>
-                    <label>
-                        <input type="checkbox" v-model="overflow">
-                        可超出最大值 {{ overflow }}
-                    </label>
-                </div>
+                    其它：
+                    <div>
+                        <label>
+                            <input type="checkbox" v-model="overflow">
+                            可超出最大值 {{ overflow }}
+                        </label>
+                        <label>
+                            <input type="checkbox" v-model="showRes">
+                            显示结果 {{ showRes }}
+                        </label>
+                    </div>
 
-                可重复
-            </div>
-            <div>
-                题数：{{ resLength }}
-                <div>
-                    <input type="range" v-model="resLength" min="1" max="50">
+                    可重复
                 </div>
+                <div>
+                    题数：{{ resLength }}
+                    <div>
+                        <input type="range" v-model="resLength" min="1" max="50">
+                    </div>
+                </div>
+                <div>
+                    <button class="border p-4 bg-red-400" @click="submit">生成</button>
+                </div>
+            </template>
+            <div class="flex flex-wrap">
+                <MathAdditionItem v-for="(item, index) in items" :item="item" :index="index" :type="type"
+                    :showRes="showRes">
+                </MathAdditionItem>
             </div>
-            <div>
-                <button class="border p-4 bg-red-400" @click="submit">生成</button>
-            </div>
-        </template>
-        <LazyMathAdditionItem v-for="item in items" :item="item" :type="type"></LazyMathAdditionItem>
-    </LayoutPaper>
+        </LayoutPaper>
+    </div>
 </template>
 <script setup>
 const ranges = [10, 20, 50, 100]    // 运算范围
@@ -69,7 +80,7 @@ const currentNumber = ref(2)  // 当前运算数
 
 // 类型
 const types = [
-    { key: 'cal', label: '计算' },
+    { key: 'cal', label: '运算' },
     { key: 'fill', label: '填空' },
 ]
 const currentTypeIndex = ref(0) // 当前类型索引
@@ -78,9 +89,15 @@ const type = computed(() => {
 })
 
 const overflow = ref(false) // 可超出最大值
+const showRes = ref(false)   // 显示结果
 
-const items = ref([])
-const resLength = ref(50)
+const resLength = ref(50)   // 生成数量
+const items = ref([])   // 结果集
+
+// 页面标题
+const title = computed(() => {
+    return `${currentRange.value} 以内${currentNumber.value === 2 ? '加法' : '连加'}（${types[currentTypeIndex.value].label}）`
+})
 
 // 生成随机数
 const random = (min = 0, max = currentRange.value) => {
@@ -98,6 +115,7 @@ const random = (min = 0, max = currentRange.value) => {
 const generator = () => {
     const res = {
         numbers: [],    // 运算数
+        dig: -1,    // 填空：挖掉的索引
         result: 0,  // 结果
         check: false    // 验证结果
     }
@@ -117,6 +135,9 @@ const generator = () => {
     res.numbers.sort(() => {
         return Math.random() - 0.5
     })
+    // 挖空
+    res.dig = random(0, res.numbers.length)
+
     // 最后一位运算数用结果减出
     res.numbers.push(res.numbers.reduce((total, item) => total -= item, res.result))
     // 检查一下结果
