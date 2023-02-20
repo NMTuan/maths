@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 10:59:27
- * @LastEditTime: 2023-02-20 11:22:50
+ * @LastEditTime: 2023-02-20 13:50:02
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\addition.vue
@@ -152,6 +152,10 @@ const submit = () => {
         items.value.push(generator())
     }
 }
+
+onMounted(() => {
+    // submit()
+})
 </script>
 <script>
 export default {
