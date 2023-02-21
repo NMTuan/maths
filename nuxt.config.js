@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 10:07:12
- * @LastEditTime: 2023-02-20 14:17:04
+ * @LastEditTime: 2023-02-21 10:11:20
  * @LastEditors: NMTuan
  * @Description:
  * @FilePath: \ezMaths\nuxt.config.js
@@ -18,6 +18,9 @@ export default defineNuxtConfig({
         '@unocss/reset/tailwind.css',
         'simplebar-vue/dist/simplebar.min.css'
     ],
+    devServer: {
+        port: '9999'
+    },
     modules: [
         '@unocss/nuxt',
         '@intlify/nuxt3',
