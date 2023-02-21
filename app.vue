@@ -31,20 +31,20 @@
                         <LayoutPin v-model:pin="pin"></LayoutPin>
                         <LayoutGuide></LayoutGuide>
                     </div>
-                    <div class="mr-2">
+                <div class="mr-2">
                         <div class="i-ri-github-fill text-2xl cursor-pointer"></div>
                     </div>
-                </div>
-                <div class="main w-85% max-w-6xl mx-auto mt-6" print="w-auto max-w-auto m-0">
-                            <NuxtLayout>
-                                <NuxtPage />
-                            </NuxtLayout>
+            </div>
+            <div class="main w-85% max-w-6xl mx-auto mt-6" print="w-auto max-w-auto m-0">
+                    <NuxtLayout>
+                        <NuxtPage />
+                    </NuxtLayout>
                     <!-- <div class="w-596px h-882px bg-white text-red-400 shadow-lg overflow-hidden" print="shadow-none">
-                    </div> -->
-             
+                            </div> -->
+
                     <!-- <router-view v-slot="{ Component }">
-                        <component :is="Component" ref="mainView"></component>
-                    </router-view> -->
+                                <component :is="Component" ref="mainView"></component>
+                            </router-view> -->
                 </div>
             </simplebar>
         </div>
@@ -94,23 +94,23 @@ const mainClass = computed(() => {
 html,
 body,
 #__nuxt {
-    @apply text-base text-cool-gray-800 bg-cool-gray-50 h-full overflow-hidden;
+    --at-apply: text-base text-cool-gray-800 bg-cool-gray-50 h-full overflow-hidden;
 }
 
 *:focus-visible {
-    @apply outline-none;
+    --at-apply: outline-none;
 }
 
 .simplebar {
     &:hover {
         .simplebar-track {
-            @apply bg-black/5;
+            --at-apply: bg-black/5;
         }
     }
 
     .simplebar-scrollbar {
         &:before {
-            @apply bg-black/50;
+            --at-apply: bg-black/50;
         }
     }
 }

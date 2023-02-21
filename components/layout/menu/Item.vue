@@ -23,22 +23,22 @@ const props = defineProps({
 </script>
 <style lang="scss" scoped>
 .link {
-    @apply block p-4 flex items-center;
-    @apply capitalize font-bold text-cool-gray-600;
-    @apply hover: bg-cool-gray-200;
+    --at-apply: block p-4 flex items-center;
+    --at-apply: capitalize font-bold text-cool-gray-600;
+    --at-apply: hover: bg-cool-gray-200;
 }
 
 .icon {
-    @apply text-20px mr-2 text-cool-gray-400;
+    --at-apply: text-20px mr-2 text-cool-gray-400;
 }
 
 .router-link-active,
 .router-link-active:hover {
-    @apply bg-blue-400;
-    @apply text-white;
+    --at-apply: bg-blue-400;
+    --at-apply: text-white;
 
     .icon {
-        @apply text-blue-200;
+        --at-apply: text-blue-200;
     }
 }
 </style>

@@ -37,11 +37,11 @@ const firstLevelPages = computed(() => {
 </script>
 <style scoped lang="scss">
 .menu {
-    @apply leading-none;
+    --at-apply: leading-none;
 }
 
 .title {
-    @apply px-4 pt-5 pb-2;
-    @apply text-cool-gray-400 capitalize text-sm;
+    --at-apply: px-4 pt-5 pb-2;
+    --at-apply: text-cool-gray-400 capitalize text-sm;
 }
 </style>
