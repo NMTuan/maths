@@ -1,12 +1,3 @@
-<!--
- * @Author: NMTuan
- * @Email: NMTuan@qq.com
- * @Date: 2023-02-17 16:27:20
- * @LastEditTime: 2023-02-21 13:57:08
- * @LastEditors: NMTuan
- * @Description: 
- * @FilePath: \ezMaths\components\math\addition\item.vue
--->
 <template>
     <div class="flex items-center flex-shrink-0 w-full sm:w-1/2 print:w-1/2 mb-3 text-lg">
         <div class="text-sm text-gray-200 mr-4">
@@ -14,12 +5,11 @@
         </div>
         <template v-for="(num, i) in item.numbers">
             {{ number(num, i) }}
-            {{ i === item.numbers.length - 1 ? ' = ' : ' + ' }}
+            {{ i === item.numbers.length - 1 ? ' = ' : ' - ' }}
         </template>
         {{ result }}
     </div>
 </template>
-
 <script setup>
 const props = defineProps({
     item: {

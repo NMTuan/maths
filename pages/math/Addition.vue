@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 10:59:27
- * @LastEditTime: 2023-02-21 13:50:52
+ * @LastEditTime: 2023-02-21 15:01:08
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\Addition.vue
@@ -60,11 +60,11 @@
 </template>
 <script setup>
 const ranges = [10, 20, 50, 100] // 运算范围
-const currentRange = useCookie('currentRange') // 当前运算范围
+const currentRange = useCookie('math_add_currentRange') // 当前运算范围
 currentRange.value = currentRange.value || 10
 
 const numberRange = [2, 4] // 参与运算数的范围
-const currentNumber = useCookie('currentNumber') // 当前运算数
+const currentNumber = useCookie('math_add_currentNumber') // 当前运算数
 currentNumber.value = currentNumber.value || 2
 
 // 类型
@@ -72,15 +72,15 @@ const types = [
     { key: 'cal', label: '运算' },
     { key: 'fill', label: '填空' }
 ]
-const currentTypeIndex = useCookie('currentTypeIndex') // 当前类型索引
+const currentTypeIndex = useCookie('math_add_currentTypeIndex') // 当前类型索引
 currentTypeIndex.value = currentTypeIndex.value || 0
 const type = computed(() => {
     return types[currentTypeIndex.value]
 })
 
-const overflow = useCookie('overflow') // 可超出最大值
+const overflow = useCookie('math_add_overflow') // 可超出最大值
 overflow.value = overflow.value || false
-const showRes = useCookie('showRes') // 显示结果
+const showRes = useCookie('math_add_showRes') // 显示结果
 showRes.value = showRes.value || false
 
 const resLength = ref(50) // 生成数量
@@ -146,7 +146,6 @@ const generator = () => {
 }
 
 const submit = () => {
-    console.log('[submit]', new Date().getTime());
     items.value = []
     while (items.value.length < resLength.value) {
         items.value.push(generator())
