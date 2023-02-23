@@ -163,7 +163,8 @@ onMounted(() => {
 <script>
 export default {
     page: {
-        name: '加法'
+        name: '加法运算',
+        sort: 100
     }
 }
 </script>

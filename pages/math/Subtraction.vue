@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 10:59:38
- * @LastEditTime: 2023-02-21 16:43:43
+ * @LastEditTime: 2023-02-23 15:56:20
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\subtraction.vue
@@ -83,7 +83,7 @@ const items = ref([]) // 结果集
 
 // 页面标题
 const title = computed(() => {
-    return `${currentRange.value} 以内${currentNumber.value === 2 ? '加法' : '连加'
+    return `${currentRange.value} 以内${currentNumber.value === 2 ? '减法' : '连减'
         }（${types[currentTypeIndex.value].label}）`
 })
 // 生成随机数
@@ -158,7 +158,8 @@ onMounted(() => {
 <script>
 export default {
     page: {
-        name: '减法'
+        name: '减法运算',
+        sort: 200
     }
 }
 </script>
