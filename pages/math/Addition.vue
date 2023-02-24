@@ -24,20 +24,20 @@
                 <div class="sm:flex items-center justify-between">
                     <el-form class="flex items-center flex-wrap">
                         <el-form-item label="运算范围" class="w-40 mr-4">
-                            <el-select v-model="currentRange" placeholder="请选择范围" @change="submit">
+                            <el-select v-model="currentRange" placeholder="" @change="submit">
                                 <el-option v-for="range in ranges" :key="range" :label="range" :value="range" />
                             </el-select>
                         </el-form-item>
 
                         <el-form-item label="运算数" class="w-32 mr-4">
-                            <el-select v-model="currentNumber" placeholder="请选择范围" @change="submit">
+                            <el-select v-model="currentNumber" placeholder="" @change="submit">
                                 <el-option v-for="number in numberRange[1] - numberRange[0] + 1"
                                     :label="number + numberRange[0] - 1" :value="number + numberRange[0] - 1" />
                             </el-select>
                         </el-form-item>
 
                         <el-form-item label="模式" class="w-32 mr-4">
-                            <el-select v-model="currentTypeIndex" placeholder="请选择范围">
+                            <el-select v-model="currentTypeIndex" placeholder="">
                                 <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
                             </el-select>
                         </el-form-item>
