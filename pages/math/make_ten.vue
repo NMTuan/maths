@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-24 09:53:57
- * @LastEditTime: 2023-02-24 11:22:24
+ * @LastEditTime: 2023-02-24 14:48:11
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\make_ten.vue
@@ -62,7 +62,7 @@ const types = [
     { key: 'max', label: '拆大数' }
 ]
 const currentTypeIndex = useCookie('math_make_ten_currentTypeIndex') // 当前类型索引
-currentTypeIndex.value = currentTypeIndex.value || 0
+currentTypeIndex.value = currentTypeIndex.value || 1
 const type = computed(() => {
     return types[currentTypeIndex.value]
 })
