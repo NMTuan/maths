@@ -1,14 +1,14 @@
 <template>
     <LayoutPaper>
         <div class="flex">
-            <TemplatePinyin class="flex-1 border-x border-cool-gray-400 -ml-1px" v-for="i in 10">
+            <TemplatePinyinItem class="flex-1 border-x border-cool-gray-400 -ml-1px" v-for="i in 10">
                 a
-            </TemplatePinyin>
+            </TemplatePinyinItem>
         </div>
         <div class="flex flex-wrap justify-between">
-            <TemplatePinyin v-for="item in content.replaceAll('-', ' ')">
+            <TemplatePinyinItem v-for="item in content.replaceAll('-', ' ')">
                 {{ item }}
-            </TemplatePinyin>
+            </TemplatePinyinItem>
         </div>
     </LayoutPaper>
 </template>

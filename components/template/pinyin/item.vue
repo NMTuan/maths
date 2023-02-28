@@ -1,3 +1,12 @@
+<!--
+ * @Author: NMTuan
+ * @Email: NMTuan@qq.com
+ * @Date: 2023-02-28 14:30:19
+ * @LastEditTime: 2023-02-28 16:51:24
+ * @LastEditors: NMTuan
+ * @Description: 
+ * @FilePath: \ezMaths\components\template\pinyin\item.vue
+-->
 <template>
     <div class="bg">
         <div class="content">
@@ -13,9 +22,9 @@
 
 .bg {
     font-family: 'py';
-    --at-apply: relative text-3xl leading-none;
-    --at-apply: h-12 flex items-center justify-center;
-    --at-apply: px-2 mb-4;
+    --at-apply: relative text-2xl leading-none;
+    --at-apply: h-9 flex items-center justify-center;
+    --at-apply: px-2 mb-3;
     // --at-apply: font-bold;
 
     &::before,
@@ -30,11 +39,11 @@
 
     &::after {
         content: '';
-        --at-apply: border-dashed border-cool-gray-400 top-4 h-4;
+        --at-apply: border-dashed border-cool-gray-400 top-3 h-3;
     }
 }
 
 .content {
-    --at-apply: -mt-1;
+    --at-apply: -mt-1 relative z-1;
 }
 </style>
