@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-17 14:24:03
- * @LastEditTime: 2023-02-20 15:08:12
+ * @LastEditTime: 2023-03-01 10:37:23
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\layout\paper.vue
@@ -13,7 +13,7 @@
             <div class="sticky top-18 right-0 text-cool-gray-300 text-right" print="hidden">预览</div>
             <slot />
         </div>
-        <div class="print:hidden sticky bottom-0 px-8 pt-6 pb-2 bg-white border-t relative">
+        <div class="print:hidden sticky bottom-0 px-8 pt-6 pb-2 bg-white border-t relative z-10">
             <!-- <div class="text-cool-gray-300 text-right" print="hidden">设置</div> -->
             <slot name="config"></slot>
         </div>

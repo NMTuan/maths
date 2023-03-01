@@ -1,19 +1,74 @@
+<!--
+ * @Author: NMTuan
+ * @Email: NMTuan@qq.com
+ * @Date: 2023-02-28 14:24:53
+ * @LastEditTime: 2023-03-01 11:22:38
+ * @LastEditors: NMTuan
+ * @Description: 
+ * @FilePath: \ezMaths\pages\template\pinyin.vue
+-->
 <template>
     <LayoutPaper>
-        <div class="flex">
-            <TemplatePinyinItem class="flex-1 border-x border-cool-gray-400 -ml-1px" v-for="i in 10">
-                a
-            </TemplatePinyinItem>
-        </div>
-        <div class="flex flex-wrap justify-between">
-            <TemplatePinyinItem v-for="item in content.replaceAll('-', ' ')">
-                {{ item }}
-            </TemplatePinyinItem>
-        </div>
+        <template #config>
+            <div class="sm:flex items-center justify-between">
+                <el-form class="flex items-center flex-wrap">
+                    <el-form-item label="尺寸" class="w-32 mr-4">
+                        <el-select v-model="currentConfigIndex" placeholder="" @change="changeSize">
+                            <el-option v-for="(item, index) in config" :key="item.size" :label="item.label"
+                                :value="index" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="行数" class="w-28 mr-4">
+                        <el-select v-model="rows" placeholder="">
+                            <el-option v-for="item in currentConfig.maxRows" :key="item" :label="item" :value="item" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="列数" class="w-28 mr-4">
+                        <el-select v-model="cols" placeholder="">
+                            <el-option v-for="item in currentConfig.maxCols" :key="item" :label="item" :value="item" />
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <el-form class="flex-shrink-0 flex items-center flex-wrap">
+                    <el-form-item label="" class="">
+                        <el-button-group>
+                            <el-button type="primary" @click="print">打印</el-button>
+                        </el-button-group>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </template>
+        <TemplatePinyinLine v-for='item in rows' :size="currentSize" :cols="cols">
+        </TemplatePinyinLine>
     </LayoutPaper>
 </template>
 <script setup>
-const content = 'hàn-yǔ-pīn-yīn-shū-xiě-bǐ-shùn-jí-sì-xiàn-gé-wèi-zhì-yī-bǐ-zuǒ-bàn-yuán-èr-bǐ-shù-yòu-wān-zhàn-zhōng-gé-yī-bǐ-yuán-zuǒ-shàng-qǐ-bǐ-zhàn-zhōng-gé-yī-bǐ-héng-zài-zuǒ-bàn-yuán-zhàn-zhōng-gé-yī-bǐ-shù-èr-bǐ-diǎn-zhàn-shàng-zhōng-gé-yī-bǐ-shù-yòu-wān-èr-bǐ-shù-zhàn-zhōng-gé-yī-bǐ-shù-yòu-wān-èr-bǐ-shù-sān-bǐ-diǎn-sì-bǐ-diǎn-zhàn-shàng-zhōng-gé-yī-bǐ-yòu-xié-èr-bǐ-zuǒ-xié-zhàn-zhōng-xià-gé-yī-bǐ-xié-xià-xié-shàng-èr-bǐ-xié-xià-xié-shàng-zhàn-zhōng-gé-yī-bǐ-shù-èr-bǐ-yòu-bàn-yuán-zhàn-shàng-zhōng-gé-yī-bǐ-shù-èr-bǐ-yòu-bàn-yuán-zhàn'
+// 配置项
+const config = [
+    { label: '适中', size: 'base', maxRows: 20, maxCols: 14 },
+    { label: '较大', size: 'lg', maxRows: 15, maxCols: 12 },
+]
+const currentConfigIndex = useCookie('template_pinyin_current_config')   // 当前配置项索引
+currentConfigIndex.value = currentConfigIndex.value || 0
+const currentConfig = computed(() => config[currentConfigIndex.value])
+const currentSize = computed(() => currentConfig.value.size)   // 当前尺寸
+const rows = useCookie('template_pinyin_rows') // 行数
+rows.value = rows.value || currentConfig.value.maxRows
+const cols = useCookie('template_pinyin_cols')    // 列数
+cols.value = cols.value || currentConfig.value.maxCols
+
+const changeSize = () => {
+    if (rows.value > currentConfig.value.maxRows) {
+        rows.value = currentConfig.value.maxRows
+    }
+    if (cols.value > currentConfig.value.maxCols) {
+        cols.value = currentConfig.value.maxCols
+    }
+}
+
+const print = () => {
+    window.print()
+}
 
 </script>
 <script>

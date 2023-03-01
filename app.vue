@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 10:07:12
- * @LastEditTime: 2023-02-20 10:03:38
+ * @LastEditTime: 2023-03-01 10:51:07
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\app.vue
@@ -24,7 +24,7 @@
         <!-- main -->
         <div class="flex-1 h-full overflow-hidden" :class="mainClass">
             <simplebar class="simplebar h-full" ref="mainScroll">
-                <div class="flex items-center justify-between p-4 leading-none bg-cool-gray-50/50 backdrop-blur sticky left-0 top-0 right-0 z-10"
+                <div class="flex items-center justify-between p-4 leading-none bg-cool-gray-50/50 backdrop-blur sticky left-0 top-0 right-0 z-100"
                     print="hidden">
 
                     <div class="flex items-center">
@@ -35,16 +35,16 @@
                         <div class="i-ri-github-fill text-2xl cursor-pointer"></div>
                     </div>
             </div>
-            <div class="main w-85% max-w-6xl mx-auto mt-6" print="w-auto max-w-auto m-0">
+            <div class="main w-85% max-w-6xl mx-auto mt-6" print="w-auto max-w-98% m-0">
                     <NuxtLayout>
                         <NuxtPage />
                     </NuxtLayout>
                     <!-- <div class="w-596px h-882px bg-white text-red-400 shadow-lg overflow-hidden" print="shadow-none">
-                            </div> -->
+                                    </div> -->
 
                     <!-- <router-view v-slot="{ Component }">
-                                <component :is="Component" ref="mainView"></component>
-                            </router-view> -->
+                                        <component :is="Component" ref="mainView"></component>
+                                    </router-view> -->
                 </div>
             </simplebar>
         </div>
