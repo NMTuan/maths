@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 10:07:12
- * @LastEditTime: 2023-03-01 11:25:50
+ * @LastEditTime: 2023-03-06 10:08:09
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\app.vue
@@ -31,20 +31,14 @@
                         <LayoutPin v-model:pin="pin"></LayoutPin>
                         <LayoutGuide></LayoutGuide>
                     </div>
-                <div class="mr-2">
+                    <div class="mr-2">
                         <div class="i-ri-github-fill text-2xl cursor-pointer"></div>
                     </div>
-            </div>
-            <div class="main w-85% max-w-790px mx-auto mt-6" print="w-auto max-w-98% m-0">
+                </div>
+                <div class="main w-85% max-w-790px mx-auto mt-6" print="w-auto max-w-98% m-0">
                     <NuxtLayout>
                         <NuxtPage />
                     </NuxtLayout>
-                    <!-- <div class="w-596px h-882px bg-white text-red-400 shadow-lg overflow-hidden" print="shadow-none">
-                                            </div> -->
-
-                    <!-- <router-view v-slot="{ Component }">
-                                                <component :is="Component" ref="mainView"></component>
-                                            </router-view> -->
                 </div>
             </simplebar>
         </div>

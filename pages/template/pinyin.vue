@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-28 14:24:53
- * @LastEditTime: 2023-03-01 11:22:38
+ * @LastEditTime: 2023-03-06 10:56:11
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\template\pinyin.vue
@@ -43,10 +43,19 @@
     </LayoutPaper>
 </template>
 <script setup>
+const runtimeConfig = useRuntimeConfig()
+
+useServerSeoMeta({
+    title: () => `四线三格（拼音）- 模板 - ${runtimeConfig.public.title}`,
+    keywords: '四线三格,拼音,模板,打印',
+    description: 'A4纸一键打印标准拼音四线三格模板。'
+})
+
+
 // 配置项
 const config = [
-    { label: '适中', size: 'base', maxRows: 20, maxCols: 14 },
-    { label: '较大', size: 'lg', maxRows: 15, maxCols: 12 },
+    { label: '适中 -（行高0.96cm）', size: 'base', maxRows: 20, maxCols: 14 },
+    { label: '较大 -（行高1.20cm）', size: 'lg', maxRows: 15, maxCols: 12 },
 ]
 const currentConfigIndex = useCookie('template_pinyin_current_config')   // 当前配置项索引
 currentConfigIndex.value = currentConfigIndex.value || 0
@@ -74,7 +83,7 @@ const print = () => {
 <script>
 export default {
     page: {
-        name: '拼音（四线三格）',
+        name: '四线三格（拼音）',
         sort: 200
     }
 }

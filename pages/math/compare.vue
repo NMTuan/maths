@@ -2,48 +2,53 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-27 10:33:15
- * @LastEditTime: 2023-02-27 10:59:24
+ * @LastEditTime: 2023-03-06 10:48:02
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\compare.vue
 -->
 <template>
-    <div>
-        <Title>{{ title }}</Title>
-        <LayoutPaper>
-            <template #config>
-                <div class="sm:flex items-center justify-between">
-                    <el-form class="flex items-center flex-wrap">
-                        <el-form-item label="运算范围" class="w-40 mr-4">
-                            <el-select v-model="currentRange" placeholder="" @change="submit">
-                                <el-option v-for="range in ranges" :key="range" :label="range" :value="range" />
-                            </el-select>
-                        </el-form-item>
+    <LayoutPaper>
+        <template #config>
+            <div class="sm:flex items-center justify-between">
+                <el-form class="flex items-center flex-wrap">
+                    <el-form-item label="运算范围" class="w-40 mr-4">
+                        <el-select v-model="currentRange" placeholder="" @change="submit">
+                            <el-option v-for="range in ranges" :key="range" :label="range" :value="range" />
+                        </el-select>
+                    </el-form-item>
 
-                        <el-form-item label="" class="">
-                            <el-checkbox v-model="showRes" label="显示答案" />
-                        </el-form-item>
-                    </el-form>
+                    <el-form-item label="" class="">
+                        <el-checkbox v-model="showRes" label="显示答案" />
+                    </el-form-item>
+                </el-form>
 
-                    <el-form class="flex-shrink-0 flex items-center flex-wrap">
-                        <el-form-item label="" class="">
-                            <el-button-group>
-                                <el-button type="primary" plain @click="submit">重新生成</el-button>
-                                <el-button type="primary" @click="print">打印</el-button>
-                            </el-button-group>
-                        </el-form-item>
-                    </el-form>
-                </div>
-            </template>
-            <div class="flex flex-wrap">
-                <MathCompareItem v-for="(item, index) in items" :item="item" :index="index" :showRes="showRes">
-                </MathCompareItem>
+                <el-form class="flex-shrink-0 flex items-center flex-wrap">
+                    <el-form-item label="" class="">
+                        <el-button-group>
+                            <el-button type="primary" plain @click="submit">重新生成</el-button>
+                            <el-button type="primary" @click="print">打印</el-button>
+                        </el-button-group>
+                    </el-form-item>
+                </el-form>
             </div>
-        </LayoutPaper>
-    </div>
+        </template>
+        <div class="flex flex-wrap">
+            <MathCompareItem v-for="(item, index) in items" :item="item" :index="index" :showRes="showRes">
+            </MathCompareItem>
+        </div>
+    </LayoutPaper>
 </template>
 
 <script setup>
+const runtimeConfig = useRuntimeConfig()
+
+useServerSeoMeta({
+    title: () => `比大小 - 数学 - ${runtimeConfig.public.title}`,
+    keywords: '比大小,数字启蒙,打印',
+    description: 'A4纸一键打印10以内至100以内的数字大小比较。适合幼儿园3-6岁小朋友。'
+})
+
 const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_compare_currentRange') // 当前运算范围
 currentRange.value = currentRange.value || 10
@@ -53,11 +58,6 @@ showRes.value = showRes.value || false
 
 const resLength = ref(50) // 生成数量
 const items = ref([]) // 结果集
-
-// 页面标题
-const title = computed(() => {
-    return `比大小`
-})
 
 // 生成随机数
 const random = (min = 0, max = currentRange.value) => {

@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:21:09
- * @LastEditTime: 2023-03-02 13:39:16
+ * @LastEditTime: 2023-03-06 10:54:35
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\chinese\Pinyin.vue
@@ -53,10 +53,18 @@
     </LayoutPaper>
 </template>
 <script setup>
+const runtimeConfig = useRuntimeConfig()
+
+useServerSeoMeta({
+    title: () => `汉语拼音描红字帖 - 语文 - ${runtimeConfig.public.title}`,
+    keywords: '拼音字帖,3-6岁,拼音启蒙,打印',
+    description: '适合幼儿园3-6岁小朋友汉语拼音启蒙，打印声母、韵母、整体认读、声调描红字帖。'
+})
+
 // 配置项
 const config = [
-    { label: '适中', size: 'base', maxRows: 20, maxCols: 14 },
-    { label: '较大', size: 'lg', maxRows: 15, maxCols: 12 },
+    { label: '适中 -（行高0.96cm）', size: 'base', maxRows: 20, maxCols: 14 },
+    { label: '较大 -（行高1.20cm）', size: 'lg', maxRows: 15, maxCols: 12 },
 ]
 const currentConfigIndex = useCookie('template_pinyin_current_config')   // 当前配置项索引
 currentConfigIndex.value = currentConfigIndex.value || 0
@@ -74,7 +82,7 @@ const loop = useCookie('chinese_pinyin_loop')   // 循环填充
 loop.value = loop.value || false
 
 const content = useCookie('chinese_pinyin_content') // 打印内容
-content.value = content.value || []
+content.value = content.value || ["a", "o", "e", "i", "u", "ü"]
 const showContentDialog = ref(false)
 
 // 选择打印内容
@@ -100,7 +108,7 @@ const print = () => {
 <script>
 export default {
     page: {
-        name: '拼音字母',
+        name: '拼音字帖',
         sort: 200
     }
 }

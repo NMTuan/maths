@@ -2,14 +2,12 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-24 09:53:57
- * @LastEditTime: 2023-02-24 14:48:11
+ * @LastEditTime: 2023-03-06 10:44:56
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\make_ten.vue
 -->
 <template>
-    <div>
-        <Title>{{ title }}</Title>
         <LayoutPaper>
             <template #config>
                 <div class="sm:flex items-center justify-between">
@@ -44,9 +42,16 @@
                 </MathMakeTenItem>
             </div>
         </LayoutPaper>
-    </div>
 </template>
 <script setup>
+const runtimeConfig = useRuntimeConfig()
+
+useServerSeoMeta({
+    title: () => `20以内凑十法练习题 - 数学 - ${runtimeConfig.public.title}`,
+    keywords: '凑十法,进位加法,数学,打印',
+    description: 'A4纸一键打印20以内凑十法练习题。适合幼儿园、幼小衔接、小学一年级等。'
+})
+
 // const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_make_ten_currentRange') // 当前运算范围
 currentRange.value = currentRange.value || 20
@@ -75,11 +80,6 @@ showRes.value = showRes.value || false
 
 const resLength = ref(20) // 生成数量
 const items = ref([]) // 结果集
-
-// 页面标题
-const title = computed(() => {
-    return `凑十法`
-})
 
 // 生成随机数
 const random = (min = 0, max = currentRange.value) => {
@@ -138,7 +138,7 @@ onMounted(() => {
 <script>
 export default {
     page: {
-        name: '凑十法',
+        name: '凑十法练习题',
         sort: 400
     }
 }
