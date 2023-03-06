@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 10:07:12
- * @LastEditTime: 2023-03-06 10:08:09
+ * @LastEditTime: 2023-03-06 15:28:32
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\app.vue
@@ -12,10 +12,9 @@
         <!-- menu -->
         <div class="fixed z-20 h-full overflow-hidden" print="hidden" :class="menuClass">
             <div class="w-64 h-full">
-                <div class="h-14 flex items-center justify-center">
-                    <i class="i-ri-medal-2-fill block mr-2 text-xl"></i>
-                    试题助手
-                </div>
+                <!-- <div class="h-14 flex items-center justify-center">
+                            {{ runtimeConfig.public.title }}
+                        </div> -->
                 <simplebar class="simplebar h-full">
                     <LayoutMenu></LayoutMenu>
                 </simplebar>
@@ -47,6 +46,8 @@
 <script setup>
 import { computed } from 'vue'
 import simplebar from 'simplebar-vue';
+// const runtimeConfig = useRuntimeConfig()
+
 
 const pin = useCookie('pin')
 

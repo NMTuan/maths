@@ -8,7 +8,7 @@
  * @FilePath: \ezMaths\pages\template\pinyin.vue
 -->
 <template>
-    <LayoutPaper>
+    <LayoutPaper title="四线三格（拼音）">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
@@ -79,8 +79,7 @@ const print = () => {
 <script>
 export default {
     page: {
-        name: '四线三格（拼音）',
-        sort: 200
+        name: '四线三格（拼音）'
     }
 }
 </script>

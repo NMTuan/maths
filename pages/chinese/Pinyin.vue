@@ -2,13 +2,13 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:21:09
- * @LastEditTime: 2023-03-06 14:30:29
+ * @LastEditTime: 2023-03-06 16:09:42
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\chinese\Pinyin.vue
 -->
 <template>
-    <LayoutPaper>
+    <LayoutPaper title="拼音字帖">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">

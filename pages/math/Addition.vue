@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 10:59:27
- * @LastEditTime: 2023-03-06 10:35:42
+ * @LastEditTime: 2023-03-06 16:00:26
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\addition.vue
@@ -17,7 +17,7 @@
  * @FilePath: \ezMaths\pages\math\Addition.vue
 -->
 <template>
-    <LayoutPaper>
+    <LayoutPaper title="加法练习题">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
@@ -167,7 +167,7 @@ onMounted(() => {
 <script>
 export default {
     page: {
-        name: '加法运算',
+        name: '加法练习题',
         sort: 100
     }
 }

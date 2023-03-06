@@ -1,5 +1,5 @@
 <template>
-    <LayoutPaper>
+    <LayoutPaper title="分成练习题">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
@@ -139,7 +139,7 @@ onMounted(() => {
 export default {
     page: {
         sort: 500,
-        name: '分解与组成（分成）',
+        name: '分成练习题',
     }
 }
 </script>

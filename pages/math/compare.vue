@@ -2,13 +2,13 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-27 10:33:15
- * @LastEditTime: 2023-03-06 10:48:02
+ * @LastEditTime: 2023-03-06 16:08:56
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\compare.vue
 -->
 <template>
-    <LayoutPaper>
+    <LayoutPaper title="比大小">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">

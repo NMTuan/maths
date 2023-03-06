@@ -8,7 +8,7 @@
  * @FilePath: \ezMaths\pages\math\make_ten.vue
 -->
 <template>
-    <LayoutPaper>
+    <LayoutPaper title="凑十法练习题">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">

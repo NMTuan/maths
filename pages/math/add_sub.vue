@@ -1,5 +1,5 @@
 <template>
-    <LayoutPaper>
+    <LayoutPaper title="加减法混合运算">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
