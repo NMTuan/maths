@@ -41,13 +41,10 @@
 </template>
 
 <script setup>
-const runtimeConfig = useRuntimeConfig()
-
-useServerSeoMeta({
-    title: () => `比大小 - 数学 - ${runtimeConfig.public.title}`,
-    keywords: '比大小,数字启蒙,打印',
-    description: 'A4纸一键打印10以内至100以内的数字大小比较。适合幼儿园3-6岁小朋友。'
-})
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
 const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_compare_currentRange') // 当前运算范围

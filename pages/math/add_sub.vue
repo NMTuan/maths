@@ -44,13 +44,10 @@
     </LayoutPaper>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig()
-
-useServerSeoMeta({
-    title: () => `加减法混合运算、填空、口算练习题 - 数学 - ${runtimeConfig.public.title}`,
-    keywords: '加减法,混合运算,打印,数学',
-    description: 'A4纸一键打印加减法混合运算数学题，10以内至100以内口算练习题。适合幼儿园、幼小衔接、小学一年级、二年级等。'
-})
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
 const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_add_sub_currentRange') // 当前运算范围

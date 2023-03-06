@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-28 14:24:53
- * @LastEditTime: 2023-03-06 10:56:11
+ * @LastEditTime: 2023-03-06 14:29:47
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\template\pinyin.vue
@@ -43,14 +43,10 @@
     </LayoutPaper>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig()
-
-useServerSeoMeta({
-    title: () => `四线三格（拼音）- 模板 - ${runtimeConfig.public.title}`,
-    keywords: '四线三格,拼音,模板,打印',
-    description: 'A4纸一键打印标准拼音四线三格模板。'
-})
-
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
 // 配置项
 const config = [

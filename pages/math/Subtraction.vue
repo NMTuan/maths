@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-24 13:00:07
- * @LastEditTime: 2023-03-06 10:42:37
+ * @LastEditTime: 2023-03-06 14:42:16
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\subtraction.vue
@@ -61,14 +61,10 @@
     </LayoutPaper>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig()
-
-useServerSeoMeta({
-    title: () => `减法、连减、填空、口算练习题 - 数学 - ${runtimeConfig.public.title}`,
-    keywords: '减法,口算,数学,打印',
-    description: 'A4纸一键打印适合幼儿园、幼小衔接、小学一年级、二年级的减法/连减数学题，10以内至100以内口算练习题。'
-})
-
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
 const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_sub_currentRange') // 当前运算范围

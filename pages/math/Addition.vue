@@ -64,13 +64,11 @@
     </LayoutPaper>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig()
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
-useServerSeoMeta({
-    title: () => `加法、连加、填空、口算练习题 - 数学 - ${runtimeConfig.public.title}`,
-    keywords: '加法,口算,数学,打印',
-    description: 'A4纸一键打印适合幼儿园、幼小衔接、小学一年级、二年级的加法/连加数学题，10以内至100以内口算练习题。'
-})
 const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_add_currentRange') // 当前运算范围
 currentRange.value = currentRange.value || 10

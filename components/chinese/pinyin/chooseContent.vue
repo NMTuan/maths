@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-02 09:53:33
- * @LastEditTime: 2023-03-02 14:04:53
+ * @LastEditTime: 2023-03-06 14:55:09
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\chinese\pinyin\chooseContent.vue
@@ -84,7 +84,6 @@ const words = [
 ]
 
 const handleOpen = () => {
-    console.log('open');
     content.value = props.content
 }
 const handleClose = () => {

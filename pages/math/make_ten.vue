@@ -8,49 +8,46 @@
  * @FilePath: \ezMaths\pages\math\make_ten.vue
 -->
 <template>
-        <LayoutPaper>
-            <template #config>
-                <div class="sm:flex items-center justify-between">
-                    <el-form class="flex items-center flex-wrap">
-                        <el-form-item label="模式" class="w-32 mr-4">
-                            <el-select v-model="currentTypeIndex" placeholder="" @change="submit">
-                                <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="" class="mr-4">
-                            <el-checkbox v-model="showTen" label="显示10" />
-                        </el-form-item>
+    <LayoutPaper>
+        <template #config>
+            <div class="sm:flex items-center justify-between">
+                <el-form class="flex items-center flex-wrap">
+                    <el-form-item label="模式" class="w-32 mr-4">
+                        <el-select v-model="currentTypeIndex" placeholder="" @change="submit">
+                            <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="" class="mr-4">
+                        <el-checkbox v-model="showTen" label="显示10" />
+                    </el-form-item>
 
-                        <el-form-item label="" class="">
-                            <el-checkbox v-model="showRes" label="显示答案" />
-                        </el-form-item>
-                    </el-form>
+                    <el-form-item label="" class="">
+                        <el-checkbox v-model="showRes" label="显示答案" />
+                    </el-form-item>
+                </el-form>
 
-                    <el-form class="flex-shrink-0 flex items-center flex-wrap">
-                        <el-form-item label="" class="">
-                            <el-button-group>
-                                <el-button type="primary" plain @click="submit">重新生成</el-button>
-                                <el-button type="primary" @click="print">打印</el-button>
-                            </el-button-group>
-                        </el-form-item>
-                    </el-form>
-                </div>
-            </template>
-            <div class="flex flex-wrap">
-                <MathMakeTenItem v-for="(item, index) in items" :item="item" :index="index" :showTen="showTen"
-                    :showRes="showRes">
-                </MathMakeTenItem>
+                <el-form class="flex-shrink-0 flex items-center flex-wrap">
+                    <el-form-item label="" class="">
+                        <el-button-group>
+                            <el-button type="primary" plain @click="submit">重新生成</el-button>
+                            <el-button type="primary" @click="print">打印</el-button>
+                        </el-button-group>
+                    </el-form-item>
+                </el-form>
             </div>
-        </LayoutPaper>
+        </template>
+        <div class="flex flex-wrap">
+            <MathMakeTenItem v-for="(item, index) in items" :item="item" :index="index" :showTen="showTen"
+                :showRes="showRes">
+            </MathMakeTenItem>
+        </div>
+    </LayoutPaper>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig()
-
-useServerSeoMeta({
-    title: () => `20以内凑十法练习题 - 数学 - ${runtimeConfig.public.title}`,
-    keywords: '凑十法,进位加法,数学,打印',
-    description: 'A4纸一键打印20以内凑十法练习题。适合幼儿园、幼小衔接、小学一年级等。'
-})
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
 // const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_make_ten_currentRange') // 当前运算范围

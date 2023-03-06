@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:21:09
- * @LastEditTime: 2023-03-06 10:54:35
+ * @LastEditTime: 2023-03-06 14:30:29
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\chinese\Pinyin.vue
@@ -53,13 +53,10 @@
     </LayoutPaper>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig()
-
-useServerSeoMeta({
-    title: () => `汉语拼音描红字帖 - 语文 - ${runtimeConfig.public.title}`,
-    keywords: '拼音字帖,3-6岁,拼音启蒙,打印',
-    description: '适合幼儿园3-6岁小朋友汉语拼音启蒙，打印声母、韵母、整体认读、声调描红字帖。'
-})
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
 // 配置项
 const config = [

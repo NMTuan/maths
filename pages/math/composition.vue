@@ -52,13 +52,10 @@
     </LayoutPaper>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig()
-
-useServerSeoMeta({
-    title: () => `数字的分解与组成 - 数学 - ${runtimeConfig.public.title}`,
-    keywords: '分成,数学,打印',
-    description: 'A4纸一键打印10以内至100以内分成练习题。适合幼儿园、幼小衔接、小学一年级等。'
-})
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
 const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_composition_currentRange') // 当前运算范围
