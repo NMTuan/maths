@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-17 14:24:03
- * @LastEditTime: 2023-03-06 16:10:04
+ * @LastEditTime: 2023-03-07 09:41:21
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\layout\paper.vue
@@ -10,7 +10,7 @@
 <template>
     <div class="shadow-lg" print="shadow-none">
         <div class="bg-white p-8 pt-6 min-h-3xl" print="shadow-none p-0 pt-6">
-            <div class="flex mb-3">
+            <div class="mb-3 hidden" print="flex">
                 <div class="mr-6">
                     {{ title }}
                     <span class="text-sm">(www.dayin.page)</span>
