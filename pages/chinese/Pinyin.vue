@@ -49,7 +49,8 @@
         <TemplatePinyinLine v-for='(item, index) in rows' :size="currentSize" :cols="cols" :trace="trace">
             {{ loop ? content[index % content.length] : content[index] }}
         </TemplatePinyinLine>
-        <ChinesePinyinChooseContent v-model:content="content" v-model:show="showContentDialog"></ChinesePinyinChooseContent>
+        <ChinesePinyinChooseContent v-model:content="content" v-model:show="showContentDialog" :rows="rows">
+        </ChinesePinyinChooseContent>
     </LayoutPaper>
 </template>
 <script setup>

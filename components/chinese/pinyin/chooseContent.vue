@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-02 09:53:33
- * @LastEditTime: 2023-03-06 14:55:09
+ * @LastEditTime: 2023-03-07 09:58:39
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\chinese\pinyin\chooseContent.vue
@@ -15,7 +15,8 @@
                 <el-form-item v-for="item in words" :label="item.label">
                     <template v-for="child in item.children">
                         <el-checkbox-group v-model="content" size="large" class="mr-2">
-                            <el-checkbox-button v-for="word in child.value" :key="word" :label="word" class="mb-2">
+                            <el-checkbox-button v-for="word in child.value" :key="word" :label="word"
+                                :disabled="!content.includes(word) && content.length >= rows" class="mb-2">
                                 {{ word }}
                             </el-checkbox-button>
                         </el-checkbox-group>
@@ -41,6 +42,10 @@ const props = defineProps({
     content: {
         type: Array,
         default: () => []
+    },
+    rows: {
+        type: Number,
+        default: 0
     }
 })
 const emits = defineEmits(['update:show', 'update:content'])
