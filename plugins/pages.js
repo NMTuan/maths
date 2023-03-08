@@ -27,9 +27,29 @@ export default defineNuxtPlugin(() => {
         return total
     }, [])
 
+    // 找到顶级的菜单
+    const firstLevelPages = computed(() => {
+        const res = pages.filter((page) => {
+            return (
+                page.level === 1 &&
+                page.dynamicRoute === false &&
+                page.fileName !== 'index'
+            )
+        })
+        // 排序，sort值越小排名越靠前，未设定的统统往后排
+        return res.sort((a, b) => {
+            let x = a.sort || 10000
+            let y = b.sort || 10000
+            x = typeof x === 'string' ? Number(x) : x
+            y = typeof y === 'string' ? Number(y) : y
+            return x - y
+        })
+    })
+
     return {
         provide: {
-            pages
+            pages,
+            firstLevelPages
         }
     }
 })

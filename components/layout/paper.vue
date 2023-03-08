@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-17 14:24:03
- * @LastEditTime: 2023-03-07 09:41:21
+ * @LastEditTime: 2023-03-07 10:32:57
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\layout\paper.vue
@@ -13,7 +13,7 @@
             <div class="mb-3 hidden" print="flex">
                 <div class="mr-6">
                     {{ title }}
-                    <span class="text-sm">(www.dayin.page)</span>
+                    <span class="text-sm">(<Domain www></Domain>)</span>
                 </div>
                 <div class="flex-1">日期：__________</div>
                 <div class="flex-1">用时：__________</div>
@@ -21,7 +21,6 @@
             </div>
             <div class="sticky top-18 right-0 text-cool-gray-300 text-right" print="hidden">预览</div>
             <slot />
-            <!-- <div class="absolute right-10 bottom-0  text-sm text-cool-gray-200">加法练习生成器 www.dayin.page</div> -->
         </div>
         <div class="print:hidden sticky bottom-0 px-8 pt-6 pb-2 bg-white border-t relative z-10">
             <!-- <div class="text-cool-gray-300 text-right" print="hidden">设置</div> -->
