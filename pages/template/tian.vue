@@ -1,14 +1,14 @@
 <!--
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
- * @Date: 2023-02-28 14:24:53
- * @LastEditTime: 2023-03-06 14:29:47
+ * @Date: 2023-03-08 13:40:32
+ * @LastEditTime: 2023-03-10 09:32:23
  * @LastEditors: NMTuan
  * @Description: 
- * @FilePath: \ezMaths\pages\template\pinyin.vue
+ * @FilePath: \ezMaths\pages\template\tian.vue
 -->
 <template>
-    <LayoutPaper title="四线三格（拼音）">
+    <LayoutPaper>
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
@@ -38,8 +38,8 @@
                 </el-form>
             </div>
         </template>
-        <TemplatePinyinRow v-for='item in rows' :size="currentSize" :cols="cols">
-        </TemplatePinyinRow>
+        <TemplateTianRow v-for="item in rows" :size="currentSize" :cols="cols">
+        </TemplateTianRow>
     </LayoutPaper>
 </template>
 <script setup>
@@ -48,19 +48,22 @@ const seo = $getSeoInfo()
 useServerSeoMeta(seo)
 useHead(seo)
 
-// 配置项
 const config = [
-    { label: '适中 -（行高0.96cm）', size: 'base', maxRows: 20, maxCols: 14 },
-    { label: '较大 -（行高1.20cm）', size: 'lg', maxRows: 15, maxCols: 12 },
+    { label: '较小 - 行高0.96cm', size: 'sm', maxRows: 20, maxCols: 20 },
+    { label: '适中 - 行高1.20cm', size: 'base', maxRows: 16, maxCols: 14 },
+    { label: '较大 - 行高1.50cm', size: 'lg', maxRows: 14, maxCols: 12 },
+    { label: '巨大 - 行高1.80cm', size: 'xl', maxRows: 12, maxCols: 11 },
 ]
-const currentConfigIndex = useCookie('template_pinyin_current_config')   // 当前配置项索引
+
+const currentConfigIndex = useCookie('template_tian_current_config')   // 当前配置项索引
 currentConfigIndex.value = currentConfigIndex.value || 0
 const currentConfig = computed(() => config[currentConfigIndex.value])
 const currentSize = computed(() => currentConfig.value.size)   // 当前尺寸
-const rows = useCookie('template_pinyin_rows') // 行数
+const rows = useCookie('template_tian_rows') // 行数
 rows.value = rows.value || currentConfig.value.maxRows
-const cols = useCookie('template_pinyin_cols')    // 列数
+const cols = useCookie('template_tian_cols')    // 列数
 cols.value = cols.value || currentConfig.value.maxCols
+
 
 const changeSize = () => {
     if (rows.value > currentConfig.value.maxRows) {
@@ -79,7 +82,7 @@ const print = () => {
 <script>
 export default {
     page: {
-        name: '四线三格（拼音）'
+        name: '田字格'
     }
 }
 </script>

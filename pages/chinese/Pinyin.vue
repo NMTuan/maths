@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:21:09
- * @LastEditTime: 2023-03-06 16:09:42
+ * @LastEditTime: 2023-03-09 11:00:05
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\chinese\Pinyin.vue
@@ -46,9 +46,9 @@
                 </el-form>
             </div>
         </template>
-        <TemplatePinyinLine v-for='(item, index) in rows' :size="currentSize" :cols="cols" :trace="trace">
+        <TemplatePinyinRow v-for='(item, index) in rows' :size="currentSize" :cols="cols" :trace="trace">
             {{ loop ? content[index % content.length] : content[index] }}
-        </TemplatePinyinLine>
+        </TemplatePinyinRow>
         <ChinesePinyinChooseContent v-model:content="content" v-model:show="showContentDialog" :rows="rows">
         </ChinesePinyinChooseContent>
     </LayoutPaper>
