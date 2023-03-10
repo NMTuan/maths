@@ -23,13 +23,13 @@ const props = defineProps({
 })
 const bgSize = computed(() => {
     const className = []
-    if (props.size === 'base') {
+    if (props.size === 'sm') {
         className.push('text-2xl')
         className.push('h-9')
         className.push('mb-3')
         className.push('!after:top-3 after:h-3')
     }
-    if (props.size === 'lg') {
+    if (props.size === 'base') {
         className.push('text-3xl')
         className.push('h-12')
         className.push('mb-4')
