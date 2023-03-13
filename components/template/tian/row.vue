@@ -3,13 +3,6 @@
         <TemplateTianItem v-for="(item, index) in cols" :size="size" class="flex-shrink-0 -ml-1px">
             <slot v-if="index !== 0 && trace || index === 0" />
         </TemplateTianItem>
-        <!-- <TemplateTianItem v-for="(item, index) in cols" :size="size"
-                class="flex-1 border-l border-dashed border-cool-gray-600" :class="{
-                    'text-cool-gray-300': index !== 0 && trace,
-                    'print:text-cool-gray-50/50': index !== 0 && trace,
-                }" first="border-solid" last="border-r border-r-solid">
-                <slot v-if="index !== 0 && trace || index === 0" />
-            </TemplateTianItem> -->
     </div>
 </template>
 <script setup>

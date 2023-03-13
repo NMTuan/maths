@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-28 14:24:53
- * @LastEditTime: 2023-03-10 10:34:47
+ * @LastEditTime: 2023-03-13 10:39:45
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\template\pinyin.vue
@@ -38,7 +38,7 @@
                 </el-form>
             </div>
         </template>
-        <TemplatePinyinRow v-for='item in rows' :size="currentSize" :cols="cols">
+        <TemplatePinyinRow v-for='(item, index) in rows' :size="currentSize" :cols="cols">
         </TemplatePinyinRow>
     </LayoutPaper>
 </template>
@@ -53,7 +53,7 @@ const config = [
     { label: '较小 - 行高0.96cm', size: 'sm', maxRows: 20, maxCols: 14 },
     { label: '适中 - 行高1.20cm', size: 'base', maxRows: 15, maxCols: 12 },
     { label: '较大 - 行高1.50cm', size: 'lg', maxRows: 14, maxCols: 12 },
-    { label: '巨大 - 行高1.80cm', size: 'xl', maxRows: 12, maxCols: 11 }
+    { label: '巨大 - 行高1.80cm', size: 'xl', maxRows: 12, maxCols: 10 }
 ]
 const currentConfigIndex = useCookie('template_pinyin_current_config')   // 当前配置项索引
 currentConfigIndex.value = currentConfigIndex.value || 0
