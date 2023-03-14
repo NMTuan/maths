@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 15:35:30
- * @LastEditTime: 2023-03-08 13:09:25
+ * @LastEditTime: 2023-03-14 17:23:39
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\index.vue
@@ -10,13 +10,11 @@
 <template>
     <div class="h-full">
         <simplebar class="simplebar h-full">
-            <div class="sticky left-0 top-0 right-0 w-full">
+            <div class="sticky left-0 top-0 right-0 z-100 w-full">
                 <div
                     class="flex items-center justify-between px-8 py-6 leading-none bg-cool-gray-50/50 backdrop-blur sticky left-0 top-0 right-0 z-100">
                     <Domain hump class="font-semibold text-cool-gray-500"></Domain>
-                    <div>
-                        123
-                    </div>
+                    <LayoutRightGuide></LayoutRightGuide>
                 </div>
             </div>
 
@@ -26,18 +24,18 @@
                     <p class="text-4xl font-bold text-cool-gray-600 leading-12 mt-16 mb-4">强大、易用的一键生成数学题、描红字帖及各种空白模板。</p>
                     <p class="text-2xl text-cool-gray-500">让眼睛回归纸张，远离屏幕设备。</p>
                     <div class="mt-10">
-                        <button class="bg-blue-400 text-white px-4 py-3 leading-none rounded cursor-pointer"
+                        <NuxtLink :to="{ name: 'math-addition' }"
+                            class="inline-block bg-blue-400 text-white px-4 py-3 leading-none rounded cursor-pointer"
                             hover="bg-blue-500/80">
                             开始使用
-                        </button>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>
 
             <div class="py-32 overflow-hidden">
                 <h2 class="text-5xl text-center font-extrabold text-cool-gray-600">
-                    <span class="text-blue-400">数学，</span>
-                    一键生成
+                    <span class="text-blue-400">数学</span>题，一键生成
                 </h2>
                 <div class="text-xl text-center text-cool-gray-400 mt-6">
                     不再为出题烦恼，点一下就是一张试题
@@ -47,18 +45,23 @@
 
             <div class="py-32 overflow-hidden">
                 <h2 class="text-5xl text-center font-extrabold text-cool-gray-600">
-                    <span class="text-blue-400">语文，</span>也可以
+                    <span class="text-blue-400">语文</span>字帖，也可以
                 </h2>
                 <div class="text-xl text-center text-cool-gray-400 mt-6">
                     汉语拼音描红、田字格字帖、汉字笔画笔顺，同样不在话下
                 </div>
+                <IndexHanzi></IndexHanzi>
             </div>
 
-            <div>
-                <div v-for="page in $firstLevelPages">
-                    <pre>{{ children(page) }}</pre>
+            <div class="py-32 overflow-hidden">
+                <h2 class="text-5xl text-center font-extrabold text-cool-gray-600">
+                    但，<span class="text-blue-400">不止</span>于此
+                </h2>
+                <div class="text-xl text-center text-cool-gray-400 mt-6">
+                    x
                 </div>
             </div>
+
             <div class="text-sm text-center pt-10 pb-4 text-cool-gray-400">
                 powered by
                 <a href="https://www.muyi.dev/" class="text-blue-400" hover="underline" target="_blank">
@@ -74,29 +77,6 @@ import simplebar from 'simplebar-vue';
 definePageMeta({
     layout: "index",
 });
-
-const { $pages, $firstLevelPages } = useNuxtApp()
-
-
-// 找 所有子页面
-const children = (current) => {
-    // 子页面以父页面的文件名开头.
-    const reg = new RegExp(`^${current.fileName}/`, 'ig')
-    const res = $pages.filter((page) => {
-        return (page.level === current.level + 1) && page.dynamicRoute === false && page.fileName.match(reg)
-    })
-
-    // 排序，sort值越小排名越靠前，未设定的统统往后排
-    return res.sort((a, b) => {
-        let x = a.sort || 10000
-        let y = b.sort || 10000
-        x = typeof x === 'string' ? Number(x) : x
-        y = typeof y === 'string' ? Number(y) : y
-        return x - y
-    })
-
-}
-
 
 </script>
 <script>

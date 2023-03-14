@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-15 16:00:53
- * @LastEditTime: 2023-03-07 14:03:30
+ * @LastEditTime: 2023-03-14 16:05:16
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\layouts\default.vue
@@ -13,7 +13,9 @@
         <div class="fixed z-20 h-full overflow-hidden" print="hidden" :class="menuClass">
             <div class="w-64 h-full">
                 <div class="h-14 flex items-center justify-center">
-                    <Domain hump></Domain>
+                    <NuxtLink :to="{name: 'index'}">
+                        <Domain hump></Domain>
+                    </NuxtLink>
                 </div>
                 <simplebar class="simplebar h-full">
                     <LayoutMenu></LayoutMenu>
@@ -31,7 +33,7 @@
                         <LayoutGuide></LayoutGuide>
                     </div>
                     <div class="mr-2">
-                        <div class="i-ri-github-fill text-2xl cursor-pointer"></div>
+                        <LayoutRightGuide></LayoutRightGuide>
                     </div>
                 </div>
                 <div class="main w-85% max-w-790px mx-auto mt-6" print="w-auto max-w-98% m-0">

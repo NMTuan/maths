@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-08 14:29:37
- * @LastEditTime: 2023-03-09 10:55:09
+ * @LastEditTime: 2023-03-14 17:08:06
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\template\tian\item.vue
@@ -19,11 +19,18 @@ const props = defineProps({
     size: {
         type: String,
         default: 'base'
+    },
+    customClass: {
+        type: String,
+        default: ''
     }
 })
 
 const bgSize = computed(() => {
     const className = []
+    if (props.customClass) {
+        return props.customClass
+    }
     // 0.96cm   36px
     if (props.size === 'sm') {
         className.push('text-26px')
@@ -53,6 +60,7 @@ const bgSize = computed(() => {
     @apply flex items-center justify-center;
     @apply border border-cool-gray-600;
     @apply relative;
+    @apply select-none;
 
     &::before,
     &::after {
