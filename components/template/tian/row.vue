@@ -1,6 +1,21 @@
+<!--
+ * @Author: NMTuan
+ * @Email: NMTuan@qq.com
+ * @Date: 2023-03-09 10:59:08
+ * @LastEditTime: 2023-03-14 11:16:01
+ * @LastEditors: NMTuan
+ * @Description: 
+ * @FilePath: \ezMaths\components\template\tian\row.vue
+-->
 <template>
     <div class="flex justify-center flex-wrap" :class="className">
-        <TemplateTianItem v-for="(item, index) in cols" :size="size" class="flex-shrink-0 -ml-1px">
+        <TemplateTianItem v-for="(item, index) in cols" :size="size"
+         class="flex-shrink-0 -ml-1px"
+         :class="{
+                'text-cool-gray-300': index !== 0 && trace,
+             'print:text-cool-gray-50/50': index !== 0 && trace,
+         }"
+         >
             <slot v-if="index !== 0 && trace || index === 0" />
         </TemplateTianItem>
     </div>

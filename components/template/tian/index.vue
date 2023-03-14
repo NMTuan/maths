@@ -1,14 +1,5 @@
-<!--
- * @Author: NMTuan
- * @Email: NMTuan@qq.com
- * @Date: 2023-03-13 10:48:26
- * @LastEditTime: 2023-03-14 11:18:49
- * @LastEditors: NMTuan
- * @Description: 
- * @FilePath: \ezMaths\components\template\pinyin\index.vue
--->
 <template>
-    <LayoutPaper title="四线三格（拼音）">
+    <LayoutPaper>
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
@@ -40,9 +31,9 @@
                 </el-form>
             </div>
         </template>
-        <TemplatePinyinRow v-for='(item, index) in rows' :size="currentSize" :cols="cols" :trace="trace">
+        <TemplateTianRow v-for="(item, index) in rows" :size="currentSize" :cols="cols" :trace="trace">
             <slot name="content" :item="item" :index="index"></slot>
-        </TemplatePinyinRow>
+        </TemplateTianRow>
         <slot></slot>
     </LayoutPaper>
 </template>
@@ -55,21 +46,22 @@ const props = defineProps({
     }
 })
 
-// 配置项
 const config = [
-    { label: '较小 - 行高0.96cm', size: 'sm', maxRows: 20, maxCols: 14 },
-    { label: '适中 - 行高1.20cm', size: 'base', maxRows: 15, maxCols: 12 },
+    { label: '较小 - 行高0.96cm', size: 'sm', maxRows: 20, maxCols: 20 },
+    { label: '适中 - 行高1.20cm', size: 'base', maxRows: 16, maxCols: 14 },
     { label: '较大 - 行高1.50cm', size: 'lg', maxRows: 14, maxCols: 12 },
-    { label: '巨大 - 行高1.80cm', size: 'xl', maxRows: 12, maxCols: 10 }
+    { label: '巨大 - 行高1.80cm', size: 'xl', maxRows: 12, maxCols: 11 },
 ]
-const currentConfigIndex = useCookie('template_pinyin_current_config')   // 当前配置项索引
+
+const currentConfigIndex = useCookie('template_tian_current_config')   // 当前配置项索引
 currentConfigIndex.value = currentConfigIndex.value || 1
 const currentConfig = computed(() => config[currentConfigIndex.value])
 const currentSize = computed(() => currentConfig.value.size)   // 当前尺寸
-const rows = useCookie('template_pinyin_rows') // 行数
+const rows = useCookie('template_tian_rows') // 行数
 rows.value = rows.value || currentConfig.value.maxRows
-const cols = useCookie('template_pinyin_cols')    // 列数
+const cols = useCookie('template_tian_cols')    // 列数
 cols.value = cols.value || currentConfig.value.maxCols
+
 
 const changeSize = () => {
     if (rows.value > currentConfig.value.maxRows) {
