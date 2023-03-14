@@ -1,14 +1,14 @@
 <!--
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
- * @Date: 2023-02-28 14:24:53
- * @LastEditTime: 2023-03-13 11:28:11
+ * @Date: 2023-03-08 13:40:32
+ * @LastEditTime: 2023-03-14 10:29:02
  * @LastEditors: NMTuan
  * @Description: 
- * @FilePath: \ezMaths\pages\template\pinyin.vue
+ * @FilePath: \ezMaths\pages\template\tian.vue
 -->
 <template>
-    <TemplatePinyin></TemplatePinyin>
+    <TemplateTian></TemplateTian>
 </template>
 <script setup>
 const { $getSeoInfo } = useNuxtApp()
@@ -19,7 +19,7 @@ useHead(seo)
 <script>
 export default {
     page: {
-        name: '四线三格（拼音）'
+        name: '田字格'
     }
 }
 </script>

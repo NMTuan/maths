@@ -25,7 +25,7 @@ const props = defineProps({
 .link {
     --at-apply: block p-4 flex items-center;
     --at-apply: capitalize font-bold text-cool-gray-600;
-    --at-apply: hover: bg-cool-gray-200;
+    --at-apply: hover:bg-cool-gray-200;
 }
 
 .icon {

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex">
+    <div class="flex" :class="className">
         <TemplatePinyinItem v-for="(item, index) in cols" :size="size"
             class="flex-1 border-l border-dashed border-cool-gray-600" :class="{
                 'text-cool-gray-300': index !== 0 && trace,
@@ -22,6 +22,21 @@ const props = defineProps({
     trace: {    // 描边
         type: Boolean,
         default: false
+    }
+})
+
+const className = computed(() => {
+    if (props.size === 'sm') {
+        return 'mb-12px'
+    }
+    if (props.size === 'base') {
+        return 'mb-14px'
+    }
+    if (props.size === 'lg') {
+        return 'mb-15px'
+    }
+    if (props.size === 'xl') {
+        return 'mb-18px'
     }
 })
 </script>

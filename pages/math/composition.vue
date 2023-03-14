@@ -1,60 +1,62 @@
 <template>
-    <div>
-        <Title>{{ title }}</Title>
-        <LayoutPaper>
-            <template #config>
-                <div class="sm:flex items-center justify-between">
-                    <el-form class="flex items-center flex-wrap">
-                        <el-form-item label="运算范围" class="w-40 mr-4">
-                            <el-select v-model="currentRange" placeholder="" @change="submit">
-                                <el-option v-for="range in ranges" :key="range" :label="range" :value="range" />
-                            </el-select>
-                        </el-form-item>
+    <LayoutPaper title="分成练习题">
+        <template #config>
+            <div class="sm:flex items-center justify-between">
+                <el-form class="flex items-center flex-wrap">
+                    <el-form-item label="运算范围" class="w-40 mr-4">
+                        <el-select v-model="currentRange" placeholder="" @change="submit">
+                            <el-option v-for="range in ranges" :key="range" :label="range" :value="range" />
+                        </el-select>
+                    </el-form-item>
 
-                        <!-- <el-form-item label="运算数" class="w-32 mr-4">
+                    <!-- <el-form-item label="运算数" class="w-32 mr-4">
                             <el-select v-model="currentNumber" placeholder="" @change="submit">
                                 <el-option v-for="number in numberRange[1] - numberRange[0] + 1"
                                     :label="number + numberRange[0] - 1" :value="number + numberRange[0] - 1" />
                             </el-select>
                         </el-form-item> -->
 
-                        <el-form-item label="模式" class="w-32 mr-4">
-                            <el-select v-model="currentTypeIndex" placeholder="">
-                                <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="运算" class="w-32 mr-4">
-                            <el-select v-model="currentModeIndex" placeholder="">
-                                <el-option v-for="(mode, index) in modes" :label="mode.label" :value="index" />
-                            </el-select>
-                        </el-form-item>
-                        <!-- <el-form-item label="" class="mr-4">
+                    <el-form-item label="模式" class="w-32 mr-4">
+                        <el-select v-model="currentTypeIndex" placeholder="">
+                            <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="运算" class="w-32 mr-4">
+                        <el-select v-model="currentModeIndex" placeholder="">
+                            <el-option v-for="(mode, index) in modes" :label="mode.label" :value="index" />
+                        </el-select>
+                    </el-form-item>
+                    <!-- <el-form-item label="" class="mr-4">
                             <el-checkbox v-model="overflow" label="结果可超出运算范围" @change="submit" />
                         </el-form-item> -->
-                        <el-form-item label="" class="">
-                            <el-checkbox v-model="showRes" label="显示答案" />
-                        </el-form-item>
-                    </el-form>
+                    <el-form-item label="" class="">
+                        <el-checkbox v-model="showRes" label="显示答案" />
+                    </el-form-item>
+                </el-form>
 
-                    <el-form class="flex-shrink-0 flex items-center flex-wrap">
-                        <el-form-item label="" class="">
-                            <el-button-group>
-                                <el-button type="primary" plain @click="submit">重新生成</el-button>
-                                <el-button type="primary" @click="print">打印</el-button>
-                            </el-button-group>
-                        </el-form-item>
-                    </el-form>
-                </div>
-            </template>
-            <div class="flex flex-wrap">
-                <MathCompositionItem v-for="(item, index) in items" :item="item" :index="index" :type="type" :mode="mode"
-                    :showRes="showRes">
-                </MathCompositionItem>
+                <el-form class="flex-shrink-0 flex items-center flex-wrap">
+                    <el-form-item label="" class="">
+                        <el-button-group>
+                            <el-button type="primary" plain @click="submit">重新生成</el-button>
+                            <el-button type="primary" @click="print">打印</el-button>
+                        </el-button-group>
+                    </el-form-item>
+                </el-form>
             </div>
-        </LayoutPaper>
-    </div>
+        </template>
+        <div class="flex flex-wrap">
+            <MathCompositionItem v-for="(item, index) in items" :item="item" :index="index" :type="type" :mode="mode"
+                :showRes="showRes">
+            </MathCompositionItem>
+        </div>
+    </LayoutPaper>
 </template>
 <script setup>
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
+
 const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_composition_currentRange') // 当前运算范围
 currentRange.value = currentRange.value || 10
@@ -88,11 +90,6 @@ showRes.value = showRes.value || false
 
 const resLength = ref(40) // 生成数量
 const items = ref([]) // 结果集
-
-// 页面标题
-const title = computed(() => {
-    return `分解与组成（分成）`
-})
 
 // 生成随机数
 const random = (min = 0, max = currentRange.value) => {
@@ -142,7 +139,7 @@ onMounted(() => {
 export default {
     page: {
         sort: 500,
-        name: '分解与组成（分成）',
+        name: '分成练习题',
     }
 }
 </script>

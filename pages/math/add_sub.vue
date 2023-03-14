@@ -1,52 +1,54 @@
 <template>
-    <div>
-        <Title>{{ title }}</Title>
-        <LayoutPaper>
-            <template #config>
-                <div class="sm:flex items-center justify-between">
-                    <el-form class="flex items-center flex-wrap">
-                        <el-form-item label="运算范围" class="w-40 mr-4">
-                            <el-select v-model="currentRange" placeholder="" @change="submit">
-                                <el-option v-for="range in ranges" :key="range" :label="range" :value="range" />
-                            </el-select>
-                        </el-form-item>
+    <LayoutPaper title="加减法混合运算">
+        <template #config>
+            <div class="sm:flex items-center justify-between">
+                <el-form class="flex items-center flex-wrap">
+                    <el-form-item label="运算范围" class="w-40 mr-4">
+                        <el-select v-model="currentRange" placeholder="" @change="submit">
+                            <el-option v-for="range in ranges" :key="range" :label="range" :value="range" />
+                        </el-select>
+                    </el-form-item>
 
-                        <!-- <el-form-item label="运算数" class="w-32 mr-4">
+                    <!-- <el-form-item label="运算数" class="w-32 mr-4">
                             <el-select v-model="currentNumber" placeholder="" @change="submit">
                                 <el-option v-for="number in numberRange[1] - numberRange[0] + 1"
                                     :label="number + numberRange[0] - 1" :value="number + numberRange[0] - 1" />
                             </el-select>
                         </el-form-item> -->
 
-                        <el-form-item label="模式" class="w-32 mr-4">
-                            <el-select v-model="currentTypeIndex" placeholder="">
-                                <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
-                            </el-select>
-                        </el-form-item>
+                    <el-form-item label="模式" class="w-32 mr-4">
+                        <el-select v-model="currentTypeIndex" placeholder="">
+                            <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
+                        </el-select>
+                    </el-form-item>
 
-                        <el-form-item label="" class="">
-                            <el-checkbox v-model="showRes" label="显示答案" />
-                        </el-form-item>
-                    </el-form>
+                    <el-form-item label="" class="">
+                        <el-checkbox v-model="showRes" label="显示答案" />
+                    </el-form-item>
+                </el-form>
 
-                    <el-form class="flex-shrink-0 flex items-center flex-wrap">
-                        <el-form-item label="" class="">
-                            <el-button-group>
-                                <el-button type="primary" plain @click="submit">重新生成</el-button>
-                                <el-button type="primary" @click="print">打印</el-button>
-                            </el-button-group>
-                        </el-form-item>
-                    </el-form>
-                </div>
-            </template>
-            <div class="flex flex-wrap">
-                <MathAddSubItem v-for="(item, index) in items" :item="item" :index="index" :type="type" :showRes="showRes">
-                </MathAddSubItem>
+                <el-form class="flex-shrink-0 flex items-center flex-wrap">
+                    <el-form-item label="" class="">
+                        <el-button-group>
+                            <el-button type="primary" plain @click="submit">重新生成</el-button>
+                            <el-button type="primary" @click="print">打印</el-button>
+                        </el-button-group>
+                    </el-form-item>
+                </el-form>
             </div>
-        </LayoutPaper>
-    </div>
+        </template>
+        <div class="flex flex-wrap">
+            <MathAddSubItem v-for="(item, index) in items" :item="item" :index="index" :type="type" :showRes="showRes">
+            </MathAddSubItem>
+        </div>
+    </LayoutPaper>
 </template>
 <script setup>
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
+
 const ranges = [10, 20, 50, 100] // 运算范围
 const currentRange = useCookie('math_add_sub_currentRange') // 当前运算范围
 currentRange.value = currentRange.value || 10
@@ -71,11 +73,6 @@ showRes.value = showRes.value || false
 
 const resLength = ref(50) // 生成数量
 const items = ref([]) // 结果集
-
-// 页面标题
-const title = computed(() => {
-    return `${currentRange.value} 以内加减法（${types[currentTypeIndex.value].label}）`
-})
 
 // 生成随机数
 const random = (min = 0, max = currentRange.value) => {

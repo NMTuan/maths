@@ -2,14 +2,14 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-28 14:30:19
- * @LastEditTime: 2023-03-01 10:19:59
+ * @LastEditTime: 2023-03-13 10:38:27
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\template\pinyin\item.vue
 -->
 <template>
     <div class="bg" :class="bgSize">
-        <div class="content">
+        <div class="content" :class="contentSize">
             <slot />
         </div>
     </div>
@@ -23,19 +23,39 @@ const props = defineProps({
 })
 const bgSize = computed(() => {
     const className = []
-    if (props.size === 'base') {
-        className.push('text-2xl')
+    // 0.96cm   36px
+    if (props.size === 'sm') {
+        className.push('text-26px')
         className.push('h-9')
-        className.push('mb-3')
         className.push('!after:top-3 after:h-3')
     }
-    if (props.size === 'lg') {
-        className.push('text-3xl')
+    // 1.2cm    48px
+    if (props.size === 'base') {
+        className.push('text-32px')
         className.push('h-12')
-        className.push('mb-4')
         className.push('!after:top-4 after:h-4')
     }
+    // 1.5cm    56px
+    if (props.size === 'lg') {
+        className.push('text-36px')
+        className.push('h-14')
+        className.push('!after:top-19px after:h-18px')
+    }
+    // 1.8cm    64px
+    if (props.size === 'xl') {
+        className.push('text-42px leading-none')
+        className.push('h-16')
+        className.push('!after:top-21px after:h-22px')
+    }
     return className
+})
+
+const contentSize = computed(() => {
+    if (props.size === 'xl') {
+        return '-mt-6px'
+    } else {
+        return '-mt-1'
+    }
 })
 </script>
 <style lang="scss" scoped>
@@ -68,6 +88,6 @@ const bgSize = computed(() => {
 }
 
 .content {
-    --at-apply: -mt-1 relative z-10;
+    --at-apply: relative z-10;
 }
 </style>
