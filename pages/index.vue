@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 15:35:30
- * @LastEditTime: 2023-03-14 17:23:39
+ * @LastEditTime: 2023-03-15 17:14:54
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\index.vue
@@ -58,7 +58,7 @@
                     但，<span class="text-blue-400">不止</span>于此
                 </h2>
                 <div class="text-xl text-center text-cool-gray-400 mt-6">
-                    x
+                    竖式加减法、认识钟表、笔画笔顺、控笔练习等新功能，正在开发中。。。
                 </div>
             </div>
 
