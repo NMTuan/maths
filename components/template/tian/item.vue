@@ -57,24 +57,24 @@ const bgSize = computed(() => {
 </script>
 <style lang="scss" scoped>
 .bg {
-    @apply flex items-center justify-center;
-    @apply border border-cool-gray-600;
-    @apply relative;
-    @apply select-none;
+    --at-apply: flex items-center justify-center;
+    --at-apply: border border-cool-gray-600;
+    --at-apply: relative;
+    --at-apply: select-none;
 
     &::before,
     &::after {
         content: '';
-        @apply block absolute;
-        @apply border border-dashed border-cool-gray-300;
+        --at-apply: block absolute;
+        --at-apply: border border-dashed border-cool-gray-300;
     }
 
     &::before {
-        @apply w-full h-0;
+        --at-apply: w-full h-0;
     }
 
     &::after {
-        @apply w-0 h-full;
+        --at-apply: w-0 h-full;
     }
 }
 
@@ -82,8 +82,8 @@ const bgSize = computed(() => {
     // font-family: '楷体';
     font-family: 'STKaiti';
     // font-family: '华文楷体';
-    @apply relative z-10;
-    @apply leading-none;
-    @apply flex items-center justify-center;
+    --at-apply: relative z-10;
+    --at-apply: leading-none;
+    --at-apply: flex items-center justify-center;
 }
 </style>
