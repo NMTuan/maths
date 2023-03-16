@@ -9,7 +9,7 @@
 -->
 <template>
     <div class="select-none">
-        <div class="bg-white p-8 pt-6 mt-12 mx-auto max-w-790px shadow-lg">
+        <div class="bg-white p-8 mt-12 mx-auto max-w-790px shadow-lg">
             <div class="flex flex-wrap">
                 <MathAdditionItem v-for="(item, index) in items" :item="item" :index="index" :type="{ key: 'cal' }">
                 </MathAdditionItem>

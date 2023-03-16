@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 15:35:30
- * @LastEditTime: 2023-03-15 17:14:54
+ * @LastEditTime: 2023-03-16 09:50:19
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\index.vue
@@ -57,9 +57,17 @@
                 <h2 class="text-5xl text-center font-extrabold text-cool-gray-600">
                     但，<span class="text-blue-400">不止</span>于此
                 </h2>
-                <div class="text-xl text-center text-cool-gray-400 mt-6">
-                    竖式加减法、认识钟表、笔画笔顺、控笔练习等新功能，正在开发中。。。
+                <div class="text-xl text-center text-cool-gray-400 mt-6 leading-8">
+                    竖式加减法、<br />认识钟表、<br />笔画笔顺、<br />控笔练习等新功能，<br />正在开发中
                 </div>
+                <div class="mt-10 text-center">
+                    <NuxtLink :to="{ name: 'math-addition' }"
+                        class="inline-block bg-blue-400 text-white px-4 py-3 leading-none rounded cursor-pointer"
+                        hover="bg-blue-500/80">
+                        查看所有功能
+                    </NuxtLink>
+                </div>
+
             </div>
 
             <div class="text-sm text-center pt-10 pb-4 text-cool-gray-400">

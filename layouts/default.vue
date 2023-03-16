@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-15 16:00:53
- * @LastEditTime: 2023-03-14 16:05:16
+ * @LastEditTime: 2023-03-16 10:55:53
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\layouts\default.vue
@@ -14,7 +14,7 @@
             <div class="w-64 h-full">
                 <div class="h-14 flex items-center justify-center">
                     <NuxtLink :to="{name: 'index'}">
-                        <Domain hump></Domain>
+                        <Domain hump class="font-semibold text-cool-gray-500"></Domain>
                     </NuxtLink>
                 </div>
                 <simplebar class="simplebar h-full">
