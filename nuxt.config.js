@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 10:07:12
- * @LastEditTime: 2023-03-06 10:32:09
+ * @LastEditTime: 2023-03-16 15:05:48
  * @LastEditors: NMTuan
  * @Description:
  * @FilePath: \ezMaths\nuxt.config.js
@@ -13,14 +13,18 @@ import transformerVariantGroup from '@unocss/transformer-variant-group'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-    // app: {
-    //     head: {
-    //         title: "打印页 www.dayin.page"
-    //     }
-    // },
+    app: {
+        head: {
+            script: [
+                {
+                    src: 'https://hm.baidu.com/hm.js?88b3bb5cc22501a1425b3180219c72f2'
+                }
+            ]
+        }
+    },
     runtimeConfig: {
         public: {
-            title: '打印页 www.dayin.page'
+            title: '习题打印生成器 www.dayin.page'
         }
     },
     css: [
