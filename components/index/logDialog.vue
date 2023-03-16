@@ -2,10 +2,10 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-03-16 14:13:46
+ * @LastEditTime: 2023-03-16 15:37:21
  * @LastEditors: NMTuan
  * @Description: 
- * @FilePath: \ezMaths\components\index\dialog.vue
+ * @FilePath: \ezMaths\components\index\logDialog.vue
 -->
 <template>
     <ClientOnly>
@@ -35,24 +35,15 @@ const props = defineProps({
     show: {
         type: Boolean,
         default: false
-    },
-    content: {
-        type: Array,
-        default: () => []
-    },
-    rows: {
-        type: Number,
-        default: 0
     }
 })
-const emits = defineEmits(['update:show', 'update:content'])
+const emits = defineEmits(['update:show'])
 
 const handleOpen = () => {
     content.value = props.content
 }
 const handleClose = () => {
     emits('update:show', false)
-    emits('update:content', content.value)
 }
 
 const logs = [
@@ -60,17 +51,17 @@ const logs = [
         date: '2023年3月',
         children: [
             {
-                title: "接入兔小巢",
-                url: 'https://support.qq.com/product/530277',
-                content: `
-                接入反馈系统，如果你有什么建议或意见，欢迎反馈。
-                `
-            },
-            {
                 title: "新版本上线",
                 url: 'https://www.dayin.page',
                 content: `
                 启用顶级域名 DaYin.page 。
+                `
+            },
+            {
+                title: "接入兔小巢",
+                url: 'https://support.qq.com/product/530277',
+                content: `
+                接入反馈系统，如果你有什么建议或意见，欢迎反馈。
                 `
             },
             {
@@ -104,7 +95,7 @@ const logs = [
                 新增：比大小。
                 `
             },
-                        {
+            {
                 title: '重新出发，开发新版本',
                 content: `
                 打破数学题单一模式，尝试更多 “题+打印” 类目。
