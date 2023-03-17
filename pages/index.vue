@@ -61,7 +61,7 @@
                     竖式加减法、<br />认识钟表、<br />笔画笔顺、<br />控笔练习等新功能，<br />正在开发中
                 </div>
                 <div class="mt-10 text-center">
-                    <NuxtLink :to="{ name: 'math-addition' }"
+                    <NuxtLink :to="{ name: 'math-Addition' }"
                         class="inline-block bg-blue-400 text-white px-4 py-3 leading-none rounded cursor-pointer"
                         hover="bg-blue-500/80">
                         查看所有功能
