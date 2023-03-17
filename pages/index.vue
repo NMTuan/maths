@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 15:35:30
- * @LastEditTime: 2023-03-16 09:50:19
+ * @LastEditTime: 2023-03-17 16:04:05
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\index.vue
@@ -24,7 +24,7 @@
                     <p class="text-4xl font-bold text-cool-gray-600 leading-12 mt-16 mb-4">强大、易用的一键生成数学题、描红字帖及各种空白模板。</p>
                     <p class="text-2xl text-cool-gray-500">让眼睛回归纸张，远离屏幕设备。</p>
                     <div class="mt-10">
-                        <NuxtLink :to="{ name: 'math-addition' }"
+                        <NuxtLink :to="{ name: 'math-Addition' }"
                             class="inline-block bg-blue-400 text-white px-4 py-3 leading-none rounded cursor-pointer"
                             hover="bg-blue-500/80">
                             开始使用
