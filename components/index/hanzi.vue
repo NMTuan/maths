@@ -12,8 +12,8 @@
 const customClass = computed(() => {
     return [
         'text-160px',
-        'w-44',
-        'h-44',
+        'w-42',
+        'h-42',
         'flex-shrink-0',
     ]
 })
