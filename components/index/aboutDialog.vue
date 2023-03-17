@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-03-16 16:26:21
+ * @LastEditTime: 2023-03-17 15:08:26
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\aboutDialog.vue
@@ -31,7 +31,11 @@
                     <span class="text-red-400">本站所有功能免费，除企业定制开发外，不存在任何收费点。</span>
                 </p>
                 <p>您可以通过赞赏的方式支持我。</p>
-                <p>功能类似的网站有很多。如果本站的出现伤害到了您的利益，抱歉！</p>
+                <p class="flex flex-wrap items-center justify-around bg-cool-gray-100 py-4">
+                    <img class="w-72 h-72 object-contain" src="/wepay.jpg" alt="">
+                    <img class="w-72 h-72 object-contain" src="/afdian.jpg" alt="">
+                    <img class="w-72 h-72 object-contain" src="/alipay.jpg" alt="">
+                </p>
                 <p>最后，感谢开发过程中用到的所有开源项目。谢谢！</p>
             </div>
         </el-dialog>
@@ -47,7 +51,6 @@ const props = defineProps({
 const emits = defineEmits(['update:show'])
 
 const handleOpen = () => {
-    content.value = props.content
 }
 const handleClose = () => {
     emits('update:show', false)

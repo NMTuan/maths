@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-03-16 15:37:21
+ * @LastEditTime: 2023-03-17 15:11:30
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\logDialog.vue
@@ -11,7 +11,7 @@
     <ClientOnly>
         <el-dialog :modelValue="show" @open="handleOpen" :before-close="handleClose" append-to-body title="更新日志"
             width="75%">
-            <el-timeline>
+            <el-timeline class="overflow-auto">
                 <el-timeline-item v-for="log in logs" :timestamp="log.date" placement="top">
                     <template v-for="(child, index) in log.children">
                         <div class="flex items-center gap-4" :class="{
@@ -40,7 +40,6 @@ const props = defineProps({
 const emits = defineEmits(['update:show'])
 
 const handleOpen = () => {
-    content.value = props.content
 }
 const handleClose = () => {
     emits('update:show', false)

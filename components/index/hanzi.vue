@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white p-8 mt-12 mx-auto max-w-790px shadow-lg">
-        <div class="flex items-center justify-center gap-3">
+        <div class="flex items-center justify-center flex-wrap gap-3">
             <TemplateTianItem :customClass="customClass">天</TemplateTianItem>
             <TemplateTianItem :customClass="customClass" class="text-cool-gray-300">道</TemplateTianItem>
             <TemplateTianItem :customClass="customClass" class="text-cool-gray-300">酬</TemplateTianItem>
@@ -14,7 +14,7 @@ const customClass = computed(() => {
         'text-160px',
         'w-44',
         'h-44',
-        'flex-shrink-0'
+        'flex-shrink-0',
     ]
 })
 </script>

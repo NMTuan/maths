@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-15 16:00:53
- * @LastEditTime: 2023-03-16 10:55:53
+ * @LastEditTime: 2023-03-17 15:37:51
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\layouts\default.vue
@@ -25,16 +25,17 @@
         <!-- main -->
         <div class="flex-1 h-full overflow-hidden" :class="mainClass">
             <simplebar class="simplebar h-full" ref="mainScroll">
-                <div class="flex items-center justify-between p-4 leading-none bg-cool-gray-50/50 backdrop-blur sticky left-0 top-0 right-0 z-100"
+                <div class="p-4 leading-none bg-cool-gray-50/50 backdrop-blur sticky left-0 top-0 right-0 z-100"
+                    sm="flex items-center justify-between flex-wrap flex-row-reverse"
                     print="hidden">
-
+                    <div class="mr-2">
+                        <LayoutRightGuide class="justify-end mb-4" sm="justify-start mb-0"></LayoutRightGuide>
+                    </div>
                     <div class="flex items-center">
-                        <LayoutPin v-model:pin="pin"></LayoutPin>
+                        <LayoutPin v-model:pin="pin" @click="showMenu"></LayoutPin>
                         <LayoutGuide></LayoutGuide>
                     </div>
-                    <div class="mr-2">
-                        <LayoutRightGuide></LayoutRightGuide>
-                    </div>
+          
                 </div>
                 <div class="main w-85% max-w-790px mx-auto mt-6" print="w-auto max-w-98% m-0">
                     <slot></slot>
@@ -54,7 +55,7 @@ const menuClass = computed(() => {
     switch (pin.value) {
         case 1:
             classNames.push(
-                'w-0 bg-cool-gray-100/90 border-r-8 border-cool-gray-300/50 transition-all duration-500'
+                'w-0 bg-cool-gray-100/90 border-r-11px border-cool-gray-300/50 transition-all duration-500'
             )
             classNames.push('hover:w-64 hover:border-r')
             break
