@@ -2,12 +2,18 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-06 11:28:51
- * @LastEditTime: 2023-03-06 14:41:32
+ * @LastEditTime: 2023-03-17 17:12:21
  * @LastEditors: NMTuan
  * @Description:
  * @FilePath: \ezMaths\plugins\seo.js
  */
 const data = {
+    '/': {
+        title: '首页',
+        keywords: '数学题,字帖,打印',
+        description:
+            '强大、易用的一键生成数学题、描红字帖及各种空白模板。让眼睛回归纸张，远离屏幕设备。适合幼儿园、幼小衔接、小学一年级、二年级等各年龄段使用。'
+    },
     '/math/addition': {
         title: '加法、连加、填空、口算练习题 - 数学',
         keywords: '加法,口算,数学,打印',
@@ -24,7 +30,7 @@ const data = {
         title: '加减法混合运算、填空、口算练习题',
         keywords: '加减法,混合运算,打印,数学',
         description:
-            'A4纸一键打印加减法混合运算数学题，10以内至100以内口算练习题。适合幼儿园、幼小衔接、小学一年级、二年级等。'
+            'A4纸一键打印加减法混合运算数学题，10以内至100以内口算练习题。适合幼儿园、幼小衔接、小学一年级、二年级等各年龄段使用。'
     },
     '/math/make_ten': {
         title: '20以内凑十法练习题 - 数学',

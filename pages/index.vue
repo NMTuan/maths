@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2022-07-29 15:35:30
- * @LastEditTime: 2023-03-17 16:04:05
+ * @LastEditTime: 2023-03-17 16:30:55
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\index.vue
@@ -81,6 +81,11 @@
 </template>
 <script setup>
 import simplebar from 'simplebar-vue';
+
+const { $getSeoInfo } = useNuxtApp()
+const seo = $getSeoInfo()
+useServerSeoMeta(seo)
+useHead(seo)
 
 definePageMeta({
     layout: "index",

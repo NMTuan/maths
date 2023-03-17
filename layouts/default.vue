@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-15 16:00:53
- * @LastEditTime: 2023-03-17 15:37:51
+ * @LastEditTime: 2023-03-17 17:06:14
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\layouts\default.vue
@@ -55,14 +55,14 @@ const menuClass = computed(() => {
     switch (pin.value) {
         case 1:
             classNames.push(
-                'w-0 bg-cool-gray-100/90 border-r-11px border-cool-gray-300/50 transition-all duration-500'
+                'w-0 bg-cool-gray-100/90 border-r-10px border-cool-gray-300/50 transition-all duration-500'
             )
             classNames.push('hover:w-64 hover:border-r')
             break
         case 0:
         default:
             classNames.push(
-                'w-0 bg-cool-gray-100/90 border-r-8 border-cool-gray-300/50 transition-all duration-500'
+                'w-0 bg-cool-gray-100/90 border-r-10px border-cool-gray-300/50 transition-all duration-500'
             )
             classNames.push('hover:w-64 hover:border-r')
             classNames.push('lg:w-64 lg:bg-cool-gray-200/50 lg:!border-none')
