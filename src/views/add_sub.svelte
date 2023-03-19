@@ -285,6 +285,16 @@
     }
 </script>
 
+<div class="print:hidden text-center bg-sky-200 py-4">
+    新增分成题、拼音、田字格等功能，详情
+    <a
+        class="text-blue-600 no-underline"
+        href="https://www.dayin.page/?ref=maths"
+        target="_blank"
+    >
+        点击新版网站：https://www.dayin.page/
+    </a>
+</div>
 <div class="flex flex-wrap items-center justify-center my-6 print:hidden">
     <div class="mx-4 my-2 whitespace-nowrap flex items-center">
         <strong>范围：</strong>
