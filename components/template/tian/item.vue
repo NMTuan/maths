@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-08 14:29:37
- * @LastEditTime: 2023-03-14 17:08:06
+ * @LastEditTime: 2023-03-19 11:45:16
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\template\tian\item.vue
@@ -52,7 +52,6 @@ const bgSize = computed(() => {
         className.push('w-16 h-16')
     }
     return className
-
 })
 </script>
 <style lang="scss" scoped>
@@ -79,8 +78,10 @@ const bgSize = computed(() => {
 }
 
 .content {
-    // font-family: '楷体';
-    font-family: 'STKaiti';
+    font-family: 楷体_gb2312, 楷体, 'Kaiti SC', STKaiti, 'AR PL UKai CN',
+        'AR PL UKai HK', 'AR PL UKai TW', 'AR PL UKai TW MBE', 'AR PL KaitiM GB',
+        KaiTi, KaiTi_GB2312, DFKai-SB, TW-Kai;
+    // font-family: STKaiti, zhengkai, KaiTi, 楷体;
     // font-family: '华文楷体';
     --at-apply: relative z-10;
     --at-apply: leading-none;
