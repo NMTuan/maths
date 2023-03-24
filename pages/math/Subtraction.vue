@@ -1,17 +1,8 @@
 <!--
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
- * @Date: 2023-02-24 13:00:07
- * @LastEditTime: 2023-03-06 16:07:35
- * @LastEditors: NMTuan
- * @Description: 
- * @FilePath: \ezMaths\pages\math\subtraction.vue
--->
-<!--
- * @Author: NMTuan
- * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 10:59:38
- * @LastEditTime: 2023-02-23 15:56:20
+ * @LastEditTime: 2023-03-24 16:50:28
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\subtraction.vue
