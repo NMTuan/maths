@@ -1,7 +1,8 @@
 <template>
+    <div>
     <div class="clock">
-        <div class="hour"></div>
-        <div class="minute"></div>
+        <div class="hour" :style="hourStyle"></div>
+        <div class="minute" :style="minuteStyle"></div>
         <div class="notch">
             <div class="cover"></div>
             <div class="notch_1"></div>
@@ -43,24 +44,58 @@
             <div class="dot_34"></div>
         </div>
         <div class="number">
-            <div class="number_1"><span>1</span><span>7</span></div>
-            <div class="number_2"><span>2</span><span>8</span></div>
-            <div class="number_3"><span>3</span><span>9</span></div>
-            <div class="number_4"><span>4</span><span>10</span></div>
-            <div class="number_5"><span>5</span><span>11</span></div>
-            <div class="number_6"><span>6</span><span>12</span></div>
+            <div class="number_1"><span>{{currentNumberType[1-1]}}</span><span>{{currentNumberType[7-1]}}</span></div>
+            <div class="number_2"><span>{{currentNumberType[2-1]}}</span><span>{{currentNumberType[8-1]}}</span></div>
+            <div class="number_3"><span>{{currentNumberType[3-1]}}</span><span>{{currentNumberType[9-1]}}</span></div>
+            <div class="number_4"><span>{{currentNumberType[4-1]}}</span><span>{{currentNumberType[10-1]}}</span></div>
+            <div class="number_5"><span>{{currentNumberType[5-1]}}</span><span>{{currentNumberType[11-1]}}</span></div>
+            <div class="number_6"><span>{{currentNumberType[6-1]}}</span><span>{{currentNumberType[12-1]}}</span></div>
         </div>
         <div class="center"></div>
+    </div>
+    <div class="text-center my-4 text-lg">
+    {{ time }}
+    </div>
     </div>
 </template>
 <script setup>
 const numberType = [
-    { type: 'roman', arguments: [] },
-    { type: 'arabic', arguments: [] }
+    { type: 'roman', arguments: ['1','2','3','4','5','6','7','8','9','10','11','12'] },
+    { type: 'arabic', arguments: ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'] }
 ]
+const currentNumberType = computed(() => {
+    return numberType[0].arguments
+})
+
+const props = defineProps({
+    time: {
+        type: String,
+        default: '0:00'
+    }
+})
+
+const hour = computed(() => {
+    return Number(props.time.split(':')[0] % 12) || 0
+})
+const minute = computed(() => {
+    return Number(props.time.split(':')[1]) || 0
+})
+const hourStyle = computed(() => {
+    let rotate = hour.value * 30; // 小时的旋转角度 每小时 360°/12小时 = 30°
+    // 分钟的旋转角度 每分钟 30°/60分钟 = 0.5°
+    rotate += minute.value * 0.5
+    return `transform: translate(-50%, -80%) rotate(${rotate}deg);`
+})
+const minuteStyle = computed(() => {
+    const rotate = minute.value * 6;
+    return `transform: translate(-50%, -80%) rotate(${rotate}deg);`
+    
+})
 </script>
 <style lang="scss">
 .clock {
+    @apply select-none;
+    @apply pb-100%;
     @apply relative;
     @apply overflow-hidden;
     @apply border-2 border-black rounded-full;
@@ -69,7 +104,7 @@ const numberType = [
 @mixin notch($num) {
     height: 110%;
     @apply border-2 border-black;
-    @apply absolute top-50% left-50% z-20;
+    @apply absolute top-50% left-50% z-3;
     transform: translate(-50%, -50%) rotate($num * 30deg);
 }
 .notch {
@@ -79,7 +114,7 @@ const numberType = [
         background-color: #fff;
         width: 100%;
         height: 100%;
-        z-index: 25;
+        z-index: 4;
         position: relative;
         border-radius: 100%;
     }
@@ -106,7 +141,7 @@ const numberType = [
 @mixin dot($num) {
     height: 110%;
     @apply border-1 border-cool-gray-400;
-    @apply absolute top-50% left-50% z-10;
+    @apply absolute top-50% left-50% z-1;
     transform: translate(-50%, -50%) rotate($num * 6deg);
 }
 .dot {
@@ -116,7 +151,7 @@ const numberType = [
         background-color: #fff;
         width: 100%;
         height: 100%;
-        z-index: 15;
+        z-index: 2;
         position: relative;
         border-radius: 100%;
     }
@@ -224,7 +259,7 @@ const numberType = [
     div {
         @apply h-full text-center;
         @apply flex flex-col justify-between;
-        @apply absolute top-50% left-50% z-30;
+        @apply absolute top-50% left-50% z-5;
     }
     &_1 {
         @include number(1);
@@ -255,7 +290,7 @@ const numberType = [
     left: 50%;
     transform-origin: 50% 80%;
     transform: translate(-50%, -80%) rotate(60deg);
-    z-index: 33;
+    z-index: 7;
 }
 .minute {
     width: 0;
@@ -267,7 +302,7 @@ const numberType = [
     left: 50%;
     transform-origin: 50% 80%;
     transform: translate(-50%, -80%) rotate(30deg);
-    z-index: 32;
+    z-index: 6;
 }
 .center {
     @apply w-0 h-0 overflow-hidden;

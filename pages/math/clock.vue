@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-25 16:14:45
- * @LastEditTime: 2023-03-25 19:53:58
+ * @LastEditTime: 2023-03-27 17:10:00
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\clock.vue
@@ -10,9 +10,24 @@
 <template>
     <LayoutPaper title="认识钟表">
         <div class="flex flex-wrap">
-            <MathClockItem class="w-100 h-100"></MathClockItem>
-            <MathClockItem class="w-75 h-75"></MathClockItem>
-            <MathClockItem class="w-50 h-50"></MathClockItem>
+            <MathClockItem v-for="time in times" class="flex-1 m-4"
+            :time="time"
+            ></MathClockItem>
+        </div>
+        <div class="flex flex-wrap">
+            <MathClockItem v-for="time in times" class="flex-1 m-4"
+            :time="time"
+            ></MathClockItem>
+        </div>
+        <div class="flex flex-wrap">
+            <MathClockItem v-for="time in times" class="flex-1 m-4"
+            :time="time"
+            ></MathClockItem>
+        </div>
+        <div class="flex flex-wrap">
+            <MathClockItem v-for="time in times" class="flex-1 m-4"
+            :time="time"
+            ></MathClockItem>
         </div>
     </LayoutPaper>
 </template>
@@ -21,6 +36,13 @@ const { $getSeoInfo } = useNuxtApp()
 const seo = $getSeoInfo()
 useServerSeoMeta(seo)
 useHead(seo)
+
+const times = [
+    '12:00',
+    '8:45',
+    '18:00',
+    '3:30'
+]
 </script>
 
 <script>
