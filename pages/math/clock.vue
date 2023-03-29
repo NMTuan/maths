@@ -160,7 +160,7 @@ watch(h24, () => {
 export default {
     page: {
         name: '认识钟表',
-        sort: 300
+        sort: 700
     }
 }
 </script>
