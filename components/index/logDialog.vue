@@ -2,28 +2,56 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-03-17 15:11:30
+ * @LastEditTime: 2023-03-29 22:20:04
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\logDialog.vue
 -->
 <template>
     <ClientOnly>
-        <el-dialog :modelValue="show" @open="handleOpen" :before-close="handleClose" append-to-body title="更新日志"
-            width="75%">
+        <el-dialog
+            :modelValue="show"
+            @open="handleOpen"
+            :before-close="handleClose"
+            append-to-body
+            title="更新日志"
+            width="75%"
+        >
             <el-timeline class="overflow-auto">
-                <el-timeline-item v-for="log in logs" :timestamp="log.date" placement="top">
+                <el-timeline-item
+                    v-for="log in logs"
+                    :timestamp="log.date"
+                    placement="top"
+                >
                     <template v-for="(child, index) in log.children">
-                        <div class="flex items-center gap-4" :class="{
-                            'mt-10': index > 0
-                        }">
+                        <div
+                            class="flex items-center gap-4"
+                            :class="{
+                                'mt-10': index > 0
+                            }"
+                        >
                             <div class="text-base font-bold">
                                 {{ child.title }}
                             </div>
-                            <a v-if="child.url" :href="child.url" target="_blank" class="text-blue-400">访问网站</a>
-                            <a v-if="child.github" :href="child.github" target="_blank" class="text-blue-400">源码地址</a>
+                            <a
+                                v-if="child.url"
+                                :href="child.url"
+                                target="_blank"
+                                class="text-blue-400"
+                                >访问网站</a
+                            >
+                            <a
+                                v-if="child.github"
+                                :href="child.github"
+                                target="_blank"
+                                class="text-blue-400"
+                                >源码地址</a
+                            >
                         </div>
-                        <div class="whitespace-pre" v-html="child.content"></div>
+                        <div
+                            class="whitespace-pre"
+                            v-html="child.content"
+                        ></div>
                     </template>
                 </el-timeline-item>
             </el-timeline>
@@ -39,8 +67,7 @@ const props = defineProps({
 })
 const emits = defineEmits(['update:show'])
 
-const handleOpen = () => {
-}
+const handleOpen = () => {}
 const handleClose = () => {
     emits('update:show', false)
 }
@@ -50,15 +77,21 @@ const logs = [
         date: '2023年3月',
         children: [
             {
-                title: "新版本上线",
-                url: 'https://www.dayin.page',
+                title: '新增数学类',
+                content: `
+                新增：认识钟表。
+                `
+            },
+            {
+                title: '新版本上线',
+                url: 'https://www.dayin.page/?ref=log',
                 content: `
                 启用顶级域名 DaYin.page 。
                 `
             },
             {
-                title: "接入兔小巢",
-                url: 'https://support.qq.com/product/530277',
+                title: '接入兔小巢',
+                url: 'https://support.qq.com/product/530277?ref=log',
                 content: `
                 接入反馈系统，如果你有什么建议或意见，欢迎反馈。
                 `
@@ -78,7 +111,6 @@ const logs = [
                 `
             }
         ]
-
     },
     {
         date: '2023年2月',
@@ -107,7 +139,7 @@ const logs = [
         children: [
             {
                 title: '发布并开源 “加减法数学题生成器”',
-                url: 'https://nmtuan.github.io/maths/',
+                url: 'https://nmtuan.github.io/maths/?ref=dayin.page.log',
                 github: 'https://github.com/NMTuan/maths',
                 content: `
                 尝试使用 svelte 开发了一个生成数学题的静态页面。
