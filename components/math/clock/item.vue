@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="clock">
-            <div class="hour" :style="hourStyle"></div>
-            <div class="minute" :style="minuteStyle"></div>
+            <div v-if="type === 'fill' || showRes" class="hour" :style="hourStyle"></div>
+            <div v-if="type === 'fill' || showRes" class="minute" :style="minuteStyle"></div>
             <div class="notch">
                 <div class="cover"></div>
                 <div class="notch_1"></div>
@@ -43,34 +43,44 @@
                 <div class="dot_33"></div>
                 <div class="dot_34"></div>
             </div>
-            <div class="number">
-                <div class="number_1"><span>{{ currentNumberType[1 - 1] }}</span><span>{{ currentNumberType[7 - 1] }}</span></div>
-                <div class="number_2"><span>{{ currentNumberType[2 - 1] }}</span><span>{{ currentNumberType[8 - 1] }}</span></div>
-                <div class="number_3"><span>{{ currentNumberType[3 - 1] }}</span><span>{{ currentNumberType[9 - 1] }}</span></div>
-                <div class="number_4"><span>{{ currentNumberType[4 - 1] }}</span><span>{{ currentNumberType[10 - 1] }}</span></div>
-                <div class="number_5"><span>{{ currentNumberType[5 - 1] }}</span><span>{{ currentNumberType[11 - 1] }}</span></div>
-                <div class="number_6"><span>{{ currentNumberType[6 - 1] }}</span><span>{{ currentNumberType[12 - 1] }}</span></div>
+            <div class="number" v-if="numberType !== 'none'">
+                <div class="number_1"><span>{{ numberTypes[numberType][1 - 1] }}</span><span>{{ numberTypes[numberType][7 - 1] }}</span></div>
+                <div class="number_2"><span>{{ numberTypes[numberType][2 - 1] }}</span><span>{{ numberTypes[numberType][8 - 1] }}</span></div>
+                <div class="number_3"><span>{{ numberTypes[numberType][3 - 1] }}</span><span>{{ numberTypes[numberType][9 - 1] }}</span></div>
+                <div class="number_4"><span>{{ numberTypes[numberType][4 - 1] }}</span><span>{{ numberTypes[numberType][10 - 1] }}</span></div>
+                <div class="number_5"><span>{{ numberTypes[numberType][5 - 1] }}</span><span>{{ numberTypes[numberType][11 - 1] }}</span></div>
+                <div class="number_6"><span>{{ numberTypes[numberType][6 - 1] }}</span><span>{{ numberTypes[numberType][12 - 1] }}</span></div>
             </div>
             <div class="center"></div>
         </div>
         <div class="text-center my-4 text-lg">
-            {{ time }}
+            {{ (type==='draw' || showRes) ? time : '（_____:_____）' }} 
         </div>
     </div>
 </template>
 <script setup>
-const numberType = [
-    { type: 'roman', arguments: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] },
-    { type: 'arabic', arguments: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'] }
-]
-const currentNumberType = computed(() => {
-    return numberType[0].arguments
-})
+const numberTypes = {
+    arabic: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] ,
+    roman:  ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
+    
+}
 
 const props = defineProps({
     time: {
         type: String,
         default: '0:00'
+    },
+    type: {
+        type: String,
+        default: 'fill'
+    },
+    numberType: {
+        type: String,
+        default: 'roman'
+    },
+    showRes: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -293,6 +303,7 @@ const minuteStyle = computed(() => {
 
 .number {
     @apply absolute inset-5%;
+    @apply text-sm;
 
     div {
         @apply h-full text-center;
@@ -328,7 +339,7 @@ const minuteStyle = computed(() => {
 .hour {
     width: 0;
     height: 25%;
-    @apply border-2 border-black;
+    @apply border-2 border-black transition-all;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -340,7 +351,7 @@ const minuteStyle = computed(() => {
 .minute {
     width: 0;
     height: 40%;
-    @apply border-1 border-black;
+    @apply border-1 border-black transition-all;
     background-color: #000;
     position: absolute;
     top: 50%;
