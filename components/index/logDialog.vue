@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-03-29 22:14:47
+ * @LastEditTime: 2023-03-29 22:20:04
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\logDialog.vue
@@ -76,7 +76,7 @@ const logs = [
     {
         date: '2023年3月',
         children: [
-              {
+            {
                 title: '新增数学类',
                 content: `
                 新增：认识钟表。
@@ -84,7 +84,7 @@ const logs = [
             },
             {
                 title: '新版本上线',
-                url: 'https://www.dayin.page',
+                url: 'https://www.dayin.page/?ref=log',
                 content: `
                 启用顶级域名 DaYin.page 。
                 `
@@ -139,7 +139,7 @@ const logs = [
         children: [
             {
                 title: '发布并开源 “加减法数学题生成器”',
-                url: 'https://nmtuan.github.io/maths/',
+                url: 'https://nmtuan.github.io/maths/?ref=dayin.page.log',
                 github: 'https://github.com/NMTuan/maths',
                 content: `
                 尝试使用 svelte 开发了一个生成数学题的静态页面。
