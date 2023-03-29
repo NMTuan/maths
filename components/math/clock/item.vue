@@ -104,23 +104,23 @@ const minuteStyle = computed(() => {
 </script>
 <style lang="scss">
 .clock {
-    @apply select-none;
-    @apply pb-100%;
-    @apply relative;
-    @apply overflow-hidden;
-    @apply border-2 border-black rounded-full;
+    --at-apply: select-none;
+    --at-apply: pb-100%;
+    --at-apply: relative;
+    --at-apply: overflow-hidden;
+    --at-apply: border-2 border-black rounded-full;
 }
 
 @mixin notch($num) {
     height: 110%;
-    @apply border-2 border-black;
-    @apply absolute top-50% left-50% z-3;
+    --at-apply: border-2 border-black;
+    --at-apply: absolute top-50% left-50% z-3;
     transform: translate(-50%, -50%) rotate($num * 30deg);
 }
 
 .notch {
-    @apply absolute inset-0;
-    @apply p-5%;
+    --at-apply: absolute inset-0;
+    --at-apply: p-5%;
 
     .cover {
         background-color: #fff;
@@ -158,14 +158,14 @@ const minuteStyle = computed(() => {
 
 @mixin dot($num) {
     height: 110%;
-    @apply border-1 border-cool-gray-400;
-    @apply absolute top-50% left-50% z-1;
+    --at-apply: border-1 border-cool-gray-400;
+    --at-apply: absolute top-50% left-50% z-1;
     transform: translate(-50%, -50%) rotate($num * 6deg);
 }
 
 .dot {
-    @apply absolute inset-0;
-    @apply p-3%;
+    --at-apply: absolute inset-0;
+    --at-apply: p-3%;
 
     .cover {
         background-color: #fff;
@@ -302,13 +302,13 @@ const minuteStyle = computed(() => {
 }
 
 .number {
-    @apply absolute inset-5%;
-    @apply text-sm;
+    --at-apply: absolute inset-5%;
+    --at-apply: text-sm;
 
     div {
-        @apply h-full text-center;
-        @apply flex flex-col justify-between;
-        @apply absolute top-50% left-50% z-5;
+        --at-apply: h-full text-center;
+        --at-apply: flex flex-col justify-between;
+        --at-apply: absolute top-50% left-50% z-5;
     }
 
     &_1 {
@@ -339,7 +339,7 @@ const minuteStyle = computed(() => {
 .hour {
     width: 0;
     height: 25%;
-    @apply border-2 border-black transition-all;
+    --at-apply: border-2 border-black transition-all;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -351,7 +351,7 @@ const minuteStyle = computed(() => {
 .minute {
     width: 0;
     height: 40%;
-    @apply border-1 border-black transition-all;
+    --at-apply: border-1 border-black transition-all;
     background-color: #000;
     position: absolute;
     top: 50%;
@@ -362,9 +362,9 @@ const minuteStyle = computed(() => {
 }
 
 .center {
-    @apply w-0 h-0 overflow-hidden;
-    @apply border-5 border-black rounded-full;
-    @apply absolute top-50% left-50% z-8;
+    --at-apply: w-0 h-0 overflow-hidden;
+    --at-apply: border-5 border-black rounded-full;
+    --at-apply: absolute top-50% left-50% z-8;
     transform: translate(-50%, -50%);
 }
 </style>
