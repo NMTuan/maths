@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-25 16:14:45
- * @LastEditTime: 2023-03-29 17:08:02
+ * @LastEditTime: 2023-03-29 17:17:17
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\clock.vue
@@ -101,7 +101,7 @@ const timeTypes = [
     { key: 'hour', label: '仅整点' }
 ]
 const currentTimeTypeIndex = useCookie('math_clock_currentTimeTypeIndex')
-currentTimeTypeIndex.value = currentTimeTypeIndex.value || 2
+currentTimeTypeIndex.value = currentTimeTypeIndex.value || 0
 const timeType = computed(() => {
     return timeTypes[currentTimeTypeIndex.value] || {}
 })
