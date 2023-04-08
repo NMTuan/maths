@@ -1,8 +1,16 @@
 <template>
     <div>
         <div class="clock">
-            <div v-if="type === 'fill' || showRes" class="hour" :style="hourStyle"></div>
-            <div v-if="type === 'fill' || showRes" class="minute" :style="minuteStyle"></div>
+            <div
+                v-if="type === 'fill' || showRes"
+                class="hour"
+                :style="hourStyle"
+            ></div>
+            <div
+                v-if="type === 'fill' || showRes"
+                class="minute"
+                :style="minuteStyle"
+            ></div>
             <div class="notch">
                 <div class="cover"></div>
                 <div class="notch_1"></div>
@@ -44,25 +52,55 @@
                 <div class="dot_34"></div>
             </div>
             <div class="number" v-if="numberType !== 'none'">
-                <div class="number_1"><span>{{ numberTypes[numberType][1 - 1] }}</span><span>{{ numberTypes[numberType][7 - 1] }}</span></div>
-                <div class="number_2"><span>{{ numberTypes[numberType][2 - 1] }}</span><span>{{ numberTypes[numberType][8 - 1] }}</span></div>
-                <div class="number_3"><span>{{ numberTypes[numberType][3 - 1] }}</span><span>{{ numberTypes[numberType][9 - 1] }}</span></div>
-                <div class="number_4"><span>{{ numberTypes[numberType][4 - 1] }}</span><span>{{ numberTypes[numberType][10 - 1] }}</span></div>
-                <div class="number_5"><span>{{ numberTypes[numberType][5 - 1] }}</span><span>{{ numberTypes[numberType][11 - 1] }}</span></div>
-                <div class="number_6"><span>{{ numberTypes[numberType][6 - 1] }}</span><span>{{ numberTypes[numberType][12 - 1] }}</span></div>
+                <div class="number_1">
+                    <span>{{ numberTypes[numberType][1 - 1] }}</span
+                    ><span>{{ numberTypes[numberType][7 - 1] }}</span>
+                </div>
+                <div class="number_2">
+                    <span>{{ numberTypes[numberType][2 - 1] }}</span
+                    ><span>{{ numberTypes[numberType][8 - 1] }}</span>
+                </div>
+                <div class="number_3">
+                    <span>{{ numberTypes[numberType][3 - 1] }}</span
+                    ><span>{{ numberTypes[numberType][9 - 1] }}</span>
+                </div>
+                <div class="number_4">
+                    <span>{{ numberTypes[numberType][4 - 1] }}</span
+                    ><span>{{ numberTypes[numberType][10 - 1] }}</span>
+                </div>
+                <div class="number_5">
+                    <span>{{ numberTypes[numberType][5 - 1] }}</span
+                    ><span>{{ numberTypes[numberType][11 - 1] }}</span>
+                </div>
+                <div class="number_6">
+                    <span>{{ numberTypes[numberType][6 - 1] }}</span
+                    ><span>{{ numberTypes[numberType][12 - 1] }}</span>
+                </div>
             </div>
             <div class="center"></div>
         </div>
         <div class="text-center my-4 text-lg">
-            {{ (type==='draw' || showRes) ? time : '（_____:_____）' }} 
+            {{ type === 'draw' || showRes ? time : '（_____:_____）' }}
         </div>
     </div>
 </template>
 <script setup>
 const numberTypes = {
-    arabic: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] ,
-    roman:  ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
-    
+    arabic: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    roman: [
+        'I',
+        'II',
+        'III',
+        'IV',
+        'V',
+        'VI',
+        'VII',
+        'VIII',
+        'IX',
+        'X',
+        'XI',
+        'XII'
+    ]
 }
 
 const props = defineProps({
@@ -91,36 +129,35 @@ const minute = computed(() => {
     return Number(props.time.split(':')[1]) || 0
 })
 const hourStyle = computed(() => {
-    let rotate = hour.value * 30; // 小时的旋转角度 每小时 360°/12小时 = 30°
+    let rotate = hour.value * 30 // 小时的旋转角度 每小时 360°/12小时 = 30°
     // 分钟的旋转角度 每分钟 30°/60分钟 = 0.5°
     rotate += minute.value * 0.5
     return `transform: translate(-50%, -80%) rotate(${rotate}deg);`
 })
 const minuteStyle = computed(() => {
-    const rotate = minute.value * 6;
+    const rotate = minute.value * 6
     return `transform: translate(-50%, -80%) rotate(${rotate}deg);`
-
 })
 </script>
 <style lang="scss">
 .clock {
-    --at-apply: select-none;
-    --at-apply: pb-100%;
-    --at-apply: relative;
-    --at-apply: overflow-hidden;
-    --at-apply: border-2 border-black rounded-full;
+    @apply select-none;
+    @apply pb-100%;
+    @apply relative;
+    @apply overflow-hidden;
+    @apply border-2 border-black rounded-full;
 }
 
 @mixin notch($num) {
     height: 110%;
-    --at-apply: border-2 border-black;
-    --at-apply: absolute top-50% left-50% z-3;
+    @apply border-2 border-black;
+    @apply absolute top-50% left-50% z-3;
     transform: translate(-50%, -50%) rotate($num * 30deg);
 }
 
 .notch {
-    --at-apply: absolute inset-0;
-    --at-apply: p-5%;
+    @apply absolute inset-0;
+    @apply p-5%;
 
     .cover {
         background-color: #fff;
@@ -158,14 +195,14 @@ const minuteStyle = computed(() => {
 
 @mixin dot($num) {
     height: 110%;
-    --at-apply: border-1 border-cool-gray-400;
-    --at-apply: absolute top-50% left-50% z-1;
+    @apply border-1 border-cool-gray-400;
+    @apply absolute top-50% left-50% z-1;
     transform: translate(-50%, -50%) rotate($num * 6deg);
 }
 
 .dot {
-    --at-apply: absolute inset-0;
-    --at-apply: p-3%;
+    @apply absolute inset-0;
+    @apply p-3%;
 
     .cover {
         background-color: #fff;
@@ -302,13 +339,13 @@ const minuteStyle = computed(() => {
 }
 
 .number {
-    --at-apply: absolute inset-5%;
-    --at-apply: text-sm;
+    @apply absolute inset-5%;
+    @apply text-sm;
 
     div {
-        --at-apply: h-full text-center;
-        --at-apply: flex flex-col justify-between;
-        --at-apply: absolute top-50% left-50% z-5;
+        @apply h-full text-center;
+        @apply flex flex-col justify-between;
+        @apply absolute top-50% left-50% z-5;
     }
 
     &_1 {
@@ -339,7 +376,7 @@ const minuteStyle = computed(() => {
 .hour {
     width: 0;
     height: 25%;
-    --at-apply: border-2 border-black transition-all;
+    @apply border-2 border-black transition-all;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -351,7 +388,7 @@ const minuteStyle = computed(() => {
 .minute {
     width: 0;
     height: 40%;
-    --at-apply: border-1 border-black transition-all;
+    @apply border-1 border-black transition-all;
     background-color: #000;
     position: absolute;
     top: 50%;
@@ -362,9 +399,9 @@ const minuteStyle = computed(() => {
 }
 
 .center {
-    --at-apply: w-0 h-0 overflow-hidden;
-    --at-apply: border-5 border-black rounded-full;
-    --at-apply: absolute top-50% left-50% z-8;
+    @apply w-0 h-0 overflow-hidden;
+    @apply border-5 border-black rounded-full;
+    @apply absolute top-50% left-50% z-8;
     transform: translate(-50%, -50%);
 }
 </style>

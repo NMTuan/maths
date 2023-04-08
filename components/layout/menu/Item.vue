@@ -17,28 +17,28 @@
 const props = defineProps({
     page: {
         type: Object,
-        default: () => { }
+        default: () => {}
     }
 })
 </script>
 <style lang="scss" scoped>
 .link {
-    --at-apply: block p-4 flex items-center;
-    --at-apply: capitalize font-bold text-cool-gray-600;
-    --at-apply: hover:bg-cool-gray-200;
+    @apply block p-4 flex items-center;
+    @apply capitalize font-bold text-cool-gray-600;
+    @apply hover:bg-cool-gray-200;
 }
 
 .icon {
-    --at-apply: text-20px mr-2 text-cool-gray-400;
+    @apply text-20px mr-2 text-cool-gray-400;
 }
 
 .router-link-active,
 .router-link-active:hover {
-    --at-apply: bg-blue-400;
-    --at-apply: text-white;
+    @apply bg-blue-400;
+    @apply text-white;
 
     .icon {
-        --at-apply: text-blue-200;
+        @apply text-blue-200;
     }
 }
 </style>

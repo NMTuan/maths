@@ -88,17 +88,17 @@ const handleClose = () => {
 </script>
 <style lang="scss" scoped>
 p {
-    --at-apply: mb-6 mx-4;
+    @apply mb-6 mx-4;
 }
 
 a {
-    --at-apply: text-blue-400;
-    --at-apply: hover:underline;
+    @apply text-blue-400;
+    @apply hover:underline;
 }
 
 a[target='_blank'] {
     &::after {
-        content: ''
+        content: '';
     }
 }
 </style>

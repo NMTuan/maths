@@ -66,28 +66,28 @@ const contentSize = computed(() => {
 
 .bg {
     font-family: 'py';
-    --at-apply: relative leading-none;
-    --at-apply: flex items-center justify-center;
-    // --at-apply: px-2;
-    // --at-apply: font-bold;
+    @apply relative leading-none;
+    @apply flex items-center justify-center;
+    // @apply px-2;
+    // @apply font-bold;
 
     &::before,
     &::after {
-        --at-apply: block border-y absolute inset-0;
+        @apply block border-y absolute inset-0;
     }
 
     &::before {
         content: '';
-        --at-apply: border-cool-gray-600;
+        @apply border-cool-gray-600;
     }
 
     &::after {
         content: '';
-        --at-apply: border-dashed border-cool-gray-400;
+        @apply border-dashed border-cool-gray-400;
     }
 }
 
 .content {
-    --at-apply: relative z-10;
+    @apply relative z-10;
 }
 </style>

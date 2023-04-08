@@ -14,29 +14,28 @@
         </NuxtLayout>
     </div>
 </template>
-<script setup>
-</script>
+<script setup></script>
 <style lang="scss">
 html,
 body,
 #__nuxt {
-    --at-apply: text-base text-cool-gray-800 bg-cool-gray-50 h-full overflow-hidden;
+    @apply text-base text-cool-gray-800 bg-cool-gray-50 h-full overflow-hidden;
 }
 
 *:focus-visible {
-    --at-apply: outline-none;
+    @apply outline-none;
 }
 
 .simplebar {
     &:hover {
         .simplebar-track {
-            --at-apply: bg-black/5;
+            @apply bg-black/5;
         }
     }
 
     .simplebar-scrollbar {
         &:before {
-            --at-apply: bg-black/50;
+            @apply bg-black/50;
         }
     }
 }
