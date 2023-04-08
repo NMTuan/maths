@@ -56,24 +56,24 @@ const bgSize = computed(() => {
 </script>
 <style lang="scss" scoped>
 .bg {
-    --at-apply: flex items-center justify-center;
-    --at-apply: border border-cool-gray-600;
-    --at-apply: relative;
-    --at-apply: select-none;
+    @apply flex items-center justify-center;
+    @apply border border-cool-gray-600;
+    @apply relative;
+    @apply select-none;
 
     &::before,
     &::after {
         content: '';
-        --at-apply: block absolute;
-        --at-apply: border border-dashed border-cool-gray-300;
+        @apply block absolute;
+        @apply border border-dashed border-cool-gray-300;
     }
 
     &::before {
-        --at-apply: w-full h-0;
+        @apply w-full h-0;
     }
 
     &::after {
-        --at-apply: w-0 h-full;
+        @apply w-0 h-full;
     }
 }
 
@@ -83,8 +83,8 @@ const bgSize = computed(() => {
         KaiTi, KaiTi_GB2312, DFKai-SB, TW-Kai;
     // font-family: STKaiti, zhengkai, KaiTi, 楷体;
     // font-family: '华文楷体';
-    --at-apply: relative z-10;
-    --at-apply: leading-none;
-    --at-apply: flex items-center justify-center;
+    @apply relative z-10;
+    @apply leading-none;
+    @apply flex items-center justify-center;
 }
 </style>
