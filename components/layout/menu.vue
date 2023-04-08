@@ -11,8 +11,7 @@
     <div class="menu">
         <template v-for="page in $firstLevelPages">
             <div class="title">{{ page.name }}</div>
-            <LayoutMenuList :current="page">
-            </LayoutMenuList>
+            <LayoutMenuList :current="page"> </LayoutMenuList>
         </template>
     </div>
 </template>
@@ -21,11 +20,11 @@ const { $firstLevelPages } = useNuxtApp()
 </script>
 <style scoped lang="scss">
 .menu {
-    --at-apply: leading-none;
+    @apply leading-none;
 }
 
 .title {
-    --at-apply: px-4 pt-5 pb-2;
-    --at-apply: text-cool-gray-400 capitalize text-sm;
+    @apply px-4 pt-5 pb-2;
+    @apply text-cool-gray-400 capitalize text-sm;
 }
 </style>
