@@ -2,33 +2,75 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-24 16:50:13
- * @LastEditTime: 2023-03-25 15:52:27
+ * @LastEditTime: 2023-04-08 21:03:52
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\sudoku.vue
 -->
 <template>
     <LayoutPaper title="数独">
-        <button
-            class="border px-4 py-1 rounded bg-gray-200"
-            @click="generateSudoku(4)"
-        >
-            4
-        </button>
-        <button
-            class="border px-4 py-1 rounded bg-gray-200"
-            @click="generateSudoku(6)"
-        >
-            6
-        </button>
-        <button
-            class="border px-4 py-1 rounded bg-gray-200"
-            @click="generateSudoku(9)"
-        >
-            9
-        </button>
+        <template #config>
+            <div class="sm:flex items-center justify-between">
+                <el-form class="flex items-center flex-wrap">
+                    <el-form-item label="模式" class="w-36 mr-4">
+                        <el-select
+                            v-model="currentTypeIndex"
+                            placeholder=""
+                            @change="submit"
+                        >
+                            <el-option
+                                v-for="(type, index) in types"
+                                :key="'type' + type.key"
+                                :label="type.label"
+                                :value="index"
+                            />
+                        </el-select>
+                    </el-form-item>
 
-        <div v-for="row in res">{{ row }}</div>
+                    <el-form-item label="难度" class="w-28 mr-4">
+                        <el-select
+                            v-model="currentLevelIndex"
+                            placeholder=""
+                            @change="submit"
+                        >
+                            <el-option
+                                v-for="(type, index) in levels"
+                                :key="'type' + type.key"
+                                :label="type.label"
+                                :value="index"
+                            />
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="" class="">
+                        <el-checkbox v-model="showRes" label="显示答案" />
+                    </el-form-item>
+                </el-form>
+                <el-form class="flex-shrink-0 flex items-center flex-wrap">
+                    <el-form-item label="" class="">
+                        <el-button-group>
+                            <el-button type="primary" plain @click="submit"
+                                >重新生成</el-button
+                            >
+                            <el-button type="primary" @click="print"
+                                >打印</el-button
+                            >
+                        </el-button-group>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </template>
+        <div class="flex gap-4 mb-6" v-for="(row, i) in type.row">
+            <div v-for="(item, index) in type.len / type.row" class="flex-1">
+                <!-- {{ (i * type.len) / type.row + index }} -->
+                <MathSudokuItem
+                    :data="res[(i * type.len) / type.row + index]"
+                    :data-dig="res_dig[(i * type.len) / type.row + index]"
+                    :type="type"
+                    :showRes="showRes"
+                ></MathSudokuItem>
+            </div>
+        </div>
     </LayoutPaper>
 </template>
 <script setup>
@@ -38,6 +80,58 @@ useServerSeoMeta(seo)
 useHead(seo)
 
 const res = ref([])
+const res_dig = ref([])
+
+const types = [
+    // key, lable, 生成数量，行数
+    { key: 4, label: '四宫数独', len: 20, row: 5 },
+    { key: 6, label: '六宫数独', len: 12, row: 4 },
+    { key: 9, label: '九宫数独', len: 4, row: 2 }
+]
+const currentTypeIndex = useCookie('math_sudoku_currentTypeIndex')
+currentTypeIndex.value = currentTypeIndex.value || 0
+const type = computed(() => {
+    return types[currentTypeIndex.value] || {}
+})
+
+const levels = [
+    { key: 'easy', label: '简单' },
+    { key: 'normal', label: '一般' },
+    { key: 'hard', label: '困难' }
+]
+const currentLevelIndex = useCookie('math_sudoku_currentLevelIndex')
+currentLevelIndex.value = currentLevelIndex.value || 0
+const level = computed(() => {
+    return levels[currentLevelIndex.value] || {}
+})
+
+const showRes = useCookie('math_sudoku_showRes') // 显示结果
+showRes.value = showRes.value || false
+
+const submit = () => {
+    res.value = []
+    res_dig.value = []
+    for (let i = 0; i < type.value.len; i++) {
+        const item = generateSudoku(type.value.key)
+
+        const tmp = item.reduce((total, current) => {
+            total.push([...current])
+            return total
+        }, [])
+        res.value.push(item)
+        res_dig.value.push(
+            removeSudokuNumbers(level.value.key, tmp, type.value.key)
+        )
+    }
+}
+
+onMounted(() => {
+    submit()
+})
+
+const print = () => {
+    window.print()
+}
 
 function generateSudoku(size) {
     // 创建一个 size x size 的二维数组，用于存储数独的数字
@@ -49,8 +143,8 @@ function generateSudoku(size) {
     const blockSize = Math.sqrt(size)
     // 递归地填写数独
     fillSudoku(sudoku, 0, 0, size, blockSize)
-    res.value = sudoku
-    // return sudoku;
+    // res.value = sudoku
+    return sudoku
 }
 function fillSudoku(sudoku, row, col, size, blockSize) {
     // 如果已经填写完最后一行，则返回 true
@@ -126,12 +220,146 @@ function shuffle(arr) {
     }
     return arr
 }
+
+/**
+ * 挖去数独矩阵的数字
+ * @param {number} level 难度等级，1为简单，2为一般，3为困难
+ */
+function removeSudokuNumbers(level, sudoku, size) {
+    let n = { min: 1, max: size - 1 }
+    if (size === 4) {
+        switch (level) {
+            case 'easy':
+                n.min = 1
+                n.max = 1
+                break
+            case 'normal':
+                n.min = 2
+                n.max = 2
+                break
+            case 'hard':
+                n.min = 3
+                n.max = 3
+                break
+        }
+    }
+
+    if (size === 6) {
+        switch (level) {
+            case 'easy':
+                n.min = 1
+                n.max = 2
+                break
+            case 'normal':
+                n.min = 2
+                n.max = 3
+                break
+            case 'hard':
+                n.min = 3
+                n.max = 4
+                break
+        }
+    }
+
+    if (size === 9) {
+        switch (level) {
+            case 'easy':
+                n.min = 1
+                n.max = 3
+                break
+            case 'normal':
+                n.min = 3
+                n.max = 5
+                break
+            case 'hard':
+                n.min = 5
+                n.max = 7
+                break
+        }
+    }
+    console.log('n', n)
+
+    // if (level === 1) {
+    //     n = 3
+    // } else if (level === 2) {
+    //     n = 5
+    // } else if (level === 3) {
+    //     n = 7
+    // } else {
+    //     console.error('level应满足1≤level≤3')
+    //     return null
+    // }
+
+    // 生成随机序列
+    const arr = Array.from({ length: size * size }, (_, index) => index)
+    for (let i = arr.length - 1; i > 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1))
+        const temp = arr[randomIndex]
+        arr[randomIndex] = arr[i]
+        arr[i] = temp
+    }
+
+    let count = 0 // 已经挖去的数字个数
+    for (let i = 0; i < arr.length && count < size * n.max; i++) {
+        // 每宫要挖去n个数字，因此总共要挖去9*n个数字
+        const row = Math.floor(arr[i] / size) // 当前数字所在行
+        const col = arr[i] % size // 当前数字所在列
+        let blockRow
+        let blockCol
+        if (size === 6) {
+            blockRow = Math.floor(row / 2) // 当前数字所在宫的行
+            blockCol = Math.floor(col / 3) // 当前数字所在宫的列
+        } else {
+            blockRow = Math.floor(row / Math.sqrt(size)) // 当前数字所在宫的行
+            blockCol = Math.floor(col / Math.sqrt(size)) // 当前数字所在宫的列
+        }
+        if (sudoku[row][col] !== 0) {
+            let blockCount = 0 // 当前数字所在的宫已经挖去的数字个数
+            if (size === 6) {
+                for (let j = 0; j < 2; j++) {
+                    for (let k = 0; k < 3; k++) {
+                        const blockRowPos = blockRow * 2 + j // 当前宫内行坐标
+                        const blockColPos = blockCol * 3 + k // 当前宫内列坐标
+                        if (sudoku[blockRowPos][blockColPos] === 0) {
+                            blockCount++
+                        }
+                    }
+                }
+            } else {
+                for (let j = 0; j < Math.sqrt(size); j++) {
+                    for (let k = 0; k < Math.sqrt(size); k++) {
+                        const blockRowPos = blockRow * Math.sqrt(size) + j // 当前宫内行坐标
+                        const blockColPos = blockCol * Math.sqrt(size) + k // 当前宫内列坐标
+                        if (sudoku[blockRowPos][blockColPos] === 0) {
+                            blockCount++
+                        }
+                    }
+                }
+            }
+            if (
+                blockCount >= n.min &&
+                blockCount < n.max &&
+                0.75 - Math.random() > 0
+            ) {
+                continue
+            }
+            if (blockCount >= n.max) {
+                continue // 当前数字所在宫已经挖去n个数字，跳到下一个位置
+            }
+            sudoku[row][col] = 0 // 挖去当前数字
+            count++
+        }
+    }
+
+    return sudoku
+}
+
 </script>
 <script>
 export default {
     page: {
         name: '数独',
-        sort: 200
+        sort: 800
     }
 }
 </script>
