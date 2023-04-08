@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-03-29 22:20:04
+ * @LastEditTime: 2023-04-08 21:20:18
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\logDialog.vue
@@ -73,6 +73,17 @@ const handleClose = () => {
 }
 
 const logs = [
+    {
+        date: '2023年4月',
+        children: [
+            {
+                title: '新增数学类',
+                content: `
+                新增：数独（四宫数独、六宫数独、九宫数独）。
+                `
+            }
+        ]
+    },
     {
         date: '2023年3月',
         children: [
