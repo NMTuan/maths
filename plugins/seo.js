@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-06 11:28:51
- * @LastEditTime: 2023-03-29 22:07:46
+ * @LastEditTime: 2023-04-10 19:44:49
  * @LastEditors: NMTuan
  * @Description:
  * @FilePath: \ezMaths\plugins\seo.js
@@ -55,6 +55,12 @@ const data = {
         keywords: '认识钟表,24计时法,打印',
         description:
             'A4纸一键打印认识钟表的练习题，看钟表认时间，根据时间画时针分针,适配24计时法。适合幼儿园及一年级小朋友。'
+    },
+    '/math/sudoku': {
+        title: '数独 - 数学',
+        keywords: '四宫数独,六宫数独,旧宫数独,打印',
+        description:
+            'A4纸一键打印数独，包含四宫数独、六宫数独、旧宫数独。适合幼儿园及一年级小朋友。'
     },
     '/chinese/pinyin': {
         title: '汉语拼音描红字帖 - 语文',
