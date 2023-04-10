@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-04-08 21:20:18
+ * @LastEditTime: 2023-04-10 22:01:02
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\logDialog.vue
@@ -76,6 +76,13 @@ const logs = [
     {
         date: '2023年4月',
         children: [
+            {
+                title: '新增数学类',
+                content: `
+                新增：破十法练习题。
+                新增：凑十法增加配置项：显示/隐藏 过程模版。
+                `
+            },
             {
                 title: '新增数学类',
                 content: `

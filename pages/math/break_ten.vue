@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-24 09:53:57
- * @LastEditTime: 2023-04-10 21:03:28
+ * @LastEditTime: 2023-04-10 22:09:03
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\break_ten.vue
@@ -63,10 +63,10 @@ const currentRange = useCookie('math_break_ten_currentRange') // 当前运算范
 currentRange.value = currentRange.value || 20
 
 const showTpl = useCookie('math_borek_ten_showTpl') // 显示模版
-showTpl.value = showTpl.value || true
+showTpl.value = showTpl.value !== undefined ? showTpl.value : true
 
 const showTen = useCookie('math_break_ten_showTen') // 显示下面那个10
-showTen.value = showTen.value || true
+showTen.value = showTen.value !== undefined ? showTen.value : true
 
 const showRes = useCookie('math_break_ten_showRes') // 显示结果
 showRes.value = showRes.value || false

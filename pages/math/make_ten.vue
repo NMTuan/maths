@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-24 09:53:57
- * @LastEditTime: 2023-04-10 21:18:37
+ * @LastEditTime: 2023-04-10 22:06:16
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\make_ten.vue
@@ -13,12 +13,20 @@
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
                     <el-form-item label="模式" class="w-32 mr-4">
-                        <el-select v-model="currentTypeIndex" placeholder="" @change="submit">
-                            <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
+                        <el-select
+                            v-model="currentTypeIndex"
+                            placeholder=""
+                            @change="submit"
+                        >
+                            <el-option
+                                v-for="(type, index) in types"
+                                :label="type.label"
+                                :value="index"
+                            />
                         </el-select>
                     </el-form-item>
 
-                                        <el-form-item label="" class="mr-4">
+                    <el-form-item label="" class="mr-4">
                         <el-checkbox v-model="showTpl" label="过程模版" />
                     </el-form-item>
 
@@ -34,18 +42,26 @@
                 <el-form class="flex-shrink-0 flex items-center flex-wrap">
                     <el-form-item label="" class="">
                         <el-button-group>
-                            <el-button type="primary" plain @click="submit">重新生成</el-button>
-                            <el-button type="primary" @click="print">打印</el-button>
+                            <el-button type="primary" plain @click="submit"
+                                >重新生成</el-button
+                            >
+                            <el-button type="primary" @click="print"
+                                >打印</el-button
+                            >
                         </el-button-group>
                     </el-form-item>
                 </el-form>
             </div>
         </template>
         <div class="flex flex-wrap">
-            <MathMakeTenItem v-for="(item, index) in items" :item="item" :index="index"
+            <MathMakeTenItem
+                v-for="(item, index) in items"
+                :item="item"
+                :index="index"
                 :showTpl="showTpl"
-             :showTen="showTen"
-                :showRes="showRes">
+                :showTen="showTen"
+                :showRes="showRes"
+            >
             </MathMakeTenItem>
         </div>
     </LayoutPaper>
@@ -77,10 +93,10 @@ const type = computed(() => {
 })
 
 const showTpl = useCookie('math_mark_ten_showTpl') // 显示模版
-showTpl.value = showTpl.value || true
+showTpl.value = showTpl.value !== undefined ? showTpl.value : true
 
-const showTen = useCookie('math_make_ten_showTen')  // 显示下面那个10
-showTen.value = showTen.value || true
+const showTen = useCookie('math_make_ten_showTen') // 显示下面那个10
+showTen.value = showTen.value !== undefined ? showTen.value : true
 
 const showRes = useCookie('math_make_ten_showRes') // 显示结果
 showRes.value = showRes.value || false
@@ -97,7 +113,7 @@ const random = (min = 0, max = currentRange.value) => {
 const generator = () => {
     const res = {
         numbers: [], // 运算数
-        result: 0, // 结果
+        result: 0 // 结果
     }
 
     // a + b = c
