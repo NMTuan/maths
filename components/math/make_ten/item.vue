@@ -8,7 +8,9 @@
  * @FilePath: \ezMaths\components\math\make_ten\item.vue
 -->
 <template>
-    <div class="flex items-baseline flex-shrink-0 w-full sm:w-1/3 print:w-1/3 mb-3 text-lg">
+    <div
+        class="flex items-baseline flex-shrink-0 w-full sm:w-1/3 print:w-1/3 mb-3 text-lg"
+    >
         <div class="text-sm text-gray-200 mr-4">
             {{ (index + 1).toString().padStart(2, '0') }}.
         </div>
@@ -20,23 +22,28 @@
                 </template>
                 {{ showRes ? `( ${item.result} )` : '(____)' }}
             </div>
-            <div class="pl-14">
-                <span class="mx-3">/</span>
-                <span class="mx-3">\</span>
-            </div>
-            <div class="pl-8">
-                <span :class="showRes ? 'mx-3' : 'mx-2'">
-                    {{ showRes ? `( ${10 - item.numbers[0]} )` : '(____)' }}
-                </span>
-                <span :class="showRes ? 'mx-3' : 'mx-2'">
-                    {{ showRes ? `( ${item.result - 10} )` : '(____)' }}
-                </span>
-            </div>
-            <div class="mt-4" :class="showTen ? 'ml-7' : 'ml-4'">
-                {{ showTen ? '10' : '(____)' }}
-            </div>
-            <div class="border-cool-gray-800 border-l border-b h-16 w-10 left-5 top-8 absolute">
-                <div class="absolute right-0 bottom-0 w-4 h-3 border-cool-gray-800 border-r">
+            <div :class="{ 'opacity-0': !showTpl }">
+                <div class="pl-14">
+                    <span class="mx-3">/</span>
+                    <span class="mx-3">\</span>
+                </div>
+                <div class="pl-8">
+                    <span :class="showRes ? 'mx-3' : 'mx-2'">
+                        {{ showRes ? `( ${10 - item.numbers[0]} )` : '(____)' }}
+                    </span>
+                    <span :class="showRes ? 'mx-3' : 'mx-2'">
+                        {{ showRes ? `( ${item.result - 10} )` : '(____)' }}
+                    </span>
+                </div>
+                <div class="mt-4" :class="showTen ? 'ml-7' : 'ml-4'">
+                    {{ showTen ? '10' : '(____)' }}
+                </div>
+                <div
+                    class="border-cool-gray-800 border-l border-b h-16 w-10 left-5 top-8 absolute"
+                >
+                    <div
+                        class="absolute right-0 bottom-0 w-4 h-3 border-cool-gray-800 border-r"
+                    ></div>
                 </div>
             </div>
         </div>
@@ -46,11 +53,15 @@
 const props = defineProps({
     item: {
         type: Object,
-        default: () => { }
+        default: () => {}
     },
     index: {
         type: Number,
         default: 0
+    },
+    showTpl: {
+        type: Boolean,
+        default: false
     },
     showTen: {
         type: Boolean,

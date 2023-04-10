@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-24 09:53:57
- * @LastEditTime: 2023-03-06 10:44:56
+ * @LastEditTime: 2023-04-10 21:18:37
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\math\make_ten.vue
@@ -17,6 +17,11 @@
                             <el-option v-for="(type, index) in types" :label="type.label" :value="index" />
                         </el-select>
                     </el-form-item>
+
+                                        <el-form-item label="" class="mr-4">
+                        <el-checkbox v-model="showTpl" label="过程模版" />
+                    </el-form-item>
+
                     <el-form-item label="" class="mr-4">
                         <el-checkbox v-model="showTen" label="显示10" />
                     </el-form-item>
@@ -37,7 +42,9 @@
             </div>
         </template>
         <div class="flex flex-wrap">
-            <MathMakeTenItem v-for="(item, index) in items" :item="item" :index="index" :showTen="showTen"
+            <MathMakeTenItem v-for="(item, index) in items" :item="item" :index="index"
+                :showTpl="showTpl"
+             :showTen="showTen"
                 :showRes="showRes">
             </MathMakeTenItem>
         </div>
@@ -68,6 +75,9 @@ currentTypeIndex.value = currentTypeIndex.value || 1
 const type = computed(() => {
     return types[currentTypeIndex.value]
 })
+
+const showTpl = useCookie('math_mark_ten_showTpl') // 显示模版
+showTpl.value = showTpl.value || true
 
 const showTen = useCookie('math_make_ten_showTen')  // 显示下面那个10
 showTen.value = showTen.value || true
