@@ -13,19 +13,37 @@
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
                     <el-form-item label="尺寸" class="w-32 mr-4">
-                        <el-select v-model="currentConfigIndex" placeholder="" @change="changeSize">
-                            <el-option v-for="(item, index) in config" :key="item.size" :label="item.label"
-                                :value="index" />
+                        <el-select
+                            v-model="currentConfigIndex"
+                            placeholder=""
+                            @change="changeSize"
+                        >
+                            <el-option
+                                v-for="(item, index) in config"
+                                :key="item.size"
+                                :label="item.label"
+                                :value="index"
+                            />
                         </el-select>
                     </el-form-item>
                     <el-form-item label="行数" class="w-28 mr-4">
                         <el-select v-model="rows" placeholder="">
-                            <el-option v-for="item in currentConfig.maxRows" :key="item" :label="item" :value="item" />
+                            <el-option
+                                v-for="item in currentConfig.maxRows"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                            />
                         </el-select>
                     </el-form-item>
                     <el-form-item label="列数" class="w-28 mr-4">
                         <el-select v-model="cols" placeholder="">
-                            <el-option v-for="item in currentConfig.maxCols" :key="item" :label="item" :value="item" />
+                            <el-option
+                                v-for="item in currentConfig.maxCols"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                            />
                         </el-select>
                     </el-form-item>
                     <slot name="config" :rows="rows"></slot>
@@ -34,13 +52,20 @@
                     <el-form-item label="" class="">
                         <el-button-group>
                             <slot name="button"></slot>
-                            <el-button type="primary" @click="print">打印</el-button>
+                            <el-button type="primary" @click="print"
+                                >打印</el-button
+                            >
                         </el-button-group>
                     </el-form-item>
                 </el-form>
             </div>
         </template>
-        <TemplatePinyinRow v-for='(item, index) in rows' :size="currentSize" :cols="cols" :trace="trace">
+        <TemplatePinyinRow
+            v-for="(item, index) in rows"
+            :size="currentSize"
+            :cols="cols"
+            :trace="trace"
+        >
             <slot name="content" :item="item" :index="index"></slot>
         </TemplatePinyinRow>
         <slot></slot>
@@ -63,7 +88,7 @@ const config = [
     { label: '巨大 - 行高1.80cm', size: 'xl', maxRows: 12, maxCols: 10 }
 ]
 const currentConfigIndex = useCookie('template_pinyin_current_config')   // 当前配置项索引
-currentConfigIndex.value = currentConfigIndex.value || 1
+currentConfigIndex.value = currentConfigIndex.value === undefined ? 1 : currentConfigIndex.value
 const currentConfig = computed(() => config[currentConfigIndex.value])
 const currentSize = computed(() => currentConfig.value.size)   // 当前尺寸
 const rows = useCookie('template_pinyin_rows') // 行数
@@ -83,5 +108,4 @@ const changeSize = () => {
 const print = () => {
     window.print()
 }
-
 </script>

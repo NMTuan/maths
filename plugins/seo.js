@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-06 11:28:51
- * @LastEditTime: 2023-04-10 19:44:49
+ * @LastEditTime: 2023-04-10 21:58:10
  * @LastEditors: NMTuan
  * @Description:
  * @FilePath: \ezMaths\plugins\seo.js
@@ -37,6 +37,12 @@ const data = {
         keywords: '凑十法,进位加法,数学,打印',
         description:
             'A4纸一键打印20以内凑十法练习题。适合幼儿园、幼小衔接、小学一年级等。'
+    },
+    '/math/break_ten': {
+        title: '20以内破十法练习题 - 数学',
+        keywords: '破十法,退位减法,数学,打印',
+        description:
+            'A4纸一键打印20以内破十法练习题。适合幼儿园、幼小衔接、小学一年级等。'
     },
     '/math/composition': {
         title: '数字的分解与组成 - 数学',

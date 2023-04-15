@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-04-08 21:20:18
+ * @LastEditTime: 2023-04-15 12:30:34
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\logDialog.vue
@@ -77,8 +77,16 @@ const logs = [
         date: '2023年4月',
         children: [
             {
-                title: '新增数学类',
+                title: '语文类',
                 content: `
+                优化：汉字字帖，移除一年级字库；改为自定义文字内容。
+                `
+            },
+            {
+                title: '数学类',
+                content: `
+                新增：破十法练习题。
+                新增：凑十法增加配置项：显示/隐藏 过程模版。
                 新增：数独（四宫数独、六宫数独、九宫数独）。
                 `
             }
@@ -88,7 +96,7 @@ const logs = [
         date: '2023年3月',
         children: [
             {
-                title: '新增数学类',
+                title: '数学类',
                 content: `
                 新增：认识钟表。
                 `
@@ -108,14 +116,14 @@ const logs = [
                 `
             },
             {
-                title: '新增语文类',
+                title: '语文类',
                 content: `
                 新增：拼音字母。
                 新增：一年级汉字字帖。
                 `
             },
             {
-                title: '新增空白模板',
+                title: '空白模板',
                 content: `
                 新增：四线三格（拼音）模板。
                 新增：田字格模板。
@@ -127,7 +135,7 @@ const logs = [
         date: '2023年2月',
         children: [
             {
-                title: '新增数学类',
+                title: '数学类',
                 content: `
                 新增：加法练习题。
                 新增：减法练习题。
