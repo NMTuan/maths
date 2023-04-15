@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-02 09:53:33
- * @LastEditTime: 2023-04-13 21:42:54
+ * @LastEditTime: 2023-04-15 12:19:34
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\chinese\hanzi\chooseContent.vue
@@ -22,7 +22,7 @@
                     <el-input
                         v-model.trim="contents"
                         type="textarea"
-                        rows="10"
+                        rows="6"
                         :maxlength="rows"
                         show-word-limit
                     ></el-input>
@@ -72,7 +72,7 @@ const emits = defineEmits(['update:show', 'update:content'])
 
 const contents = computed({
     set(val) {
-        emits('update:content', val.replace(/\s/ig, '').split(''))
+        emits('update:content', val.replace(/\s/gi, '').split(''))
     },
     get() {
         return props.content.join('')
@@ -173,3 +173,10 @@ const handleClose = () => {
 
 const content = ref([])
 </script>
+<style lang="scss" scoped>
+:deep {
+    textarea {
+        @apply text-lg;
+    }
+}
+</style>
