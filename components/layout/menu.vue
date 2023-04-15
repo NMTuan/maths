@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-14 11:01:18
- * @LastEditTime: 2023-03-07 16:30:55
+ * @LastEditTime: 2023-04-13 20:04:41
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\layout\menu.vue
@@ -21,6 +21,7 @@ const { $firstLevelPages } = useNuxtApp()
 <style scoped lang="scss">
 .menu {
     @apply leading-none;
+    @apply pb-10;
 }
 
 .title {

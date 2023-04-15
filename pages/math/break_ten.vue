@@ -2,30 +2,16 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-24 09:53:57
- * @LastEditTime: 2023-04-10 22:06:16
+ * @LastEditTime: 2023-04-10 22:09:03
  * @LastEditors: NMTuan
  * @Description: 
- * @FilePath: \ezMaths\pages\math\make_ten.vue
+ * @FilePath: \ezMaths\pages\math\break_ten.vue
 -->
 <template>
-    <LayoutPaper title="凑十法练习题">
+    <LayoutPaper title="破十法练习题">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
-                    <el-form-item label="模式" class="w-32 mr-4">
-                        <el-select
-                            v-model="currentTypeIndex"
-                            placeholder=""
-                            @change="submit"
-                        >
-                            <el-option
-                                v-for="(type, index) in types"
-                                :label="type.label"
-                                :value="index"
-                            />
-                        </el-select>
-                    </el-form-item>
-
                     <el-form-item label="" class="mr-4">
                         <el-checkbox v-model="showTpl" label="过程模版" />
                     </el-form-item>
@@ -54,7 +40,7 @@
             </div>
         </template>
         <div class="flex flex-wrap">
-            <MathMakeTenItem
+            <MathBreakTenItem
                 v-for="(item, index) in items"
                 :item="item"
                 :index="index"
@@ -62,7 +48,7 @@
                 :showTen="showTen"
                 :showRes="showRes"
             >
-            </MathMakeTenItem>
+            </MathBreakTenItem>
         </div>
     </LayoutPaper>
 </template>
@@ -73,32 +59,16 @@ useServerSeoMeta(seo)
 useHead(seo)
 
 // const ranges = [10, 20, 50, 100] // 运算范围
-const currentRange = useCookie('math_make_ten_currentRange') // 当前运算范围
+const currentRange = useCookie('math_break_ten_currentRange') // 当前运算范围
 currentRange.value = currentRange.value || 20
 
-// const numberRange = [2, 4] // 参与运算数的范围
-// const currentNumber = useCookie('math_add_sub_currentNumber') // 当前运算数
-// currentNumber.value = currentNumber.value || 2
-
-// 类型
-const types = [
-    { key: 'no', label: '不限制' },
-    { key: 'min', label: '拆小数' },
-    { key: 'max', label: '拆大数' }
-]
-const currentTypeIndex = useCookie('math_make_ten_currentTypeIndex') // 当前类型索引
-currentTypeIndex.value = currentTypeIndex.value || 1
-const type = computed(() => {
-    return types[currentTypeIndex.value]
-})
-
-const showTpl = useCookie('math_mark_ten_showTpl') // 显示模版
+const showTpl = useCookie('math_borek_ten_showTpl') // 显示模版
 showTpl.value = showTpl.value !== undefined ? showTpl.value : true
 
-const showTen = useCookie('math_make_ten_showTen') // 显示下面那个10
+const showTen = useCookie('math_break_ten_showTen') // 显示下面那个10
 showTen.value = showTen.value !== undefined ? showTen.value : true
 
-const showRes = useCookie('math_make_ten_showRes') // 显示结果
+const showRes = useCookie('math_break_ten_showRes') // 显示结果
 showRes.value = showRes.value || false
 
 const resLength = ref(20) // 生成数量
@@ -116,28 +86,16 @@ const generator = () => {
         result: 0 // 结果
     }
 
-    // a + b = c
-    // 先生成一个 >11 <18 的 c
-    // 然后确定 a 的范围。c - 10 + 1 ~ 9
-    // 然后 c - a 得到 b
+    // c 2~9
+    // a 11~10+c-1
+    // b = a-c
 
-    const c = random(11, 18)
-    const a = random(c - 10 + 1, 9)
-    const b = c - a
+    const c = random(2, 9)
+    const a = random(11, 10 + c - 1)
+    const b = a - c
 
     res.numbers = [a, b]
     res.result = c
-
-    if (type.value.key === 'min') {
-        res.numbers.sort((a, b) => {
-            return b - a
-        })
-    }
-    if (type.value.key === 'max') {
-        res.numbers.sort((a, b) => {
-            return a - b
-        })
-    }
 
     return res
 }
@@ -161,8 +119,8 @@ onMounted(() => {
 <script>
 export default {
     page: {
-        name: '凑十法练习题',
-        sort: 400
+        name: '破十法练习题',
+        sort: 450
     }
 }
 </script>

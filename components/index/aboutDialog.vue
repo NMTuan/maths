@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-03-17 15:08:26
+ * @LastEditTime: 2023-04-13 19:48:13
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\aboutDialog.vue
@@ -42,12 +42,7 @@
                         >点击这里</a
                     >留言反馈。
                 </p>
-                <p>
-                    <span class="text-red-400"
-                        >本站所有功能免费，除企业定制开发外，不存在任何收费点。</span
-                    >
-                </p>
-                <p>您可以通过赞赏的方式支持我。</p>
+                <p>您可以通过以下方式支持我:</p>
                 <p
                     class="flex flex-wrap items-center justify-around bg-cool-gray-100 py-4"
                 >
@@ -67,7 +62,7 @@
                         alt=""
                     />
                 </p>
-                <p>最后，感谢开发过程中用到的所有开源项目。谢谢！</p>
+                <p>您的支持将是我持续开发的动力。谢谢！</p>
             </div>
         </el-dialog>
     </ClientOnly>
