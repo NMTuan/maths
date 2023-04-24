@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-28 14:24:53
- * @LastEditTime: 2023-03-13 11:28:11
+ * @LastEditTime: 2023-04-24 07:01:33
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\pages\template\pinyin.vue
@@ -19,7 +19,8 @@ useHead(seo)
 <script>
 export default {
     page: {
-        name: '四线三格（拼音）'
+        name: '四线三格（拼音）',
+        sort: 100
     }
 }
 </script>
