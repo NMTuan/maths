@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-16 11:37:44
- * @LastEditTime: 2023-04-15 12:30:34
+ * @LastEditTime: 2023-04-26 07:07:36
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\index\logDialog.vue
@@ -76,6 +76,18 @@ const logs = [
     {
         date: '2023年4月',
         children: [
+            {
+                title: '英语类',
+                content: `
+                新增：英文字母字帖。
+                `
+            },
+            {
+                title: '空白模版',
+                content: `
+                新增：四线三格（英语）。
+                `
+            },
             {
                 title: '语文类',
                 content: `

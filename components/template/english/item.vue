@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-28 14:30:19
- * @LastEditTime: 2023-04-24 21:14:08
+ * @LastEditTime: 2023-04-26 06:19:02
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\template\english\item.vue
@@ -110,7 +110,8 @@ const contentSize = computed(() => {
     // font-family: HengShuiTi, 楷体;
     // font-family: SegoeUIItalic, 楷体;
     @apply relative leading-none;
-    @apply flex items-center justify-center;
+    @apply flex items-center ;
+    @apply tracking-wider;
     // @apply px-2;
     // @apply font-bold;
 

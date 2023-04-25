@@ -2,13 +2,13 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-13 10:48:26
- * @LastEditTime: 2023-04-24 21:20:26
+ * @LastEditTime: 2023-04-26 07:03:31
  * @LastEditors: NMTuan
  * @Description: 
  * @FilePath: \ezMaths\components\template\english\index.vue
 -->
 <template>
-    <LayoutPaper title="四线三格（英语）">
+    <LayoutPaper :title="title">
         <template #config>
             <div class="sm:flex items-center justify-between">
                 <el-form class="flex items-center flex-wrap">
@@ -88,6 +88,10 @@
 </template>
 <script setup>
 const props = defineProps({
+    title: {
+        type: String,
+        default: '四线三格（英语）'
+    },
     trace: {
         // 是否描红
         type: Boolean,
@@ -119,7 +123,8 @@ const fontStyles = [
 const currentFontStyleIndex = useCookie(
     'template_english_current_font_style_index'
 )
-currentFontStyleIndex.value === undefined ? 0 : currentFontStyleIndex.value
+currentFontStyleIndex.value =
+    currentFontStyleIndex.value === undefined ? 0 : currentFontStyleIndex.value
 const fontStyle = computed(() => fontStyles[currentFontStyleIndex.value] || {})
 
 const changeSize = () => {
