@@ -2,13 +2,13 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-02-28 14:24:53
- * @LastEditTime: 2023-04-24 07:01:33
+ * @LastEditTime: 2023-04-25 06:42:58
  * @LastEditors: NMTuan
  * @Description: 
- * @FilePath: \ezMaths\pages\template\pinyin.vue
+ * @FilePath: \ezMaths\pages\template\english.vue
 -->
 <template>
-    <TemplatePinyin></TemplatePinyin>
+    <TemplateEnglish> </TemplateEnglish>
 </template>
 <script setup>
 const { $getSeoInfo } = useNuxtApp()
@@ -19,8 +19,8 @@ useHead(seo)
 <script>
 export default {
     page: {
-        name: '四线三格（拼音）',
-        sort: 100
+        name: '四线三格（英语）',
+        sort: 200
     }
 }
 </script>

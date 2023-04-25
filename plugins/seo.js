@@ -2,7 +2,7 @@
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
  * @Date: 2023-03-06 11:28:51
- * @LastEditTime: 2023-04-10 21:58:10
+ * @LastEditTime: 2023-04-26 07:02:33
  * @LastEditors: NMTuan
  * @Description:
  * @FilePath: \ezMaths\plugins\seo.js
@@ -73,6 +73,12 @@ const data = {
         keywords: '拼音字帖,3-6岁,拼音启蒙,打印',
         description:
             '适合幼儿园3-6岁小朋友汉语拼音启蒙，打印声母、韵母、整体认读、声调描红字帖。'
+    },
+    '/english/word': {
+        title: '英文字母描红字帖 - 英语',
+        keywords: '英文字帖,意大利体字帖，衡水体英文字帖',
+        description:
+            '包括意大利体、衡水体等多种字体的英文字母描红字帖。26个英文字母启蒙。'
     },
     '/template/pinyin': {
         title: '四线三格（拼音）- 模板',

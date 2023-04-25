@@ -1,11 +1,11 @@
 <!--
  * @Author: NMTuan
  * @Email: NMTuan@qq.com
- * @Date: 2023-02-14 11:20:42
- * @LastEditTime: 2023-04-25 06:41:03
+ * @Date: 2023-04-25 06:37:40
+ * @LastEditTime: 2023-04-25 06:38:01
  * @LastEditors: NMTuan
  * @Description: 
- * @FilePath: \ezMaths\pages\Chinese.vue
+ * @FilePath: \ezMaths\pages\english.vue
 -->
 <template>
     <div>
@@ -15,8 +15,8 @@
 <script>
 export default {
     page: {
-        name: '语文',
-        sort: 200
+        sort: 300,
+        name: '英语'
     }
 }
 </script>
